@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://b1u33unakingl"]
+
+[ext_resource type="Texture2D" uid="uid://c4mi8c3tnjrop" path="res://assets/sprites/card_arts/base_game/loot/001_one_cent_1.png" id="1_yrji4"]
+[ext_resource type="Script" path="res://src/cards/loot/L001_APenny.cs" id="2_82kv4"]
+[ext_resource type="Script" path="res://resources/cards/loot/LootCardResource.cs" id="2_kn6wc"]
+
+[resource]
+script = ExtResource("2_kn6wc")
+lootCardType = 14
+CardName = "A Penny!"
+Script = ExtResource("2_82kv4")
+charmed = false
+soulCount = 0
+BgArt = ExtResource("1_yrji4")

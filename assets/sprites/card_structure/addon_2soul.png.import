@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://begecjjqyax8j"
-path="res://.godot/imported/adon_2soul.png-2be6b31c394b7d19471def209b003751.ctex"
+path="res://.godot/imported/addon_2soul.png-e30895950de887d3d6609581f2138a1f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/card_structure/adon_2soul.png"
-dest_files=["res://.godot/imported/adon_2soul.png-2be6b31c394b7d19471def209b003751.ctex"]
+source_file="res://assets/sprites/card_structure/addon_2soul.png"
+dest_files=["res://.godot/imported/addon_2soul.png-e30895950de887d3d6609581f2138a1f.ctex"]
 
 [params]
 

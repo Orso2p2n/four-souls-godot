@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cmvj4k3xeud10"]
+
+[ext_resource type="Resource" uid="uid://4486c6umed7t" path="res://resources/decks/base_game/deck_base_game_loot.tres" id="1_vey83"]
+[ext_resource type="Script" path="res://resources/deck_sets/DeckSetResource.cs" id="2_ee514"]
+
+[resource]
+script = ExtResource("2_ee514")
+name = "Base Game"
+deckSet = 0
+decks = Array[Resource]([ExtResource("1_vey83")])

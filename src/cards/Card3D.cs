@@ -4,15 +4,19 @@ using System.Threading.Tasks;
 
 public partial class Card3D : Node3D
 {
+	[Export] public bool forceInit = false;
+
 	[Export] Sprite3D sprite3D;
 	[Export] CardBase cardBase;
 
 	bool dragged;
 
 	public override void _Ready() {
-		UpdateSprite(true);
+		cardBase.cardVisual.TextureRefreshed += UpdateSprite;
 
-		GD.Print("Card3D ready");
+		if (forceInit) {
+			cardBase.Init();
+		}
 	}
 
     public override void _Process(double delta) {
@@ -30,12 +34,8 @@ public partial class Card3D : Node3D
 		}
     }
 
-    public async Task UpdateSprite(bool setTexture = false) {
-		var texture = await cardBase.cardVisual.UpdateAndGetTexture();
-
-		if (setTexture) {
-			sprite3D.Texture = texture;
-		}
+    public void UpdateSprite(ViewportTexture texture) {
+		sprite3D.Texture = texture;
 	}
 
 	void OnClicked() {

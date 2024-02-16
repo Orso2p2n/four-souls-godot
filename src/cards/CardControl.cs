@@ -8,14 +8,10 @@ public partial class CardControl : Control
 	[Export] CardBase cardBase;
 
 	public override void _Ready() {
-		UpdateSprite(true);
+		cardBase.cardVisual.TextureRefreshed += UpdateSprite;
 	}
 
-	public async Task UpdateSprite(bool setTexture = false) {
-		var texture = await cardBase.cardVisual.UpdateAndGetTexture();
-
-		if (setTexture) {
-			textureRect.Texture = texture;
-		}
+    public void UpdateSprite(ViewportTexture texture) {
+		textureRect.Texture = texture;
 	}
 }

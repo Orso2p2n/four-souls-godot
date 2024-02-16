@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://d4jvl25muoj6n"]
+
+[ext_resource type="Script" path="res://resources/deck_types/DeckTypeResource.cs" id="1_k7ipr"]
+[ext_resource type="Texture2D" uid="uid://djppedhwfrccd" path="res://assets/sprites/card_backs/back_loot.png" id="1_ksxcp"]
+
+[resource]
+script = ExtResource("1_k7ipr")
+name = "Loot"
+deckType = 1
+backTexture = ExtResource("1_ksxcp")
