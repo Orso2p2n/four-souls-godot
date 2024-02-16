@@ -1,0 +1,5 @@
+une ressource commune qui stocke type, nom, art, et autres valeurs communes (HP, dice, attack...)
+
+un script par carte qui gère les effets, sans composition de ressources
+
+le script gère aussi le texte

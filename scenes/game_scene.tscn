@@ -1,0 +1,93 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqrcg6mefh4c6"]
+
+[ext_resource type="Script" path="res://src/debug/DebugUI.cs" id="2_8xbdr"]
+[ext_resource type="PackedScene" uid="uid://bmq3w836loiaj" path="res://scenes/card_3d.tscn" id="3_8xqfd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5t7t"]
+bg_color = Color(0.301961, 0.301961, 0.301961, 0.670588)
+
+[sub_resource type="Environment" id="Environment_sgdv0"]
+background_mode = 1
+background_color = Color(0.15, 0.15, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+reflected_light_source = 1
+
+[node name="GameScene" type="Node3D"]
+
+[node name="Game" type="Node" parent="."]
+
+[node name="UI" type="Control" parent="Game"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Debug" type="Node" parent="Game"]
+
+[node name="DebugUI" type="Control" parent="Game/Debug" node_paths=PackedStringArray("toggleButton", "menu")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_8xbdr")
+toggleButton = NodePath("ToggleButton")
+menu = NodePath("Menu")
+
+[node name="ToggleButton" type="Button" parent="Game/Debug/DebugUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.995833
+anchor_top = 0.00740741
+anchor_right = 0.995833
+anchor_bottom = 0.00740741
+offset_left = -120.0
+offset_bottom = 32.0
+grow_horizontal = 0
+text = "Open Debug"
+metadata/_edit_use_anchors_ = true
+
+[node name="Menu" type="Panel" parent="Game/Debug/DebugUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d5t7t")
+
+[node name="CloseButton" type="Button" parent="Game/Debug/DebugUI/Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.995833
+anchor_top = 0.00740741
+anchor_right = 0.995833
+anchor_bottom = 0.00740741
+offset_left = -32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "X"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sgdv0")
+
+[node name="Camera" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Camera"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0)
+projection = 1
+size = 5.0
+
+[node name="Card3D" parent="." instance=ExtResource("3_8xqfd")]
+
+[connection signal="pressed" from="Game/Debug/DebugUI/ToggleButton" to="Game/Debug/DebugUI" method="_on_toggle_button_pressed"]
+[connection signal="pressed" from="Game/Debug/DebugUI/Menu/CloseButton" to="Game/Debug/DebugUI" method="_on_close_button_pressed"]
