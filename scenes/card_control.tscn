@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cj63rf228wkjb"]
 
-[ext_resource type="Script" path="res://src/cards/CardControl.cs" id="1_7ual2"]
+[ext_resource type="Script" path="res://src/card_objects/CardControl.cs" id="1_7ual2"]
 [ext_resource type="PackedScene" uid="uid://bi0bliua64s4" path="res://scenes/card_base.tscn" id="1_14fry"]
 [ext_resource type="Texture2D" uid="uid://dk600j6g6reg6" path="res://assets/sprites/card_other/penny_cropped.png" id="2_0x5yx"]
 

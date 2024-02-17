@@ -37,4 +37,3 @@ enabled=PackedStringArray("res://addons/resources_spreadsheet_view/plugin.cfg")
 
 anti_aliasing/quality/msaa_2d=2
 anti_aliasing/quality/msaa_3d=2
-anti_aliasing/quality/use_taa=true

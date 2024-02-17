@@ -11,6 +11,10 @@ public partial class CardVisual : SubViewport
 	public CardBase card;
 
 	public void Init() {
+		_ = UpdateVisual();
+	}
+
+	private async Task UpdateVisual() {
 		var cardResource = card.cardResource;
 
 		// Set textures
@@ -54,18 +58,22 @@ public partial class CardVisual : SubViewport
 			composition.charmedTextureRect.Texture = StaticTextures.cardStructureAddonCharmed;
 		}
 
-		_ = Refresh();
+		await composition.titleLabel.SetText(cardResource.CardName);
+
+		_ = RefreshViewportTexture();
 	}
 
-	public async Task Refresh() {
-		await UpdateTexture();
+	private async Task RefreshViewportTexture() {
+		await RenderViewportTexture();
 
 		var newTexture = GetTexture();
+
+		GD.Print("Texture refreshed for: " + card.cardResource.CardName);
 
 		EmitSignal(SignalName.TextureRefreshed, newTexture);
 	}
 
-	private async Task UpdateTexture() {
+	private async Task RenderViewportTexture() {
 		RenderTargetUpdateMode = UpdateMode.Once;
 
 		await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);

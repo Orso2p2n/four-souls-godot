@@ -13,4 +13,7 @@ public partial class CardVisualComposition : Control
 	[Export] public TextureRect soulTextureRect;
 	[Export] public TextureRect charmedTextureRect;
 	[Export] public TextureRect fgArtTextureRect;
+
+	[ExportGroup("Texts")]
+	[Export] public CardVisualTitle titleLabel;
 }
