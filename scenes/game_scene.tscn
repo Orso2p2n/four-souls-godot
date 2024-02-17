@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqrcg6mefh4c6"]
+[gd_scene load_steps=8 format=3 uid="uid://cqrcg6mefh4c6"]
 
 [ext_resource type="Script" path="res://src/Assets.cs" id="1_y60vm"]
 [ext_resource type="Script" path="res://src/debug/DebugUI.cs" id="2_8xbdr"]
+[ext_resource type="Script" path="res://src/CardManager.cs" id="2_dncla"]
 [ext_resource type="PackedScene" uid="uid://bmq3w836loiaj" path="res://scenes/card_3d.tscn" id="3_8xqfd"]
+[ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardButton.cs" id="3_xvt67"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5t7t"]
 bg_color = Color(0.301961, 0.301961, 0.301961, 0.670588)
@@ -20,6 +22,11 @@ reflected_light_source = 1
 
 [node name="Assets" type="Node" parent="Game"]
 script = ExtResource("1_y60vm")
+
+[node name="CardManager" type="Node" parent="Game" node_paths=PackedStringArray("cardContainer")]
+script = ExtResource("2_dncla")
+card3DScene = ExtResource("3_8xqfd")
+cardContainer = NodePath("../../CardContainer")
 
 [node name="Debug" type="Node" parent="Game"]
 
@@ -49,7 +56,6 @@ text = "Open Debug"
 metadata/_edit_use_anchors_ = true
 
 [node name="Menu" type="Panel" parent="Game/Debug/DebugUI"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,11 +77,33 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "X"
 
+[node name="SpawnCardButton" type="MenuButton" parent="Game/Debug/DebugUI/Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -20.0
+offset_right = 72.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Spawn Card"
+flat = false
+script = ExtResource("3_xvt67")
+cardResourcesDir = "res://resources/cards"
+
+[node name="PopupMenu" type="PopupMenu" parent="Game/Debug/DebugUI/Menu/SpawnCardButton"]
+
 [node name="UI" type="Control" parent="Game"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -8.0
+offset_right = -8.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -90,6 +118,8 @@ transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0)
 projection = 1
 size = 5.0
+
+[node name="CardContainer" type="Node" parent="."]
 
 [node name="Card3D" parent="." instance=ExtResource("3_8xqfd")]
 forceInit = true

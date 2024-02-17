@@ -7,7 +7,7 @@ public partial class Card3D : Node3D
 	[Export] public bool forceInit = false;
 
 	[Export] Sprite3D sprite3D;
-	[Export] CardBase cardBase;
+	[Export] public CardBase cardBase;
 
 	bool dragged;
 
