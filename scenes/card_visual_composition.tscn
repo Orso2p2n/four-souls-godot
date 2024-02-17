@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5fomlhh5frqv"]
+
+[ext_resource type="Texture2D" uid="uid://cioravgdirrej" path="res://assets/sprites/card_other/card_crop.png" id="1_5jpu6"]
+[ext_resource type="Texture2D" uid="uid://c4mi8c3tnjrop" path="res://assets/sprites/card_arts/base_game/loot/001_one_cent_1.png" id="2_2ygbm"]
+[ext_resource type="Script" path="res://src/CardVisualComposition.cs" id="2_l2tsa"]
+
+[node name="CardVisualComposition" type="Control" node_paths=PackedStringArray("bgArtTextureRect", "borderTextureRect", "bottomTextureRect", "topTextureRect", "statblockTextureRect", "rewardTextureRect", "soulTextureRect", "charmedTextureRect", "fgArtTextureRect")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -44.0
+offset_top = -43.0
+offset_right = 918.0
+offset_bottom = 1269.0
+script = ExtResource("2_l2tsa")
+bgArtTextureRect = NodePath("BleedzonesMask/BgArt")
+borderTextureRect = NodePath("BleedzonesMask/Border")
+bottomTextureRect = NodePath("BleedzonesMask/Bottom")
+topTextureRect = NodePath("BleedzonesMask/Top")
+statblockTextureRect = NodePath("BleedzonesMask/Statblock")
+rewardTextureRect = NodePath("BleedzonesMask/Reward")
+soulTextureRect = NodePath("BleedzonesMask/Soul")
+charmedTextureRect = NodePath("BleedzonesMask/Charmed")
+fgArtTextureRect = NodePath("BleedzonesMask/FgArt")
+
+[node name="BleedzonesMask" type="TextureRect" parent="."]
+clip_children = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_5jpu6")
+
+[node name="BgArt" type="TextureRect" parent="BleedzonesMask"]
+layout_mode = 0
+offset_right = 962.0
+offset_bottom = 1312.0
+texture = ExtResource("2_2ygbm")
+
+[node name="Border" type="TextureRect" parent="BleedzonesMask"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Bottom" type="TextureRect" parent="BleedzonesMask"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Top" type="TextureRect" parent="BleedzonesMask"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Statblock" type="TextureRect" parent="BleedzonesMask"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Reward" type="TextureRect" parent="BleedzonesMask"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Soul" type="TextureRect" parent="BleedzonesMask"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Charmed" type="TextureRect" parent="BleedzonesMask"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FgArt" type="TextureRect" parent="BleedzonesMask"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

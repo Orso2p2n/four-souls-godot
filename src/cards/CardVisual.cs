@@ -6,17 +6,7 @@ public partial class CardVisual : SubViewport
 {
 	[Signal] public delegate void TextureRefreshedEventHandler(ViewportTexture newTexture);
 
-	[ExportGroup("TextureRects")]
-	[Export] public TextureRect maskTextureRect;
-	[Export] public TextureRect bgArtTextureRect;
-	[Export] public TextureRect borderTextureRect;
-	[Export] public TextureRect bottomTextureRect;
-	[Export] public TextureRect topTextureRect;
-	[Export] public TextureRect statblockTextureRect;
-	[Export] public TextureRect rewardTextureRect;
-	[Export] public TextureRect soulTextureRect;
-	[Export] public TextureRect charmedTextureRect;
-	[Export] public TextureRect fgArtTextureRect;
+	[Export] public CardVisualComposition composition;
 
 	public CardBase card;
 
@@ -25,23 +15,23 @@ public partial class CardVisual : SubViewport
 
 		// Set textures
 		if (cardResource.BgArt != null) {
-			bgArtTextureRect.Texture = cardResource.BgArt;
+			composition.bgArtTextureRect.Texture = cardResource.BgArt;
 		}
 
 		if (cardResource.FgArt != null) {
-			fgArtTextureRect.Texture = cardResource.FgArt;
+			composition.fgArtTextureRect.Texture = cardResource.FgArt;
 		}
 
 		if (cardResource.topTextBoxTexture != null) {
-			topTextureRect.Texture = cardResource.topTextBoxTexture;
+			composition.topTextureRect.Texture = cardResource.topTextBoxTexture;
 		}
 
 		if (cardResource.botTextBoxTexture != null) {
-			bottomTextureRect.Texture = cardResource.botTextBoxTexture;
+			composition.bottomTextureRect.Texture = cardResource.botTextBoxTexture;
 		}
 
 		if (cardResource.botTextBoxTexture != null) {
-			bottomTextureRect.Texture = cardResource.botTextBoxTexture;
+			composition.bottomTextureRect.Texture = cardResource.botTextBoxTexture;
 		}
 
 		// Addons
@@ -57,11 +47,11 @@ public partial class CardVisual : SubViewport
 					break;
 			}
 
-			soulTextureRect.Texture = texture;
+			composition.soulTextureRect.Texture = texture;
 		}
 
 		if (cardResource.charmed) {
-			charmedTextureRect.Texture = StaticTextures.cardStructureAddonCharmed;
+			composition.charmedTextureRect.Texture = StaticTextures.cardStructureAddonCharmed;
 		}
 
 		_ = Refresh();
