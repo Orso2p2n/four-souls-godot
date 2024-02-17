@@ -39,10 +39,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_8xbdr")
-toggleButton = NodePath("ToggleButton")
+toggleButton = NodePath("OpenButton")
 menu = NodePath("Menu")
 
-[node name="ToggleButton" type="Button" parent="Game/Debug/DebugUI"]
+[node name="OpenButton" type="Button" parent="Game/Debug/DebugUI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.995833
@@ -124,5 +124,6 @@ size = 4.0
 [node name="Card3D" parent="." instance=ExtResource("3_8xqfd")]
 forceInit = true
 
-[connection signal="pressed" from="Game/Debug/DebugUI/ToggleButton" to="Game/Debug/DebugUI" method="_on_toggle_button_pressed"]
+[connection signal="pressed" from="Game/Debug/DebugUI/OpenButton" to="Game/Debug/DebugUI" method="_on_toggle_button_pressed"]
+[connection signal="gui_input" from="Game/Debug/DebugUI/Menu" to="Game/Debug/DebugUI" method="_on_menu_gui_input"]
 [connection signal="pressed" from="Game/Debug/DebugUI/Menu/CloseButton" to="Game/Debug/DebugUI" method="_on_close_button_pressed"]

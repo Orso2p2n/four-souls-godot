@@ -29,4 +29,14 @@ public partial class DebugUI : Control
 	void _on_close_button_pressed() {
 		CloseMenu();
 	}
+
+	void _on_menu_gui_input(InputEvent _event) {
+		if (_event is InputEventMouseButton eventMouseButton) {
+			if (eventMouseButton.ButtonIndex == MouseButton.Left) {
+				if (eventMouseButton.IsPressed()) {
+					CloseMenu();
+				}
+			}
+		}
+	}
 }
