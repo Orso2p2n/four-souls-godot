@@ -14,8 +14,14 @@ public partial class DescriptionEffect : RichTextLabel
 	int baseFontSize;
 	int curFontSize;
 
+	public FontVariation font;
+
 	public override void _Ready() {
-		curFontSize = baseFontSize = GetThemeFontSize("normal_font_size");
+		curFontSize = baseFontSize = Theme.GetFontSize("normal_font_size", "RichTextLabel");
+
+		var oldFont = Theme.GetFont("normal_font", "RichTextLabel");
+        font = oldFont.Duplicate() as FontVariation;
+		AddThemeFontOverride("normal_font", font);
 	}
 
 	public void SetText(string text) {
@@ -26,6 +32,12 @@ public partial class DescriptionEffect : RichTextLabel
 
 	public void RefreshText() {
 		SetText(unprocessedText);
+	}
+
+	public void ReduceFontSize(int amount) {
+		curFontSize -= amount;
+		AddThemeFontSizeOverride("normal_font_size", curFontSize);
+		RefreshText();
 	}
 
 	private string ProcessText(string text) {

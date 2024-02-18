@@ -127,6 +127,7 @@ offset_left = 107.0
 offset_top = 825.0
 offset_right = 853.0
 offset_bottom = 1202.0
+theme_override_constants/separation = 0
 alignment = 1
 script = ExtResource("6_h83wf")
 effectScene = ExtResource("7_kd4mk")

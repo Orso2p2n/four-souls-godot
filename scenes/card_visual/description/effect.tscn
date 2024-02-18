@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dgho7ocmaf4ss" path="res://assets/sprites/card_effects_icons/icon_dice.png" id="5_gwqg7"]
 
 [node name="Effect" type="RichTextLabel"]
+offset_right = 1.0
 theme = ExtResource("1_d8366")
 bbcode_enabled = true
 text = "[center]"

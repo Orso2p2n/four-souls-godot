@@ -14,10 +14,4 @@ public partial class L001_APenny : CardBase
 			"gain 1¢."
 		};
     }
-
-    public override string[] GetLoreText() {
-        return new string[]{
-			"this is just a penny."
-		};
-    }
 }

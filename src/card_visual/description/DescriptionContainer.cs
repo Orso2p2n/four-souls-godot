@@ -1,5 +1,8 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
 
 public partial class DescriptionContainer : VBoxContainer
 {
@@ -8,9 +11,12 @@ public partial class DescriptionContainer : VBoxContainer
 	[Export] PackedScene lineScene;
 	[Export] PackedScene lineSubScene;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
+	List<DescriptionEffect> texts;
+
+	float maxHeight;
+
+	public override void _Ready() {
+		maxHeight = Size.Y;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -18,7 +24,9 @@ public partial class DescriptionContainer : VBoxContainer
 	{
 	}
 
-	public void SetDescription(CardBase card) {
+	public async Task SetDescription(CardBase card) {
+		texts = new List<DescriptionEffect>();
+
 		// Process effect text
 		var effectText = card.GetEffectText();
 		if (effectText != null) {
@@ -27,9 +35,17 @@ public partial class DescriptionContainer : VBoxContainer
 			
 		// Process lore text
 		var loreText = card.GetLoreText();
-		if (effectText != null) {
+		if (loreText != null) {
 			AddLine();
 			ProcessText(loreText, true);
+		}
+
+		if (texts.Count > 0) {
+			await ToSignal(texts.Last(), SignalName.Resized);
+			
+			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+			await ProcessTextsRescale();
 		}
 	}
 
@@ -63,5 +79,43 @@ public partial class DescriptionContainer : VBoxContainer
 		var descEffect = instance as DescriptionEffect;
 
 		descEffect.SetText(text);
+
+		texts.Add(descEffect);
+	}
+
+	private async Task ProcessTextsRescale() {
+		var childrenHeight = GetChildrenHeight();
+
+		int maxSpacingGlyph = -4;
+
+		var i = 0;
+
+		while (childrenHeight > maxHeight && i < 99) {
+			foreach (DescriptionEffect text in texts) {
+				if (text.font.SpacingGlyph > maxSpacingGlyph) {
+					text.font.SpacingGlyph--;
+				}
+				else {
+					text.ReduceFontSize(1);
+				}
+			}
+
+			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+			childrenHeight = GetChildrenHeight();
+
+			i++;
+		}
+	}
+
+	private float GetChildrenHeight() {
+		float totalHeight = 0;
+		var children = GetChildren();
+
+		foreach (Control child in children) {
+			totalHeight += child.Size.Y;
+		}
+
+		return totalHeight;
 	}
 }
