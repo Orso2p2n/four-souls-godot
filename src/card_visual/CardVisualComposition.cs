@@ -16,4 +16,5 @@ public partial class CardVisualComposition : Control
 
 	[ExportGroup("Texts")]
 	[Export] public CardVisualTitle titleLabel;
+	[Export] public DescriptionContainer descriptionContainer;
 }

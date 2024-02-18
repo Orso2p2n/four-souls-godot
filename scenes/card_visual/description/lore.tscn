@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bedaixr2va8a5"]
+
+[ext_resource type="PackedScene" uid="uid://bm5hcya5v3hfp" path="res://scenes/card_visual/description/effect.tscn" id="1_vedr5"]
+
+[node name="Lore" instance=ExtResource("1_vedr5")]
+theme_override_colors/default_color = Color(0.447059, 0.447059, 0.447059, 1)

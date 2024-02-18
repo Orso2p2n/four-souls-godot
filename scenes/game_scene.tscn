@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/Assets.cs" id="1_y60vm"]
 [ext_resource type="Script" path="res://src/debug/DebugUI.cs" id="2_8xbdr"]
 [ext_resource type="Script" path="res://src/CardManager.cs" id="2_dncla"]
-[ext_resource type="PackedScene" uid="uid://bmq3w836loiaj" path="res://scenes/card_3d.tscn" id="3_8xqfd"]
+[ext_resource type="PackedScene" uid="uid://bmq3w836loiaj" path="res://scenes/card_objects/card_3d.tscn" id="3_8xqfd"]
 [ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardButton.cs" id="3_xvt67"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5t7t"]
@@ -120,9 +120,6 @@ projection = 1
 size = 4.0
 
 [node name="CardContainer" type="Node" parent="."]
-
-[node name="Card3D" parent="." instance=ExtResource("3_8xqfd")]
-forceInit = true
 
 [connection signal="pressed" from="Game/Debug/DebugUI/OpenButton" to="Game/Debug/DebugUI" method="_on_toggle_button_pressed"]
 [connection signal="gui_input" from="Game/Debug/DebugUI/Menu" to="Game/Debug/DebugUI" method="_on_menu_gui_input"]

@@ -1,19 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5fomlhh5frqv"]
+[gd_scene load_steps=11 format=3 uid="uid://b5fomlhh5frqv"]
 
-[ext_resource type="Texture2D" uid="uid://cioravgdirrej" path="res://assets/sprites/card_other/card_crop.png" id="1_5jpu6"]
-[ext_resource type="Script" path="res://src/card_visual/CardVisualComposition.cs" id="1_o1d1x"]
-[ext_resource type="Texture2D" uid="uid://ckv16gg2tokmb" path="res://assets/sprites/card_other/blank_loot.png" id="3_e7yqq"]
-[ext_resource type="Theme" uid="uid://nmanbwnqgomd" path="res://resources/themes/card/title.tres" id="4_8nqre"]
-[ext_resource type="Script" path="res://src/card_visual/CardVisualTitle.cs" id="5_eqn1r"]
+[ext_resource type="Script" path="res://src/card_visual/CardVisualComposition.cs" id="1_7o27l"]
+[ext_resource type="Texture2D" uid="uid://cioravgdirrej" path="res://assets/sprites/card_other/card_crop.png" id="2_15nr0"]
+[ext_resource type="Texture2D" uid="uid://ckv16gg2tokmb" path="res://assets/sprites/card_other/blank_loot.png" id="3_phv2k"]
+[ext_resource type="Theme" uid="uid://nmanbwnqgomd" path="res://resources/themes/card/title.tres" id="4_2pcup"]
+[ext_resource type="Script" path="res://src/card_visual/CardVisualTitle.cs" id="5_48mn0"]
+[ext_resource type="Script" path="res://src/card_visual/description/DescriptionContainer.cs" id="6_h83wf"]
+[ext_resource type="PackedScene" uid="uid://bm5hcya5v3hfp" path="res://scenes/card_visual/description/effect.tscn" id="7_kd4mk"]
+[ext_resource type="PackedScene" uid="uid://bedaixr2va8a5" path="res://scenes/card_visual/description/lore.tscn" id="9_knjop"]
+[ext_resource type="PackedScene" uid="uid://dhhmjnud2g2i3" path="res://scenes/card_visual/description/line_sub.tscn" id="10_w22b6"]
+[ext_resource type="PackedScene" uid="uid://gi6ltebjm5ur" path="res://scenes/card_visual/description/line.tscn" id="12_s1vve"]
 
-[node name="CardVisualComposition" type="Control" node_paths=PackedStringArray("bgArtTextureRect", "borderTextureRect", "bottomTextureRect", "topTextureRect", "statblockTextureRect", "rewardTextureRect", "soulTextureRect", "charmedTextureRect", "fgArtTextureRect", "titleLabel")]
+[node name="CardVisualComposition" type="Control" node_paths=PackedStringArray("bgArtTextureRect", "borderTextureRect", "bottomTextureRect", "topTextureRect", "statblockTextureRect", "rewardTextureRect", "soulTextureRect", "charmedTextureRect", "fgArtTextureRect", "titleLabel", "descriptionContainer")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -44.0
 offset_top = -43.0
 offset_right = 918.0
 offset_bottom = 1269.0
-script = ExtResource("1_o1d1x")
+script = ExtResource("1_7o27l")
 bgArtTextureRect = NodePath("BleedzonesMask/BgArt")
 borderTextureRect = NodePath("BleedzonesMask/Border")
 bottomTextureRect = NodePath("BleedzonesMask/Bottom")
@@ -24,20 +29,21 @@ soulTextureRect = NodePath("BleedzonesMask/Soul")
 charmedTextureRect = NodePath("BleedzonesMask/Charmed")
 fgArtTextureRect = NodePath("BleedzonesMask/FgArt")
 titleLabel = NodePath("BleedzonesMask/Texts/TitleContainer/Title")
+descriptionContainer = NodePath("BleedzonesMask/Texts/DescriptionContainer")
 
 [node name="BleedzonesMask" type="TextureRect" parent="."]
 clip_children = 1
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("1_5jpu6")
+texture = ExtResource("2_15nr0")
 
 [node name="BgArt" type="TextureRect" parent="BleedzonesMask"]
 custom_minimum_size = Vector2(962, 1312)
 layout_mode = 0
 offset_right = 962.0
 offset_bottom = 1312.0
-texture = ExtResource("3_e7yqq")
+texture = ExtResource("3_phv2k")
 
 [node name="Border" type="TextureRect" parent="BleedzonesMask"]
 custom_minimum_size = Vector2(962, 1312)
@@ -110,7 +116,20 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("4_8nqre")
+theme = ExtResource("4_2pcup")
 fit_content = true
 autowrap_mode = 0
-script = ExtResource("5_eqn1r")
+script = ExtResource("5_48mn0")
+
+[node name="DescriptionContainer" type="VBoxContainer" parent="BleedzonesMask/Texts"]
+layout_mode = 0
+offset_left = 107.0
+offset_top = 825.0
+offset_right = 853.0
+offset_bottom = 1202.0
+alignment = 1
+script = ExtResource("6_h83wf")
+effectScene = ExtResource("7_kd4mk")
+loreScene = ExtResource("9_knjop")
+lineScene = ExtResource("12_s1vve")
+lineSubScene = ExtResource("10_w22b6")

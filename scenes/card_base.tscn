@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/cards/CardBase.cs" id="1_p6asd"]
 [ext_resource type="Resource" uid="uid://b1u33unakingl" path="res://resources/cards/loot/001_a_penny.tres" id="2_afgq4"]
-[ext_resource type="PackedScene" uid="uid://b7uo5qjjyab0" path="res://scenes/card_visual.tscn" id="3_j3hdo"]
+[ext_resource type="PackedScene" uid="uid://b7uo5qjjyab0" path="res://scenes/card_visual/card_visual.tscn" id="3_j3hdo"]
 
 [node name="CardBase" type="Node" node_paths=PackedStringArray("cardVisual")]
 script = ExtResource("1_p6asd")

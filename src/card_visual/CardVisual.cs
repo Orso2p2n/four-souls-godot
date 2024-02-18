@@ -60,6 +60,8 @@ public partial class CardVisual : SubViewport
 
 		await composition.titleLabel.SetText(cardResource.CardName);
 
+		composition.descriptionContainer.SetDescription(card);
+
 		_ = RefreshViewportTexture();
 	}
 

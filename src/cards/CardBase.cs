@@ -20,4 +20,12 @@ public partial class CardBase : Node
 		cardVisual.card = this;
 		cardVisual.Init();
 	}
+
+	public virtual string[] GetEffectText() {
+		return null;
+	}
+
+	public virtual string[] GetLoreText() {
+		return null;
+	}
 }

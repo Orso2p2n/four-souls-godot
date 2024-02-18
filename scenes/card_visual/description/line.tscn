@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://gi6ltebjm5ur"]
+
+[ext_resource type="Texture2D" uid="uid://c1of3skyw88uw" path="res://assets/sprites/card_effects_icons/line_dark.png" id="1_spyf5"]
+
+[node name="Line" type="TextureRect"]
+modulate = Color(1, 1, 1, 0.313726)
+texture = ExtResource("1_spyf5")
+stretch_mode = 3
