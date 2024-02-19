@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b85e6y4il8iwr"]
+
+[ext_resource type="Script" path="res://src/PlayerLocation.cs" id="1_42mg6"]
+
+[node name="PlayerLocation" type="Marker3D"]
+gizmo_extents = 1.0
+script = ExtResource("1_42mg6")

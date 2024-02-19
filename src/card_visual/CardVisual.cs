@@ -10,7 +10,8 @@ public partial class CardVisual : SubViewport
 
 	public CardBase card;
 
-	public void Init() {
+	public void Init(CardBase card) {
+		this.card = card;
 		_ = UpdateVisual();
 	}
 

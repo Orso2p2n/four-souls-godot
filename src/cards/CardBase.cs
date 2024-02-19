@@ -4,21 +4,32 @@ using System;
 public partial class CardBase : Node
 {
 	[Export] public CardVisual cardVisual;
-	[Export] public CardResource defaultCardResource;
+
+	[Export] public Card3D card3d;
+	[Export] public CardControl cardControl;
 
 	public CardResource cardResource;
 
-	public override void _Ready() {
-		if (defaultCardResource != null) {
-			cardResource = defaultCardResource;
+	public override void _Ready() {}
+
+	public virtual void Init() {
+		card3d.Init(this);
+		cardControl.Init(this);
+		cardVisual.Init(this);
+	}
+
+	public void TurnInto3D(Vector3? atPos = null) {
+		cardControl.Visible = false;
+		card3d.Visible = true;
+
+		if (atPos != null) {
+			card3d.Position = (Vector3) atPos;
 		}
 	}
 
-	public virtual void Init() { // Called once the resource is loaded
-		base._Ready();
-
-		cardVisual.card = this;
-		cardVisual.Init();
+	public void TurnIntoControl() {
+		card3d.Visible = false;
+		cardControl.Visible = true;
 	}
 
 	public virtual string[] GetEffectText() {

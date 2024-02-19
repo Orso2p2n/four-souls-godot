@@ -3,7 +3,7 @@ using System;
 
 public partial class CardManager : Node
 {
-    [Export] PackedScene card3DScene;
+    [Export] PackedScene cardScene;
     [Export] Node cardContainer;
 
     public static CardManager ME;
@@ -12,26 +12,28 @@ public partial class CardManager : Node
         ME = this;
     }
 
-    public void CreateCard3D(CardResource cardResource, Vector3 position) {
-        Card3D card3D = (Card3D) card3DScene.Instantiate();
+    public CardBase CreateCard(CardResource cardResource) {
+        CardBase card = (CardBase) cardScene.Instantiate();
 
-        card3D.cardBase = HandleCardBaseSetup(cardResource, card3D.cardBase, card3D);
-
-        card3D.ChangeParent(cardContainer);
-        card3D.Position = position;
-
-        card3D.cardBase.Init();
-    }
-
-    CardBase HandleCardBaseSetup(CardResource cardResource, CardBase card, Node parent) {
         Script script = cardResource.Script;
         CardBase newCard = card.SafelySetScript<CardBase>(script);
+
+        // Copy exports
         newCard.cardVisual = card.cardVisual;
+        newCard.card3d = card.card3d;
+        newCard.cardControl = card.cardControl;
 
         newCard.cardResource = cardResource;
 
-        newCard.ChangeParent(parent);
+        newCard.ChangeParent(cardContainer);
+
+        newCard.Init();
 
         return newCard;
+    }
+
+    public void CreateCard3D(CardResource cardResource, Vector3 position) {
+        var card = CreateCard(cardResource);
+        card.TurnInto3D(atPos: position);
     }
 }

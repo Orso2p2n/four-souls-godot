@@ -4,19 +4,16 @@ using System.Threading.Tasks;
 
 public partial class Card3D : Node3D
 {
-	[Export] public bool forceInit = false;
-
 	[Export] Sprite3D sprite3D;
-	[Export] public CardBase cardBase;
+	public CardBase cardBase;
 
 	bool dragged;
 
-	public override void _Ready() {
+	public void Init(CardBase cardBase) {
+		this.cardBase = cardBase;
+		
+		Visible = false;
 		cardBase.cardVisual.TextureRefreshed += UpdateSprite;
-
-		if (forceInit) {
-			cardBase.Init();
-		}
 	}
 
     public override void _Process(double delta) {

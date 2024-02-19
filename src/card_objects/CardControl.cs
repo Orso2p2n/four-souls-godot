@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 public partial class CardControl : Control
 {
 	[Export] TextureRect textureRect;
-	[Export] CardBase cardBase;
+	public CardBase cardBase;
 
-	public override void _Ready() {
+	public void Init(CardBase cardBase) {
+		this.cardBase = cardBase;
+
+		Visible = false;
 		cardBase.cardVisual.TextureRefreshed += UpdateSprite;
 	}
 
