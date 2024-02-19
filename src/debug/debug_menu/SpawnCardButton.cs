@@ -27,6 +27,12 @@ public partial class SpawnCardButton : MenuButton
 	public void OnPopupPressed(long index) {
 		var cardResource = cardResources[(int) index];
 
-		CardManager.ME.CreateCard3D(cardResource, Vector3.Zero);
+		SpawnCard(cardResource);
+	}
+
+	public virtual CardBase SpawnCard(CardResource cardResource) {
+		var card = CardManager.ME.CreateCard3D(cardResource, Vector3.Zero);
+
+		return card;
 	}
 }

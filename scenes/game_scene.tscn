@@ -1,13 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://cqrcg6mefh4c6"]
+[gd_scene load_steps=13 format=3 uid="uid://cqrcg6mefh4c6"]
 
 [ext_resource type="Script" path="res://src/Game.cs" id="1_ctgsk"]
 [ext_resource type="Script" path="res://src/Assets.cs" id="1_y60vm"]
 [ext_resource type="Script" path="res://src/debug/DebugUI.cs" id="2_8xbdr"]
 [ext_resource type="Script" path="res://src/CardManager.cs" id="2_dncla"]
 [ext_resource type="PackedScene" uid="uid://dmga6tho40pxg" path="res://scenes/players/main_player.tscn" id="2_k48q5"]
-[ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardButton.cs" id="3_xvt67"]
 [ext_resource type="PackedScene" uid="uid://bi0bliua64s4" path="res://scenes/card.tscn" id="6_0wx1o"]
 [ext_resource type="Script" path="res://src/HUD.cs" id="8_3ajbj"]
+[ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardInWorld.cs" id="8_x8m5e"]
+[ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardInHandButton.cs" id="9_3l4qs"]
 [ext_resource type="PackedScene" uid="uid://d14u8obxjmagj" path="res://scenes/game_board.tscn" id="9_u4lp4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5t7t"]
@@ -67,7 +68,6 @@ text = "Open Debug"
 metadata/_edit_use_anchors_ = true
 
 [node name="Menu" type="Panel" parent="Game/Debug/DebugUI"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -104,12 +104,32 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Spawn Card"
 flat = false
-script = ExtResource("3_xvt67")
-cardResourcesDir = "res://resources/cards"
+script = ExtResource("8_x8m5e")
+cardResourcesDir = "res://resources/cards/loot"
 
 [node name="PopupMenu" type="PopupMenu" parent="Game/Debug/DebugUI/Menu/SpawnCardButton"]
 
-[node name="HUD" type="Control" parent="Game"]
+[node name="SpawnCardInHandButton" type="MenuButton" parent="Game/Debug/DebugUI/Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -20.0
+offset_right = 256.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Spawn Card in hand"
+flat = false
+script = ExtResource("9_3l4qs")
+cardResourcesDir = "res://resources/cards/loot"
+
+[node name="PopupMenu" type="PopupMenu" parent="Game/Debug/DebugUI/Menu/SpawnCardInHandButton"]
+
+[node name="HUD" type="Control" parent="Game" node_paths=PackedStringArray("hand")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,18 +138,20 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("8_3ajbj")
+hand = NodePath("Hand")
 
-[node name="Hand" type="Control" parent="Game/HUD"]
+[node name="Hand" type="HBoxContainer" parent="Game/HUD"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 192.0
-offset_top = -72.0
+offset_top = -136.0
 offset_right = -192.0
 grow_horizontal = 2
 grow_vertical = 0
+alignment = 1
 
 [node name="Environment" type="Node" parent="."]
 

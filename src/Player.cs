@@ -12,7 +12,7 @@ public partial class Player : Node
 
     public int gold;
 
-    public List<CardBase> cardsInHand;
+    public List<CardBase> cardsInHand = new List<CardBase>();
 
     public int playerNumber;
 

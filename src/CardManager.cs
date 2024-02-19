@@ -32,8 +32,10 @@ public partial class CardManager : Node
         return newCard;
     }
 
-    public void CreateCard3D(CardResource cardResource, Vector3 position) {
+    public CardBase CreateCard3D(CardResource cardResource, Vector3 position) {
         var card = CreateCard(cardResource);
-        card.TurnInto3D(atPos: position);
+        card.TurnInto3D(position);
+
+        return card;
     }
 }

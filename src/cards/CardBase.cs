@@ -27,9 +27,13 @@ public partial class CardBase : Node
 		}
 	}
 
-	public void TurnIntoControl() {
+	public void TurnIntoControl(Control parent = null) {
 		card3d.Visible = false;
 		cardControl.Visible = true;
+
+		if (parent != null) {
+			cardControl.ChangeParent(parent);
+		}
 	}
 
 	public virtual string[] GetEffectText() {
