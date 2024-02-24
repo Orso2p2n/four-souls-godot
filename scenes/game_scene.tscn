@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://cqrcg6mefh4c6"]
+[gd_scene load_steps=14 format=3 uid="uid://cqrcg6mefh4c6"]
 
 [ext_resource type="Script" path="res://src/Game.cs" id="1_ctgsk"]
 [ext_resource type="Script" path="res://src/Assets.cs" id="1_y60vm"]
 [ext_resource type="Script" path="res://src/debug/DebugUI.cs" id="2_8xbdr"]
 [ext_resource type="Script" path="res://src/CardManager.cs" id="2_dncla"]
 [ext_resource type="PackedScene" uid="uid://dmga6tho40pxg" path="res://scenes/players/main_player.tscn" id="2_k48q5"]
+[ext_resource type="PackedScene" uid="uid://dltv4ohk4lff3" path="res://scenes/players/other_player.tscn" id="4_2arig"]
 [ext_resource type="PackedScene" uid="uid://bi0bliua64s4" path="res://scenes/card.tscn" id="6_0wx1o"]
 [ext_resource type="Script" path="res://src/HUD.cs" id="8_3ajbj"]
 [ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardInWorld.cs" id="8_x8m5e"]
@@ -29,6 +30,7 @@ playersContainer = NodePath("Players")
 hud = NodePath("HUD")
 gameBoardScene = ExtResource("9_u4lp4")
 mainPlayerScene = ExtResource("2_k48q5")
+otherPlayerScene = ExtResource("4_2arig")
 
 [node name="Players" type="Node" parent="Game"]
 
@@ -43,6 +45,7 @@ cardContainer = NodePath("../../CardContainer")
 [node name="Debug" type="Node" parent="Game"]
 
 [node name="DebugUI" type="Control" parent="Game/Debug" node_paths=PackedStringArray("toggleButton", "menu")]
+z_index = 99
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

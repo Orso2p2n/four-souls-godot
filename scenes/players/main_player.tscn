@@ -3,5 +3,5 @@
 [ext_resource type="PackedScene" uid="uid://fimnkt42gwdv" path="res://scenes/players/player.tscn" id="1_uqqj8"]
 [ext_resource type="Script" path="res://src/MainPlayer.cs" id="2_q24p3"]
 
-[node name="Player" instance=ExtResource("1_uqqj8")]
+[node name="MainPlayer" instance=ExtResource("1_uqqj8")]
 script = ExtResource("2_q24p3")

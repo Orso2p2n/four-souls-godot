@@ -26,5 +26,14 @@ public partial class Player : Node
 
     public virtual void AddCardInHand(CardBase card) {
         cardsInHand.Add(card);
+
+        PrintCardsInHand();
+    }
+
+    void PrintCardsInHand() {
+        GD.Print("Cards in hand of player " + playerNumber + ":");
+        foreach (var card in cardsInHand) {
+            GD.Print(" - " + card.cardResource.CardName);
+        }
     }
 }
