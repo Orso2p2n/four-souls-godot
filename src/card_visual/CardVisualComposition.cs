@@ -4,17 +4,17 @@ using System;
 public partial class CardVisualComposition : Control
 {
 	[ExportGroup("TextureRects")]
-	[Export] public TextureRect bgArtTextureRect;
-	[Export] public TextureRect borderTextureRect;
-	[Export] public TextureRect bottomTextureRect;
-	[Export] public TextureRect topTextureRect;
-	[Export] public TextureRect statblockTextureRect;
-	[Export] public TextureRect rewardTextureRect;
-	[Export] public TextureRect soulTextureRect;
-	[Export] public TextureRect charmedTextureRect;
-	[Export] public TextureRect fgArtTextureRect;
+	[Export] public TextureRect BgArtTextureRect { get; private set; }
+	[Export] public TextureRect BorderTextureRect { get; private set; }
+	[Export] public TextureRect BottomTextureRect { get; private set; }
+	[Export] public TextureRect TopTextureRect { get; private set; }
+	[Export] public TextureRect StatblockTextureRect { get; private set; }
+	[Export] public TextureRect RewardTextureRect { get; private set; }
+	[Export] public TextureRect SoulTextureRect { get; private set; }
+	[Export] public TextureRect CharmedTextureRect { get; private set; }
+	[Export] public TextureRect FgArtTextureRect { get; private set; }
 
 	[ExportGroup("Texts")]
-	[Export] public CardVisualTitle titleLabel;
-	[Export] public DescriptionContainer descriptionContainer;
+	[Export] public CardVisualTitle TitleLabel { get; private set; }
+	[Export] public DescriptionContainer DescriptionContainer { get; private set; }
 }

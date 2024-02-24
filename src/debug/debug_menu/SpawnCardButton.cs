@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 public partial class SpawnCardButton : MenuButton
 {
-	[Export(PropertyHint.Dir)] public string cardResourcesDir;
+	[Export(PropertyHint.Dir)] private string _cardResourcesDir;
 	
-	List<CardResource> cardResources;
+	private List<CardResource> _cardResources;
 
 	public override void _Ready() {
 		var popup = GetPopup();
 		
-		cardResources = Assets.GetAllResourcesOfTypeInPath<CardResource>(cardResourcesDir);
+		_cardResources = Assets.GetAllResourcesOfTypeInPath<CardResource>(_cardResourcesDir);
 
 		var i = 0;
-		foreach (var cardResource in cardResources) {
+		foreach (var cardResource in _cardResources) {
 			popup.AddItem(cardResource.CardName);
 			popup.SetItemIcon(i, cardResource.BgArt);
 			popup.SetItemIconMaxWidth(i, 24);
@@ -25,7 +25,7 @@ public partial class SpawnCardButton : MenuButton
 	}
 
 	public void OnPopupPressed(long index) {
-		var cardResource = cardResources[(int) index];
+		var cardResource = _cardResources[(int) index];
 
 		SpawnCard(cardResource);
 	}

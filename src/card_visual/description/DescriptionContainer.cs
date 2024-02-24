@@ -6,26 +6,21 @@ using System.Linq;
 
 public partial class DescriptionContainer : VBoxContainer
 {
-	[Export] PackedScene effectScene;
-	[Export] PackedScene loreScene;
-	[Export] PackedScene lineScene;
-	[Export] PackedScene lineSubScene;
+	[Export] private PackedScene _effectScene;
+	[Export] private PackedScene _loreScene;
+	[Export] private PackedScene _lineScene;
+	[Export] private PackedScene _lineSubScene;
 
-	List<DescriptionEffect> texts;
+	private List<DescriptionEffect> _texts;
 
-	float maxHeight;
+	private float _maxHeight;
 
 	public override void _Ready() {
-		maxHeight = Size.Y;
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		_maxHeight = Size.Y;
 	}
 
 	public async Task SetDescription(CardBase card) {
-		texts = new List<DescriptionEffect>();
+		_texts = new List<DescriptionEffect>();
 
 		// Process effect text
 		var effectText = card.GetEffectText();
@@ -40,8 +35,8 @@ public partial class DescriptionContainer : VBoxContainer
 			ProcessText(loreText, true);
 		}
 
-		if (texts.Count > 0) {
-			await ToSignal(texts.Last(), SignalName.Resized);
+		if (_texts.Count > 0) {
+			await ToSignal(_texts.Last(), SignalName.Resized);
 			
 			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
@@ -66,13 +61,13 @@ public partial class DescriptionContainer : VBoxContainer
 	}
 
 	private void AddLine(bool sub = false) {
-		var line = sub ? lineSubScene.Instantiate() : lineScene.Instantiate();
+		var line = sub ? _lineSubScene.Instantiate() : _lineScene.Instantiate();
 
 		line.ChangeParent(this);
 	}
 
 	private void AddText(string text, bool lore = false) {
-		var instance =  lore ? loreScene.Instantiate() : effectScene.Instantiate();
+		var instance =  lore ? _loreScene.Instantiate() : _effectScene.Instantiate();
 
 		instance.ChangeParent(this);
 
@@ -80,7 +75,7 @@ public partial class DescriptionContainer : VBoxContainer
 
 		descEffect.SetText(text);
 
-		texts.Add(descEffect);
+		_texts.Add(descEffect);
 	}
 
 	private async Task ProcessTextsRescale() {
@@ -90,8 +85,8 @@ public partial class DescriptionContainer : VBoxContainer
 
 		var i = 0;
 
-		while (childrenHeight > maxHeight && i < 99) {
-			foreach (DescriptionEffect text in texts) {
+		while (childrenHeight > _maxHeight && i < 99) {
+			foreach (DescriptionEffect text in _texts) {
 				if (text.font.SpacingGlyph > maxSpacingGlyph) {
 					text.font.SpacingGlyph--;
 				}

@@ -24,6 +24,6 @@ public partial class LootCardResource : CardResource
     [Export] public LootCardType lootCardType;
 
     override public DeckTypeResource GetDeckTypeResource() {
-        return StaticResources.deckTypeLoot;
+        return StaticResources.DeckTypeLoot;
     }
 }

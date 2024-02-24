@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public partial class GameBoard : Node3D
 {
-	[Export] public Node playerLocationsContainer;
+	[Export] public Node PlayerLocationsContainer { get; set; }
 
-	public List<PlayerLocation> playerLocations;
+	public List<PlayerLocation> PlayerLocations { get; set; }
 
     public override void _Ready() {
-		playerLocations = new List<PlayerLocation>();
+		PlayerLocations = new List<PlayerLocation>();
 
-		foreach (var child in playerLocationsContainer.GetChildren()) {
-			playerLocations.Add(child as PlayerLocation);
+		foreach (var child in PlayerLocationsContainer.GetChildren()) {
+			PlayerLocations.Add(child as PlayerLocation);
 		}
     }
 }

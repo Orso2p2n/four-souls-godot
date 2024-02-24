@@ -3,29 +3,29 @@ using System;
 
 public partial class CardManager : Node
 {
-    [Export] PackedScene cardScene;
-    [Export] Node cardContainer;
+    [Export] private PackedScene _cardScene;
+    [Export] private Node _cardContainer;
 
-    public static CardManager ME;
+    public static CardManager ME { get; set; }
 
     public override void _Ready() {
         ME = this;
     }
 
     public CardBase CreateCard(CardResource cardResource) {
-        CardBase card = (CardBase) cardScene.Instantiate();
+        CardBase card = (CardBase) _cardScene.Instantiate();
 
         Script script = cardResource.Script;
         CardBase newCard = card.SafelySetScript<CardBase>(script);
 
         // Copy exports
-        newCard.cardVisual = card.cardVisual;
-        newCard.card3d = card.card3d;
-        newCard.cardControl = card.cardControl;
+        newCard.CardVisual = card.CardVisual;
+        newCard.Card3d = card.Card3d;
+        newCard.CardControl = card.CardControl;
 
-        newCard.cardResource = cardResource;
+        newCard.CardResource = cardResource;
 
-        newCard.ChangeParent(cardContainer);
+        newCard.ChangeParent(_cardContainer);
 
         newCard.Init();
 

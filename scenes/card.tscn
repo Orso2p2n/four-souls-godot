@@ -1,17 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bi0bliua64s4"]
+[gd_scene load_steps=5 format=3 uid="uid://bi0bliua64s4"]
 
 [ext_resource type="Script" path="res://src/cards/CardBase.cs" id="1_ketgn"]
-[ext_resource type="Resource" uid="uid://b1u33unakingl" path="res://resources/cards/loot/001_a_penny.tres" id="2_d5ed4"]
 [ext_resource type="PackedScene" uid="uid://b7uo5qjjyab0" path="res://scenes/card_visual/card_visual.tscn" id="3_hoage"]
 [ext_resource type="PackedScene" uid="uid://bmq3w836loiaj" path="res://scenes/card_objects/card_3d.tscn" id="4_1j0kc"]
 [ext_resource type="PackedScene" uid="uid://cj63rf228wkjb" path="res://scenes/card_objects/card_control.tscn" id="5_qcaoa"]
 
-[node name="Card" type="Node" node_paths=PackedStringArray("cardVisual", "card3d", "cardControl")]
+[node name="Card" type="Node" node_paths=PackedStringArray("CardVisual", "Card3d", "CardControl")]
 script = ExtResource("1_ketgn")
-cardVisual = NodePath("CardVisual")
-defaultCardResource = ExtResource("2_d5ed4")
-card3d = NodePath("Card3D")
-cardControl = NodePath("CardControl")
+CardVisual = NodePath("CardVisual")
+Card3d = NodePath("Card3D")
+CardControl = NodePath("CardControl")
 
 [node name="CardVisual" parent="." instance=ExtResource("3_hoage")]
 

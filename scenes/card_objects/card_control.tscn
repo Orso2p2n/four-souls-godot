@@ -3,13 +3,12 @@
 [ext_resource type="Script" path="res://src/card_objects/CardControl.cs" id="1_7ual2"]
 [ext_resource type="Texture2D" uid="uid://dk600j6g6reg6" path="res://assets/sprites/card_other/penny_cropped.png" id="2_0x5yx"]
 
-[node name="CardControl" type="AspectRatioContainer" node_paths=PackedStringArray("textureRect", "cardBase")]
+[node name="CardControl" type="AspectRatioContainer" node_paths=PackedStringArray("_textureRect")]
 offset_right = 184.0
 offset_bottom = 256.0
 ratio = 0.7135
 script = ExtResource("1_7ual2")
-textureRect = NodePath("TextureRect")
-cardBase = NodePath("")
+_textureRect = NodePath("TextureRect")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 2

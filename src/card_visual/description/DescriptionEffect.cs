@@ -5,19 +5,19 @@ using System.Reflection.Metadata.Ecma335;
 public partial class DescriptionEffect : RichTextLabel
 {
 	[ExportGroup("Icons")]
-	[Export] Texture2D hpIcon;
-	[Export] Texture2D atkIcon;
-	[Export] Texture2D diceIcon;
+	[Export] private Texture2D _hpIcon;
+	[Export] private Texture2D _atkIcon;
+	[Export] private Texture2D _diceIcon;
 
-	string unprocessedText;
+	private string _unprocessedText;
 
-	int baseFontSize;
-	int curFontSize;
+	private int _baseFontSize;
+	private int _curFontSize;
 
 	public FontVariation font;
 
 	public override void _Ready() {
-		curFontSize = baseFontSize = Theme.GetFontSize("normal_font_size", "RichTextLabel");
+		_curFontSize = _baseFontSize = Theme.GetFontSize("normal_font_size", "RichTextLabel");
 
 		var oldFont = Theme.GetFont("normal_font", "RichTextLabel");
         font = oldFont.Duplicate() as FontVariation;
@@ -25,27 +25,27 @@ public partial class DescriptionEffect : RichTextLabel
 	}
 
 	public void SetText(string text) {
-		unprocessedText = text;
+		_unprocessedText = text;
 		
 		Text = ProcessText(text);
 	}
 
 	public void RefreshText() {
-		SetText(unprocessedText);
+		SetText(_unprocessedText);
 	}
 
 	public void ReduceFontSize(int amount) {
-		curFontSize -= amount;
-		AddThemeFontSizeOverride("normal_font_size", curFontSize);
+		_curFontSize -= amount;
+		AddThemeFontSizeOverride("normal_font_size", _curFontSize);
 		RefreshText();
 	}
 
 	private string ProcessText(string text) {
 		text = "[center]" + text;
 
-		text = ReplaceIconsInText(text, "[HP]", hpIcon);
-		text = ReplaceIconsInText(text, "[ATK]", atkIcon);
-		text = ReplaceIconsInText(text, "[DICE]", diceIcon);
+		text = ReplaceIconsInText(text, "[HP]", _hpIcon);
+		text = ReplaceIconsInText(text, "[ATK]", _atkIcon);
+		text = ReplaceIconsInText(text, "[DICE]", _diceIcon);
 
 		return text;
 	}
@@ -53,7 +53,7 @@ public partial class DescriptionEffect : RichTextLabel
 	private string ReplaceIconsInText(string text, string key, Texture2D icon) {
 		var path = icon.ResourcePath;
 
-		int targetHeight = curFontSize;
+		int targetHeight = _curFontSize;
 		int iconHeight = icon.GetHeight();
 		int iconWidth = icon.GetWidth();
 

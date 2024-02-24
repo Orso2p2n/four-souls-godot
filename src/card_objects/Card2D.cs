@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 public partial class Card2D : Node2D
 {
-	[Export] Sprite2D sprite2D;
-	[Export] CardBase cardBase;
+	[Export] private Sprite2D _sprite2D;
+	private CardBase _cardBase;
 
 	public override void _Ready() {
-		cardBase.cardVisual.TextureRefreshed += UpdateSprite;
+		_cardBase.CardVisual.TextureRefreshed += UpdateSprite;
 	}
 
     public void UpdateSprite(ViewportTexture texture) {
-		sprite2D.Texture = texture;
+		_sprite2D.Texture = texture;
 	}
 }

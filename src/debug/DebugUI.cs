@@ -3,23 +3,23 @@ using System;
 
 public partial class DebugUI : Control
 {
-	[Export] Button toggleButton;
-	[Export] Control menu;
+	[Export] private Button _toggleButton;
+	[Export] private Control _menu;
 
-	bool menuShown = false;
+	private bool _menuShown = false;
 
 	public override void _Ready() {
 		CloseMenu();
 	}
 
 	public void OpenMenu() {
-		menu.Visible = true;
-		toggleButton.Visible = false;
+		_menu.Visible = true;
+		_toggleButton.Visible = false;
 	}
 
 	public void CloseMenu() {
-		menu.Visible = false;
-		toggleButton.Visible = true;
+		_menu.Visible = false;
+		_toggleButton.Visible = true;
 	}
 
 	void _on_toggle_button_pressed() {

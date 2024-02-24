@@ -4,24 +4,26 @@ using System.Collections.Generic;
 
 public partial class Game : Node
 {
-    public static Game ME;
+    public static Game ME { get; set; }
 
-    [Export] Node playersContainer;
-    [Export] public HUD hud;
+    [Export] private Node _playersContainer;
+    [Export] public HUD Hud;
 
     [ExportCategory("Scenes")]
-    [Export] PackedScene gameBoardScene;
-    [Export] PackedScene mainPlayerScene;
-    [Export] PackedScene otherPlayerScene;
+    [Export] private PackedScene _gameBoardScene;
+    [Export] private PackedScene _mainPlayerScene;
+    [Export] private PackedScene _otherPlayerScene;
 
-    public List<Player> players = new List<Player>();
-    GameBoard gameBoard;
+    public List<Player> Players { get; set; }
+    private GameBoard _gameBoard;
 
     public override void _Ready() {
         ME = this;
 
+        Players = new List<Player>();
+
         CreateGameBoard();
-        
+
         CreateMainPlayer();
         CreateOtherPlayer();
         CreateOtherPlayer();
@@ -29,28 +31,28 @@ public partial class Game : Node
     }
 
     void CreateGameBoard() {
-        gameBoard = gameBoardScene.Instantiate() as GameBoard;
-        gameBoard.ChangeParent(this);
+        _gameBoard = _gameBoardScene.Instantiate() as GameBoard;
+        _gameBoard.ChangeParent(this);
     }
 
     void CreateMainPlayer() {
-        var createdPlayer = mainPlayerScene.Instantiate() as MainPlayer; 
+        var createdPlayer = _mainPlayerScene.Instantiate() as MainPlayer; 
 
         OnPlayerCreated(createdPlayer);
     }
 
     void CreateOtherPlayer() {
-        var createdPlayer = otherPlayerScene.Instantiate() as OtherPlayer; 
+        var createdPlayer = _otherPlayerScene.Instantiate() as OtherPlayer; 
 
         OnPlayerCreated(createdPlayer);
     }
 
     void OnPlayerCreated(Player player) {
-        player.ChangeParent(playersContainer);
+        player.ChangeParent(_playersContainer);
 
-        var playerNumber = players.Count;
-        player.Init(this, playerNumber, gameBoard.playerLocations[playerNumber]);
+        var playerNumber = Players.Count;
+        player.Init(this, playerNumber, _gameBoard.PlayerLocations[playerNumber]);
 
-        players.Add(player);
+        Players.Add(player);
     }
 }

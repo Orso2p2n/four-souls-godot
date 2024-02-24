@@ -8,9 +8,9 @@
 material = ExtResource("2_l12cw")
 size = Vector3(20, 2, 10)
 
-[node name="GameBoard" type="Node3D" node_paths=PackedStringArray("playerLocationsContainer")]
+[node name="GameBoard" type="Node3D" node_paths=PackedStringArray("PlayerLocationsContainer")]
 script = ExtResource("1_hl5i2")
-playerLocationsContainer = NodePath("PlayerLocations")
+PlayerLocationsContainer = NodePath("PlayerLocations")
 
 [node name="PlayerLocations" type="Node3D" parent="."]
 

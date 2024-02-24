@@ -6,9 +6,9 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_fb2ih"]
 size = Vector3(0.875, 0.1, 1.225)
 
-[node name="Card3D" type="Node3D" node_paths=PackedStringArray("sprite3D")]
+[node name="Card3D" type="Node3D" node_paths=PackedStringArray("_sprite3D")]
 script = ExtResource("1_vch16")
-sprite3D = NodePath("Sprite3D")
+_sprite3D = NodePath("Sprite3D")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)

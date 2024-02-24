@@ -61,14 +61,14 @@ public partial class Assets : Node
 }
 
 public static class StaticResources {
-    public static DeckTypeResource deckTypeLoot = ResourceLoader.Load<DeckTypeResource>("res://resources/deck_types/deck_type_loot.tres");
+    public static DeckTypeResource DeckTypeLoot { get; set; } = ResourceLoader.Load<DeckTypeResource>("res://resources/deck_types/deck_type_loot.tres");
 }
 
 public static class StaticTextures {
-    public static Texture2D cardStructureBotBase = ResourceLoader.Load<Texture2D>("res://assets/sprites/card_structure/bot_base.png");
-    public static Texture2D cardStructureTopBase = ResourceLoader.Load<Texture2D>("res://assets/sprites/card_structure/top_base.png");
+    public static Texture2D CardStructureBotBase { get; set; } = ResourceLoader.Load<Texture2D>("res://assets/sprites/card_structure/bot_base.png");
+    public static Texture2D CardStructureTopBase { get; set; } = ResourceLoader.Load<Texture2D>("res://assets/sprites/card_structure/top_base.png");
 
-    public static Texture2D cardStructureAddon1Soul = ResourceLoader.Load<Texture2D>("res://assets/sprites/card_structure/addon_1soul.png");
-    public static Texture2D cardStructureAddon2Soul = ResourceLoader.Load<Texture2D>("res://assets/sprites/card_structure/addon_2soul.png");
-    public static Texture2D cardStructureAddonCharmed = ResourceLoader.Load<Texture2D>("res://assets/sprites/card_structure/addon_charmed.png");
+    public static Texture2D CardStructureAddon1Soul { get; set; } = ResourceLoader.Load<Texture2D>("res://assets/sprites/card_structure/addon_1soul.png");
+    public static Texture2D CardStructureAddon2Soul { get; set; } = ResourceLoader.Load<Texture2D>("res://assets/sprites/card_structure/addon_2soul.png");
+    public static Texture2D CardStructureAddonCharmed { get; set; } = ResourceLoader.Load<Texture2D>("res://assets/sprites/card_structure/addon_charmed.png");
 }

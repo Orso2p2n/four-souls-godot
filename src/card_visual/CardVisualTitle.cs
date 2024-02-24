@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 public partial class CardVisualTitle : RichTextLabel
 {
-	FontVariation font;
+	private FontVariation _font;
 
     public override void _Ready() {
 		var oldFont = Theme.GetFont("normal_font", "RichTextLabel");
-        font = oldFont.Duplicate() as FontVariation;
-		AddThemeFontOverride("normal_font", font);
+        _font = oldFont.Duplicate() as FontVariation;
+		AddThemeFontOverride("normal_font", _font);
     }
 
     public async Task SetText(string text) {
@@ -29,8 +29,8 @@ public partial class CardVisualTitle : RichTextLabel
 
 		// Rescale title on X
 		while (realSize.X > container.Size.X) {
-			if (font.SpacingGlyph > maxSpacingGlyph) {
-				font.SpacingGlyph--;
+			if (_font.SpacingGlyph > maxSpacingGlyph) {
+				_font.SpacingGlyph--;
 			}
 			else {
 				var newScale = new Godot.Vector2(Scale.X - 0.025f, 1f);

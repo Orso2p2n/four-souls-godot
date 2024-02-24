@@ -3,36 +3,36 @@ using System;
 
 public partial class CardBase : Node
 {
-	[Export] public CardVisual cardVisual;
+	[Export] public CardVisual CardVisual { get; set; }
 
-	[Export] public Card3D card3d;
-	[Export] public CardControl cardControl;
+	[Export] public Card3D Card3d { get; set; }
+	[Export] public CardControl CardControl { get; set; }
 
-	public CardResource cardResource;
+	public CardResource CardResource { get; set; }
 
 	public override void _Ready() {}
 
 	public virtual void Init() {
-		card3d.Init(this);
-		cardControl.Init(this);
-		cardVisual.Init(this);
+		Card3d.Init(this);
+		CardControl.Init(this);
+		CardVisual.Init(this);
 	}
 
 	public void TurnInto3D(Vector3? atPos = null) {
-		cardControl.Visible = false;
-		card3d.Visible = true;
+		CardControl.Visible = false;
+		Card3d.Visible = true;
 
 		if (atPos != null) {
-			card3d.Position = (Vector3) atPos;
+			Card3d.Position = (Vector3) atPos;
 		}
 	}
 
 	public void TurnIntoControl(Control parent = null) {
-		card3d.Visible = false;
-		cardControl.Visible = true;
+		Card3d.Visible = false;
+		CardControl.Visible = true;
 
 		if (parent != null) {
-			cardControl.ChangeParent(parent);
+			CardControl.ChangeParent(parent);
 		}
 	}
 

@@ -6,34 +6,34 @@ using System.Collections.Generic;
 
 public partial class Player : Node
 {
-    public Game game;
+    public Game Game { get; set; }
 
-    public CardBase character;
+    public CardBase CharacterCard { get; set; }
 
-    public int gold;
+    public int Gold { get; set; }
 
-    public List<CardBase> cardsInHand = new List<CardBase>();
+    public List<CardBase> CardsInHand { get; set; } = new List<CardBase>();
 
-    public int playerNumber;
+    public int PlayerNumber { get; set; }
 
-    public PlayerLocation playerLocation;
+    public PlayerLocation PlayerLocation { get; set; }
 
     public virtual void Init(Game game, int playerNumber, PlayerLocation playerLocation) {
-        this.game = game;
-        this.playerNumber = playerNumber;
-        this.playerLocation = playerLocation;
+        Game = game;
+        PlayerNumber = playerNumber;
+        PlayerLocation = playerLocation;
     }
 
     public virtual void AddCardInHand(CardBase card) {
-        cardsInHand.Add(card);
+        CardsInHand.Add(card);
 
         PrintCardsInHand();
     }
 
     void PrintCardsInHand() {
-        GD.Print("Cards in hand of player " + playerNumber + ":");
-        foreach (var card in cardsInHand) {
-            GD.Print(" - " + card.cardResource.CardName);
+        GD.Print("Cards in hand of player " + PlayerNumber + ":");
+        foreach (var card in CardsInHand) {
+            GD.Print(" - " + card.CardResource.CardName);
         }
     }
 }

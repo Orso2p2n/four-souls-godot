@@ -4,17 +4,18 @@ using System.Threading.Tasks;
 
 public partial class CardControl : Control
 {
-	[Export] TextureRect textureRect;
-	public CardBase cardBase;
+	[Export] private TextureRect _textureRect;
+
+	public CardBase CardBase { get; set; }
 
 	public void Init(CardBase cardBase) {
-		this.cardBase = cardBase;
+		CardBase = cardBase;
 
 		Visible = false;
-		cardBase.cardVisual.TextureRefreshed += UpdateSprite;
+		cardBase.CardVisual.TextureRefreshed += UpdateSprite;
 	}
 
     public void UpdateSprite(ViewportTexture texture) {
-		textureRect.Texture = texture;
+		_textureRect.Texture = texture;
 	}
 }

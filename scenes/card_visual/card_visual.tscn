@@ -3,13 +3,12 @@
 [ext_resource type="Script" path="res://src/card_visual/CardVisual.cs" id="1_tfc8r"]
 [ext_resource type="PackedScene" uid="uid://b5fomlhh5frqv" path="res://scenes/card_visual/card_visual_composition.tscn" id="2_ono1l"]
 
-[node name="CardVisual" type="SubViewport" node_paths=PackedStringArray("composition")]
+[node name="CardVisual" type="SubViewport"]
 transparent_bg = true
 msaa_2d = 2
 screen_space_aa = 1
 size = Vector2i(875, 1225)
 render_target_update_mode = 1
 script = ExtResource("1_tfc8r")
-composition = NodePath("CardVisualComposition")
 
 [node name="CardVisualComposition" parent="." instance=ExtResource("2_ono1l")]

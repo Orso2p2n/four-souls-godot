@@ -6,37 +6,37 @@ public partial class CardVisual : SubViewport
 {
 	[Signal] public delegate void TextureRefreshedEventHandler(ViewportTexture newTexture);
 
-	[Export] public CardVisualComposition composition;
+	[Export] public CardVisualComposition Composition { get; set; }
 
-	public CardBase card;
+	public CardBase Card { get; private set; }
 
 	public void Init(CardBase card) {
-		this.card = card;
+		this.Card = card;
 		_ = UpdateVisual();
 	}
 
 	private async Task UpdateVisual() {
-		var cardResource = card.cardResource;
+		var cardResource = Card.CardResource;
 
 		// Set textures
 		if (cardResource.BgArt != null) {
-			composition.bgArtTextureRect.Texture = cardResource.BgArt;
+			Composition.BgArtTextureRect.Texture = cardResource.BgArt;
 		}
 
 		if (cardResource.FgArt != null) {
-			composition.fgArtTextureRect.Texture = cardResource.FgArt;
+			Composition.FgArtTextureRect.Texture = cardResource.FgArt;
 		}
 
 		if (cardResource.topTextBoxTexture != null) {
-			composition.topTextureRect.Texture = cardResource.topTextBoxTexture;
+			Composition.TopTextureRect.Texture = cardResource.topTextBoxTexture;
 		}
 
 		if (cardResource.botTextBoxTexture != null) {
-			composition.bottomTextureRect.Texture = cardResource.botTextBoxTexture;
+			Composition.BottomTextureRect.Texture = cardResource.botTextBoxTexture;
 		}
 
 		if (cardResource.botTextBoxTexture != null) {
-			composition.bottomTextureRect.Texture = cardResource.botTextBoxTexture;
+			Composition.BottomTextureRect.Texture = cardResource.botTextBoxTexture;
 		}
 
 		// Addons
@@ -44,24 +44,24 @@ public partial class CardVisual : SubViewport
 			Texture2D texture = null;
 			switch (cardResource.soulCount) {
 				case 1:
-					texture = StaticTextures.cardStructureAddon1Soul;
+					texture = StaticTextures.CardStructureAddon1Soul;
 					break;
 
 				case 2:
-					texture = StaticTextures.cardStructureAddon2Soul;
+					texture = StaticTextures.CardStructureAddon2Soul;
 					break;
 			}
 
-			composition.soulTextureRect.Texture = texture;
+			Composition.SoulTextureRect.Texture = texture;
 		}
 
 		if (cardResource.charmed) {
-			composition.charmedTextureRect.Texture = StaticTextures.cardStructureAddonCharmed;
+			Composition.CharmedTextureRect.Texture = StaticTextures.CardStructureAddonCharmed;
 		}
 
-		await composition.titleLabel.SetText(cardResource.CardName);
+		await Composition.TitleLabel.SetText(cardResource.CardName);
 
-		await composition.descriptionContainer.SetDescription(card);
+		await Composition.DescriptionContainer.SetDescription(Card);
 
 		_ = RefreshViewportTexture();
 	}
@@ -71,7 +71,7 @@ public partial class CardVisual : SubViewport
 
 		var newTexture = GetTexture();
 
-		GD.Print("Texture refreshed for: " + card.cardResource.CardName);
+		GD.Print("Texture refreshed for: " + Card.CardResource.CardName);
 
 		EmitSignal(SignalName.TextureRefreshed, newTexture);
 	}
