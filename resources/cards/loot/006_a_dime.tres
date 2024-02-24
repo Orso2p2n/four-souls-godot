@@ -2,13 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://ch2ip1g6kjdln" path="res://assets/sprites/card_arts/base_game/loot/048_dime.png" id="1_jpbid"]
 [ext_resource type="Script" path="res://src/cards/loot/L001_APenny.cs" id="2_l4hj7"]
-[ext_resource type="Script" path="res://resources/cards/loot/LootCardResource.cs" id="3_euo28"]
+[ext_resource type="Script" path="res://src/resources/LootCardResource.cs" id="3_euo28"]
 
 [resource]
 script = ExtResource("3_euo28")
-lootCardType = 0
+LootCardType = 0
 CardName = "A Dime!!"
 Script = ExtResource("2_l4hj7")
-charmed = false
-soulCount = 0
+Charmed = false
+SoulCount = 0
 BgArt = ExtResource("1_jpbid")

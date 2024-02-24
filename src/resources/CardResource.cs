@@ -4,16 +4,16 @@ using Godot.Collections;
 
 public partial class CardResource : Resource
 {
-    [Export] public string CardName;
-    [Export] public Script Script;
+    [Export]public string CardName { get; set; }
+    [Export] public Script Script { get; set; }
 
     [ExportGroup("Properties and Addons")]
-    [Export] public bool charmed = false;
-    [Export(PropertyHint.Range, "0,2,")] public int soulCount = 0;
+    [Export] public bool Charmed { get; set; } = false;
+    [Export(PropertyHint.Range, "0,2,")] public int SoulCount { get; set; } = 0;
 
     [ExportGroup("Art")]
-    [Export] public Texture2D BgArt;
-    [Export] public Texture2D FgArt;
+    [Export] public Texture2D BgArt { get; set; }
+    [Export] public Texture2D FgArt { get; set; }
     
     public DeckTypeResource deckTypeResource {
         get {
@@ -24,7 +24,7 @@ public partial class CardResource : Resource
     // Back texture
     public Texture2D backTexture {
         get {
-            return deckTypeResource.backTexture;
+            return deckTypeResource.BackTexture;
         }
     }
 

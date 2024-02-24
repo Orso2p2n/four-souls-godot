@@ -2,13 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://dhaiv24egjxqa" path="res://assets/sprites/card_arts/base_game/loot/034_four_cents_1.png" id="1_r8q3d"]
 [ext_resource type="Script" path="res://src/cards/loot/L001_APenny.cs" id="2_payar"]
-[ext_resource type="Script" path="res://resources/cards/loot/LootCardResource.cs" id="3_xd34n"]
+[ext_resource type="Script" path="res://src/resources/LootCardResource.cs" id="3_xd34n"]
 
 [resource]
 script = ExtResource("3_xd34n")
-lootCardType = 11
+LootCardType = 0
 CardName = "Four Cents!"
 Script = ExtResource("2_payar")
-charmed = false
-soulCount = 0
+Charmed = false
+SoulCount = 0
 BgArt = ExtResource("1_r8q3d")

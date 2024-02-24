@@ -12,7 +12,7 @@ public enum DeckType {
 
 public partial class DeckTypeResource : Resource
 {
-    [Export] public string name;
-    [Export] public DeckType deckType;
-    [Export] public Texture2D backTexture;
+    [Export] public string Name { get; set; }
+    [Export] public DeckType deckType { get; set; }
+    [Export] public Texture2D BackTexture { get; set; }
 }

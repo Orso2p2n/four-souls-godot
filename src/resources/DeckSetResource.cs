@@ -10,7 +10,7 @@ public enum DeckSet {
 
 public partial class DeckSetResource : Resource
 {
-    [Export] public string name;
-    [Export] public DeckSet deckSet;
-    [Export] public Array<DeckResource> decks;
+    [Export] public string Name { get; set; }
+    [Export] public DeckSet DeckSet { get; set; }
+    [Export] public Array<DeckResource> Decks { get; set; }
 }

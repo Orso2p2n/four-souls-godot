@@ -21,7 +21,7 @@ public enum LootCardType {
 
 public partial class LootCardResource : CardResource
 {
-    [Export] public LootCardType lootCardType;
+    [Export] public LootCardType LootCardType { get; set; }
 
     override public DeckTypeResource GetDeckTypeResource() {
         return StaticResources.DeckTypeLoot;

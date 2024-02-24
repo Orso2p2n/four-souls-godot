@@ -40,9 +40,9 @@ public partial class CardVisual : SubViewport
 		}
 
 		// Addons
-		if (cardResource.soulCount > 0) {
+		if (cardResource.SoulCount > 0) {
 			Texture2D texture = null;
-			switch (cardResource.soulCount) {
+			switch (cardResource.SoulCount) {
 				case 1:
 					texture = StaticTextures.CardStructureAddon1Soul;
 					break;
@@ -55,7 +55,7 @@ public partial class CardVisual : SubViewport
 			Composition.SoulTextureRect.Texture = texture;
 		}
 
-		if (cardResource.charmed) {
+		if (cardResource.Charmed) {
 			Composition.CharmedTextureRect.Texture = StaticTextures.CardStructureAddonCharmed;
 		}
 
