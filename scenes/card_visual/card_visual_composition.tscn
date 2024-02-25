@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dhhmjnud2g2i3" path="res://scenes/card_visual/description/line_sub.tscn" id="10_w22b6"]
 [ext_resource type="PackedScene" uid="uid://gi6ltebjm5ur" path="res://scenes/card_visual/description/line.tscn" id="12_s1vve"]
 
-[node name="CardVisualComposition" type="Control"]
+[node name="CardVisualComposition" type="Control" node_paths=PackedStringArray("BgArtTextureRect", "BorderTextureRect", "BottomTextureRect", "TopTextureRect", "StatblockTextureRect", "RewardTextureRect", "SoulTextureRect", "CharmedTextureRect", "FgArtTextureRect", "TitleLabel", "DescriptionContainer")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -44.0
@@ -19,6 +19,17 @@ offset_top = -43.0
 offset_right = 918.0
 offset_bottom = 1269.0
 script = ExtResource("1_7o27l")
+BgArtTextureRect = NodePath("BleedzonesMask/BgArt")
+BorderTextureRect = NodePath("BleedzonesMask/Border")
+BottomTextureRect = NodePath("BleedzonesMask/Bottom")
+TopTextureRect = NodePath("BleedzonesMask/Top")
+StatblockTextureRect = NodePath("BleedzonesMask/Statblock")
+RewardTextureRect = NodePath("BleedzonesMask/Reward")
+SoulTextureRect = NodePath("BleedzonesMask/Soul")
+CharmedTextureRect = NodePath("BleedzonesMask/Charmed")
+FgArtTextureRect = NodePath("BleedzonesMask/FgArt")
+TitleLabel = NodePath("BleedzonesMask/Texts/TitleContainer/Title")
+DescriptionContainer = NodePath("BleedzonesMask/Texts/DescriptionContainer")
 
 [node name="BleedzonesMask" type="TextureRect" parent="."]
 clip_children = 1
