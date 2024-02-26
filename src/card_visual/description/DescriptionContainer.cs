@@ -1,8 +1,8 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using Godot.Collections;
 
 public partial class DescriptionContainer : VBoxContainer
 {
@@ -11,7 +11,7 @@ public partial class DescriptionContainer : VBoxContainer
 	[Export] private PackedScene _lineScene;
 	[Export] private PackedScene _lineSubScene;
 
-	private List<DescriptionEffect> _texts;
+	private Array<DescriptionEffect> _texts;
 
 	private float _maxHeight;
 
@@ -20,16 +20,16 @@ public partial class DescriptionContainer : VBoxContainer
 	}
 
 	public async Task SetDescription(CardBase card) {
-		_texts = new List<DescriptionEffect>();
+		_texts = new Array<DescriptionEffect>();
 
 		// Process effect text
-		var effectText = card.GetEffectText();
+		var effectText = card.EffectText;
 		if (effectText != null) {
 			ProcessText(effectText);
 		}
 			
 		// Process lore text
-		var loreText = card.GetLoreText();
+		var loreText = card.LoreText;
 		if (loreText != null) {
 			AddLine();
 			ProcessText(loreText, true);

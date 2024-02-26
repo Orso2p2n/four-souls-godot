@@ -1,26 +1,27 @@
 using Godot;
+using Godot.Collections;
 using System;
-using System.Collections.Generic;
 
 public partial class Game : Node
 {
-    public static Game ME { get; set; }
+    public static Game ME { get; private set; }
 
     [Export] private Node _playersContainer;
     [Export] public HUD Hud;
+    [Export] public StackManager StackManager { get; private set; }
 
     [ExportCategory("Scenes")]
     [Export] private PackedScene _gameBoardScene;
     [Export] private PackedScene _mainPlayerScene;
     [Export] private PackedScene _otherPlayerScene;
 
-    public List<Player> Players { get; set; }
+    public Array<Player> Players { get; set; }
     private GameBoard _gameBoard;
 
     public override void _Ready() {
         ME = this;
 
-        Players = new List<Player>();
+        Players = new Array<Player>();
 
         CreateGameBoard();
 

@@ -1,14 +1,14 @@
 [gd_resource type="Resource" load_steps=4 format=3 uid="uid://dfcugmaa5b67"]
 
 [ext_resource type="Texture2D" uid="uid://buudj6mnfrbqp" path="res://assets/sprites/card_arts/base_game/loot/043_nickel_1.png" id="1_0yi6n"]
-[ext_resource type="Script" path="res://src/cards/loot/L001_APenny.cs" id="2_raku7"]
+[ext_resource type="Script" path="res://src/cards/loot/L005_ANickel.cs" id="2_erx88"]
 [ext_resource type="Script" path="res://src/resources/LootCardResource.cs" id="3_jm1w3"]
 
 [resource]
 script = ExtResource("3_jm1w3")
 LootCardType = 0
 CardName = "A Nickel!"
-Script = ExtResource("2_raku7")
+Script = ExtResource("2_erx88")
 Charmed = false
 SoulCount = 0
 BgArt = ExtResource("1_0yi6n")

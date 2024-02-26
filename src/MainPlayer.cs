@@ -16,7 +16,7 @@ public partial class MainPlayer : Player
         Hud = game.Hud;
     }
 
-    public override void AddCardInHand(CardBase card) {
+    protected override void AddCardInHand(CardBase card) {
         base.AddCardInHand(card);
 
         card.TurnIntoControl(Hud.Hand);

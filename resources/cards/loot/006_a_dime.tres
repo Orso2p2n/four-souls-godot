@@ -1,14 +1,14 @@
 [gd_resource type="Resource" load_steps=4 format=3 uid="uid://cl7c3t60fv1ne"]
 
 [ext_resource type="Texture2D" uid="uid://ch2ip1g6kjdln" path="res://assets/sprites/card_arts/base_game/loot/048_dime.png" id="1_jpbid"]
-[ext_resource type="Script" path="res://src/cards/loot/L001_APenny.cs" id="2_l4hj7"]
+[ext_resource type="Script" path="res://src/cards/loot/L006_ADime.cs" id="2_q1ise"]
 [ext_resource type="Script" path="res://src/resources/LootCardResource.cs" id="3_euo28"]
 
 [resource]
 script = ExtResource("3_euo28")
 LootCardType = 0
 CardName = "A Dime!!"
-Script = ExtResource("2_l4hj7")
+Script = ExtResource("2_q1ise")
 Charmed = false
 SoulCount = 0
 BgArt = ExtResource("1_jpbid")

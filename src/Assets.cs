@@ -1,13 +1,13 @@
 using Godot;
+using Godot.Collections;
 using System;
-using System.Collections.Generic;
 
 public partial class Assets : Node
 {
-    public static List<T> GetAllResourcesOfTypeInPath<T>(string path) where T : Resource {
+    public static Array<T> GetAllResourcesOfTypeInPath<[MustBeVariant] T>(string path) where T : Resource {
         var filePaths = GetAllFilesInPath(path);
         
-        var resources = new List<T>();
+        var resources = new Array<T>();
 
         foreach (var filePath in filePaths) {
             try {
@@ -22,8 +22,8 @@ public partial class Assets : Node
         return resources;
     }
 
-    public static List<string> GetAllFilesInPath(string path) {
-        var filePaths = new List<string>();
+    public static Array<string> GetAllFilesInPath(string path) {
+        var filePaths = new Array<string>();
 
         var dir = DirAccess.Open(path);
         dir.ListDirBegin();

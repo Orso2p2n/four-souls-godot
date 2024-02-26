@@ -1,8 +1,6 @@
 using Godot;
+using Godot.Collections;
 using System;
-using System.Collections.Generic;
-
-
 
 public partial class Player : Node
 {
@@ -12,7 +10,7 @@ public partial class Player : Node
 
     public int Gold { get; set; }
 
-    public List<CardBase> CardsInHand { get; set; } = new List<CardBase>();
+    public Array<CardBase> CardsInHand { get; set; } = new Array<CardBase>();
 
     public int PlayerNumber { get; set; }
 
@@ -24,8 +22,18 @@ public partial class Player : Node
         PlayerLocation = playerLocation;
     }
 
-    public virtual void AddCardInHand(CardBase card) {
+    public void TryAddCardInHand(CardBase card) {
+        if (card.CanBeInHand) {
+            AddCardInHand(card);
+        }
+        else {
+            GD.Print("Could not add card " + card.CardName + " in player " + PlayerNumber + "'s hand");
+        }
+    }
+
+    protected virtual void AddCardInHand(CardBase card) {
         CardsInHand.Add(card);
+        card.OnAddedToPlayerHand(this);
 
         PrintCardsInHand();
     }
@@ -33,7 +41,15 @@ public partial class Player : Node
     void PrintCardsInHand() {
         GD.Print("Cards in hand of player " + PlayerNumber + ":");
         foreach (var card in CardsInHand) {
-            GD.Print(" - " + card.CardResource.CardName);
+            GD.Print(" - " + card.CardName);
         }
+    }
+
+    public void GetPriority() {}
+
+    public void GainOrLoseGold(int amount) {
+        Gold += amount;
+
+        GD.Print($"Player {PlayerNumber} has {Gold} gold.");
     }
 }

@@ -8,7 +8,7 @@ public partial class SpawnCardInHandButton : SpawnCardButton
 		var card = base.SpawnCard(cardResource);
 
 		foreach (var player in Game.ME.Players) {
-			player.AddCardInHand(card);
+			player.TryAddCardInHand(card);
 		}
 
 		return card;

@@ -1,14 +1,14 @@
 [gd_resource type="Resource" load_steps=4 format=3 uid="uid://ccdiyac7a8igy"]
 
 [ext_resource type="Texture2D" uid="uid://cm0vrvt3kwc4d" path="res://assets/sprites/card_arts/base_game/loot/007_two_cents_1.png" id="1_sqdw1"]
-[ext_resource type="Script" path="res://src/cards/loot/L001_APenny.cs" id="2_hjgvs"]
+[ext_resource type="Script" path="res://src/cards/loot/L002_TwoCents.cs" id="2_f64w4"]
 [ext_resource type="Script" path="res://src/resources/LootCardResource.cs" id="3_omn1w"]
 
 [resource]
 script = ExtResource("3_omn1w")
 LootCardType = 0
 CardName = "Two Cents!"
-Script = ExtResource("2_hjgvs")
+Script = ExtResource("2_f64w4")
 Charmed = false
 SoulCount = 0
 BgArt = ExtResource("1_sqdw1")

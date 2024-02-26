@@ -1,12 +1,12 @@
 using Godot;
+using Godot.Collections;
 using System;
-using System.Collections.Generic;
 
 public partial class SpawnCardButton : MenuButton
 {
 	[Export(PropertyHint.Dir)] private string _cardResourcesDir;
 	
-	private List<CardResource> _cardResources;
+	private Array<CardResource> _cardResources;
 
 	public override void _Ready() {
 		var popup = GetPopup();
