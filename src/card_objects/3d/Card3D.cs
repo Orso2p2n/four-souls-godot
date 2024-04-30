@@ -4,9 +4,19 @@ using System.Threading.Tasks;
 
 public partial class Card3D : Node3D
 {
-	[Export] private Sprite3D _sprite3D;
+	[Export] private Card3DSprite _sprite3D;
+	[Export] private Card3DVisualElement _shadow;
 
 	public CardBase CardBase { get; set; }
+
+	public Vector2 Position2D {
+		get {
+			return Position.GetXZ();
+		}
+		set {
+			Position = Position.SetXZ(value.X, value.Y);
+		}
+	}
 
 	private bool _dragged;
 
@@ -14,7 +24,7 @@ public partial class Card3D : Node3D
 		CardBase = cardBase;
 		
 		Visible = false;
-		cardBase.CardVisual.TextureRefreshed += UpdateSprite;
+		cardBase.CardVisual.TextureRefreshed += RefreshSpriteTexture;
 	}
 
     public override void _Process(double delta) {
@@ -26,13 +36,20 @@ public partial class Card3D : Node3D
 			var cameraHeight = camera.Position.Y;
 
 			var worldPos = camera.ProjectPosition(viewportMousePos, cameraHeight);
-			worldPos.Y = 0;
 
-			Position = worldPos;
+			Position2D = worldPos.GetXZ();
 		}
     }
 
-    public void UpdateSprite(ViewportTexture texture) {
+    public override void _PhysicsProcess(double delta) {
+        base._PhysicsProcess(delta);
+
+		var lerpSpeed = 0.3f;
+		_sprite3D.LerpPosition(this, lerpSpeed);
+		_shadow.LerpPosition(this, lerpSpeed);
+    }
+
+    public void RefreshSpriteTexture(ViewportTexture texture) {
 		_sprite3D.Texture = texture;
 	}
 
@@ -40,12 +57,18 @@ public partial class Card3D : Node3D
 		GD.Print("On Card3D clicked");
 
 		_dragged = true;
+
+		// _sprite3D.TargetHeight = 1f;
+		_sprite3D.TargetOffset2D = Vector2.Up * 0.25f;
 	}
 
 	void OnReleased() {
 		GD.Print("On Card3D released");
 
 		_dragged = false;
+
+		// _sprite3D.TargetHeight = 0f;
+		_sprite3D.TargetOffset2D = Vector2.Zero;
 	}
 
 	void _on_area_3d_mouse_entered() {}
