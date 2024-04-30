@@ -42,8 +42,6 @@ public partial class Card3D : Node3D
     }
 
     public override void _PhysicsProcess(double delta) {
-        base._PhysicsProcess(delta);
-
 		var lerpSpeed = 0.3f;
 		_sprite3D.LerpPosition(this, lerpSpeed);
 		_shadow.LerpPosition(this, lerpSpeed);
@@ -58,7 +56,7 @@ public partial class Card3D : Node3D
 
 		_dragged = true;
 
-		_sprite3D.TargetHeight = 1f;
+		_sprite3D.TargetHeight = 0.5f;
 		_sprite3D.TargetOffset2D = Vector2.Up * 0.25f;
 	}
 
