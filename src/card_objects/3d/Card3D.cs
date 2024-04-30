@@ -58,7 +58,7 @@ public partial class Card3D : Node3D
 
 		_dragged = true;
 
-		// _sprite3D.TargetHeight = 1f;
+		_sprite3D.TargetHeight = 1f;
 		_sprite3D.TargetOffset2D = Vector2.Up * 0.25f;
 	}
 
@@ -67,7 +67,7 @@ public partial class Card3D : Node3D
 
 		_dragged = false;
 
-		// _sprite3D.TargetHeight = 0f;
+		_sprite3D.TargetHeight = 0f;
 		_sprite3D.TargetOffset2D = Vector2.Zero;
 	}
 
