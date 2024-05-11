@@ -3,25 +3,26 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dwu5lw0f48qqw"
-path="res://.godot/imported/080_golden_horseshoe.png-740b6c7bf2376d9bc3c633ee4c691894.ctex"
+path.bptc="res://.godot/imported/080_golden_horseshoe.png-740b6c7bf2376d9bc3c633ee4c691894.bptc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/sprites/card_arts/base_game/loot/080_golden_horseshoe.png"
-dest_files=["res://.godot/imported/080_golden_horseshoe.png-740b6c7bf2376d9bc3c633ee4c691894.ctex"]
+dest_files=["res://.godot/imported/080_golden_horseshoe.png-740b6c7bf2376d9bc3c633ee4c691894.bptc.ctex"]
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=2
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

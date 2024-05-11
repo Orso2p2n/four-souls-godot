@@ -33,6 +33,12 @@ project/assembly_name="four-souls-godot"
 
 enabled=PackedStringArray("res://addons/resources_spreadsheet_view/plugin.cfg")
 
+[importer_defaults]
+
+texture={
+"mipmaps/generate": true
+}
+
 [rendering]
 
 anti_aliasing/quality/msaa_2d=2
