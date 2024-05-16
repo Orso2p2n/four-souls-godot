@@ -8,6 +8,9 @@ public partial class StackManager : Node
 
     public Array<StackEffect> EffectsOnStack;
 
+    private int _curPriorityPlayerNumber;
+    private int _curPriorityStartNumber;
+
     public override void _Ready() {
         ME = this;
 
@@ -31,19 +34,36 @@ public partial class StackManager : Node
         }
     }
     
-    public void PassPriority(int playerStartNumber) {
-        var length = Game.ME.Players.Count;
+    public void StartPriority(int playerStartNumber) {
+        SetPriorityStart(playerStartNumber);
 
-        for (int i = 0; i < length; i++) {
-            var index = i + playerStartNumber;
+        PassPriority();
+    }
 
-            if (index >= length) {
-                index -= length;
-            }
-            
-            var player = Game.ME.Players[index];
+    public void SetPriorityStart(int playerStartNumber) {
+        _curPriorityStartNumber = _curPriorityPlayerNumber = playerStartNumber;
+    }
 
-            player.GetPriority();
+    private void PassPriority(bool first = false) {
+        var player = Game.ME.Players[_curPriorityPlayerNumber];
+        var playerHasActed = player.GetPriority();
+
+        if (_curPriorityPlayerNumber == _curPriorityStartNumber && !first) {
+            return;
+        }
+
+        _curPriorityPlayerNumber++;
+
+        var maxPlayers = Game.ME.Players.Count;
+        if (_curPriorityPlayerNumber >= maxPlayers) {
+            _curPriorityPlayerNumber -= maxPlayers;
+        }
+
+        if (playerHasActed) {
+            StartPriority(_curPriorityPlayerNumber);
+        }
+        else {
+            PassPriority();
         }
     }
 }

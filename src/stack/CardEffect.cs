@@ -4,20 +4,24 @@ using Godot.Collections;
 
 public partial class CardEffect<[MustBeVariant] T> : StackEffect where T : GodotObject
 {
+    public CardBase Card { get; set; }
+
     private Array<T> _targets;
     
     private Callable _effectCallable { get; set; }
 
-    public string EffectText { get; private set; }
-
-    public CardEffect(Array<T> targets, Callable effectCallable, string effectText) : base() {
-        _targets = targets;
-        _effectCallable = effectCallable;
-        EffectText = effectText;
+    private int _effectTextIndex;
+    public string EffectText { 
+        get {
+            return Card.EffectText[_effectTextIndex];
+        }
     }
 
-    protected override void OnAddedToStack() {
-        base.OnAddedToStack();
+    public CardEffect(CardBase card, Array<T> targets, Callable effectCallable, int effectTextIndex) : base() {
+        Card = card;
+        _targets = targets;
+        _effectCallable = effectCallable;
+        _effectTextIndex = effectTextIndex;
     }
 
     public override void Resolve() {

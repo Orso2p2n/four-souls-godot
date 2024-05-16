@@ -43,6 +43,7 @@ public partial class CardBase : Node
 
 	// Logic stuff
 	public Player PlayerOwner { get; set; }
+	public Array<Player> PlayerOwnerAsArray { get; set; }
 	public CardState State { get; set; }
 
 	// Hand logic
@@ -88,6 +89,7 @@ public partial class CardBase : Node
 
 	public virtual void OnAddedToPlayerHand(Player player) {
 		PlayerOwner = player;
+		PlayerOwnerAsArray = new Array<Player> { player }; 
 		State = CardState.InHand;
 	}
 
@@ -99,8 +101,8 @@ public partial class CardBase : Node
 
 	protected virtual void OnPlayedFromHand() {}
 
-	protected CardEffect<T> AddToStack<[MustBeVariant] T>(Array<T> targets, Callable effectCallable, string effectText) where T : GodotObject {
-		var cardEffect = new CardEffect<T>(targets, effectCallable, effectText);
+	protected CardEffect<T> AddToStack<[MustBeVariant] T>(Array<T> targets, Callable effectCallable, int effectTextIndex) where T : GodotObject {
+		var cardEffect = new CardEffect<T>(this, targets, effectCallable, effectTextIndex);
 		cardEffect.AddToStack();
 		return cardEffect;
 	}

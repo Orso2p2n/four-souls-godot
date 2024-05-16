@@ -18,17 +18,26 @@ public partial class Game : Node
     public Array<Player> Players { get; set; }
     private GameBoard _gameBoard;
 
-    public override void _Ready() {
+    public TurnManager TurnManager {get; set;}
+
+    public override void _EnterTree() {
         ME = this;
 
-        Players = new Array<Player>();
+        TurnManager = new TurnManager();
+        AddChild(TurnManager);
+    }
 
+    public override void _Ready() {
         CreateGameBoard();
+        
+        Players = new Array<Player>();
 
         CreateMainPlayer();
         CreateOtherPlayer();
         CreateOtherPlayer();
         CreateOtherPlayer();
+
+        TurnManager.StartTurn(Players[0]);
     }
 
     void CreateGameBoard() {
@@ -52,7 +61,7 @@ public partial class Game : Node
         player.ChangeParent(_playersContainer);
 
         var playerNumber = Players.Count;
-        player.Init(this, playerNumber, _gameBoard.PlayerLocations[playerNumber]);
+        player.Init(playerNumber, _gameBoard.PlayerLocations[playerNumber]);
 
         Players.Add(player);
     }

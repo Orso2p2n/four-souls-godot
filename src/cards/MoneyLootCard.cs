@@ -19,7 +19,8 @@ public partial class MoneyLootCard : LootCard
     }
 
     protected override void OnPlayedFromHand() {
-		AddToStack(new Array<Player>() { PlayerOwner }, new Callable(this, MethodName.GainMoney), EffectText[0]);
+		var callable = new Callable(this, MethodName.GainMoney);
+		AddToStack(targets: PlayerOwnerAsArray, effectCallable: callable, effectTextIndex: 0);
     }
 
 	private void GainMoney(Array<Player> targets) {

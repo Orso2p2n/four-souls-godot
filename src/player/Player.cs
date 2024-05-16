@@ -4,7 +4,13 @@ using System;
 
 public partial class Player : Node
 {
-    public Game Game { get; set; }
+    // Signals
+    [Signal] public delegate void EndActionPhaseRequestedEventHandler();
+
+    // Getters
+    private static Game Game { get { return Game.ME; } }
+    private bool IsActivePlayer { get { return Game.TurnManager.ActivePlayer == this; } }
+    private bool IsInActionPhase { get { return IsActivePlayer && Game.TurnManager.CurPhase == TurnPhase.ActionPhase; } }
 
     public CardBase CharacterCard { get; set; }
 
@@ -16,12 +22,28 @@ public partial class Player : Node
 
     public PlayerLocation PlayerLocation { get; set; }
 
-    public virtual void Init(Game game, int playerNumber, PlayerLocation playerLocation) {
-        Game = game;
+    private int _lootPlays;
+
+    public virtual void Init(int playerNumber, PlayerLocation playerLocation) {
         PlayerNumber = playerNumber;
         PlayerLocation = playerLocation;
     }
 
+    public bool GetPriority() {
+        GD.Print($"Priority gotten by player {PlayerNumber}");
+        return false;
+    }
+
+    public virtual void StartActionPhase() {
+        _lootPlays += 1;
+    }
+
+    public virtual void EndActionPhase() {
+        EmitSignal(SignalName.EndActionPhaseRequested);
+    }
+
+
+    // Hand
     public void TryAddCardInHand(CardBase card) {
         if (card.CanBeInHand) {
             AddCardInHand(card);
@@ -45,8 +67,8 @@ public partial class Player : Node
         }
     }
 
-    public void GetPriority() {}
 
+    // Common effects
     public void GainOrLoseGold(int amount) {
         Gold += amount;
 
