@@ -1,6 +1,13 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Threading.Tasks;
+
+public enum PriorityIntention {
+    Deciding,
+    NotActing,
+    Acting
+}
 
 public partial class StackManager : Node
 {
@@ -8,8 +15,8 @@ public partial class StackManager : Node
 
     public Array<StackEffect> EffectsOnStack;
 
-    private int _curPriorityPlayerNumber;
-    private int _curPriorityStartNumber;
+    private int _priorityCurNumber;
+    private int _priorityStartNumber;
 
     public override void _Ready() {
         ME = this;
@@ -17,15 +24,17 @@ public partial class StackManager : Node
         Clear();
     }
 
-    public void AddEffect(StackEffect effect) {
+    public void AddEffect(StackEffect effect, Player owner) {
         EffectsOnStack.Add(effect);
+        _ = StartPriority(owner.PlayerNumber);
     }
 
     public void Clear() {
         EffectsOnStack = new Array<StackEffect>();
     }
 
-    public void Resolve() {
+    public void ResolveStack() {
+        GD.Print("Resolving stack");
         var length = EffectsOnStack.Count;
         for (int i = length - 1; i >= 0 ; i--) {
             var stackEffect = EffectsOnStack[i];
@@ -34,36 +43,44 @@ public partial class StackManager : Node
         }
     }
     
-    public void StartPriority(int playerStartNumber) {
-        SetPriorityStart(playerStartNumber);
+    public async Task StartPriority(int startPlayer) {
+        var players = Game.ME.Players;
+        var playersCount = players.Count;
 
-        PassPriority();
-    }
+        var max = startPlayer + playersCount;
 
-    public void SetPriorityStart(int playerStartNumber) {
-        _curPriorityStartNumber = _curPriorityPlayerNumber = playerStartNumber;
-    }
+        GD.Print("-----------------");
 
-    private void PassPriority(bool first = false) {
-        var player = Game.ME.Players[_curPriorityPlayerNumber];
-        var playerHasActed = player.GetPriority();
+        // Iterate over all the players and ask for priority intention
+        for (int i = startPlayer; i < max; i++) {
+            var j = i;
+            if (i >= playersCount) j -= playersCount;
+            
+            var player = Game.ME.Players[j];
 
-        if (_curPriorityPlayerNumber == _curPriorityStartNumber && !first) {
-            return;
+            player.AskForPriorityIntention();
         }
 
-        _curPriorityPlayerNumber++;
+        // Iterate again and check the intention
+        for (int i = startPlayer; i < max; i++) {
+            var j = i;
+            if (i >= playersCount) j -= playersCount;
+            
+            var player = Game.ME.Players[j];
 
-        var maxPlayers = Game.ME.Players.Count;
-        if (_curPriorityPlayerNumber >= maxPlayers) {
-            _curPriorityPlayerNumber -= maxPlayers;
+            if (player.PriorityIntention == PriorityIntention.Deciding) {
+                await ToSignal(player, Player.SignalName.PriorityIntentionChosen);
+            }
+
+            if (player.PriorityIntention == PriorityIntention.Acting) {
+                bool hasActed = await player.GetPriority();
+
+                if (hasActed) {
+                    return;
+                }
+            }
         }
 
-        if (playerHasActed) {
-            StartPriority(_curPriorityPlayerNumber);
-        }
-        else {
-            PassPriority();
-        }
+        ResolveStack();
     }
 }

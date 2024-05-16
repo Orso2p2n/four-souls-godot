@@ -65,9 +65,29 @@ public partial class CardBase : Node
 		Card3d.Init(this);
 		CardControl.Init(this);
 		CardVisual.Init(this);
+
+		CardControl.OnClicked += OnControlClicked;
+		CardControl.OnReleased += OnControlReleased;
 	}
 
-	# region Appearance in-world
+	public void Destroy() {
+		GD.Print("Destroying card " + CardName);
+		QueueFree();
+	}
+
+	// Control Signals
+	void OnControlClicked() {
+		GD.Print($"Card Control {CardName} clicked.");
+		
+		TryPlayFromHand();
+	}
+
+	void OnControlReleased() {
+		
+	}
+
+
+	// Appearance in-world
 	public void TurnInto3D(Vector3? atPos = null) {
 		CardControl.Visible = false;
 		Card3d.Visible = true;
@@ -85,8 +105,9 @@ public partial class CardBase : Node
 			CardControl.ChangeParent(parent);
 		}
 	}
-	#endregion
 
+
+	// Hand
 	public virtual void OnAddedToPlayerHand(Player player) {
 		PlayerOwner = player;
 		PlayerOwnerAsArray = new Array<Player> { player }; 
@@ -94,29 +115,29 @@ public partial class CardBase : Node
 	}
 
 	public void TryPlayFromHand() {
-		if (CanBePlayedFromHand) {
-			OnPlayedFromHand();
+		if (CanBePlayedFromHand && PlayerOwner.LootPlays > 0) {
+			PlayFromHand();
 		}
+	}
+
+	private void PlayFromHand() {
+		PlayerOwner.LootPlays--;
+		OnPlayedFromHand();
 	}
 
 	protected virtual void OnPlayedFromHand() {}
 
+
+	// Effects
 	protected CardEffect<T> AddToStack<[MustBeVariant] T>(Array<T> targets, Callable effectCallable, int effectTextIndex) where T : GodotObject {
-		var cardEffect = new CardEffect<T>(this, targets, effectCallable, effectTextIndex);
+		var cardEffect = new CardEffect<T>(PlayerOwner, this, targets, effectCallable, effectTextIndex);
 		cardEffect.AddToStack();
 		return cardEffect;
 	}
 
-	public void Destroy() {
-		GD.Print("Destroying card " + CardName);
-		QueueFree();
-	}
-
-	#region Common targets and effects
 	protected void GainOrLoseGold(Array<Player> targets, int amount) {
 		foreach (var target in targets) {
 			target.GainOrLoseGold(amount);
 		}
 	}
-	#endregion
 }

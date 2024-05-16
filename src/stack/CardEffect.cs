@@ -17,7 +17,7 @@ public partial class CardEffect<[MustBeVariant] T> : StackEffect where T : Godot
         }
     }
 
-    public CardEffect(CardBase card, Array<T> targets, Callable effectCallable, int effectTextIndex) : base() {
+    public CardEffect(Player owner, CardBase card, Array<T> targets, Callable effectCallable, int effectTextIndex) : base(owner) {
         Card = card;
         _targets = targets;
         _effectCallable = effectCallable;
@@ -26,6 +26,8 @@ public partial class CardEffect<[MustBeVariant] T> : StackEffect where T : Godot
 
     public override void Resolve() {
         base.Resolve();
+
+        GD.Print($"Resolving effect of {Card.CardName}");
 
         Trigger();
     }

@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class MainPlayer : Player
 {
@@ -10,6 +10,27 @@ public partial class MainPlayer : Player
         base.Init(playerNumber, playerLocation);
 
         Hud.EndTurnButton.Pressed += EndActionPhase;
+
+        Hud.PriorityIntentionPanel.YesPressed += PriorityIntentionYes;
+        Hud.PriorityIntentionPanel.NoPressed += PriorityIntentionNo;
+    }
+
+    public override void AskForPriorityIntention() {
+        base.AskForPriorityIntention();
+
+        Hud.TogglePriorityIntentionPanel(true);
+    }
+
+    protected override void PriorityIntentionYes() {
+        base.PriorityIntentionYes();
+
+        Hud.TogglePriorityIntentionPanel(false);
+    }
+
+    protected override void PriorityIntentionNo() {
+        base.PriorityIntentionNo();
+
+        Hud.TogglePriorityIntentionPanel(false);
     }
 
     public override void StartActionPhase() {

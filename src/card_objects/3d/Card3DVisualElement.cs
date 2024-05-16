@@ -29,7 +29,7 @@ public partial class Card3DVisualElement : Sprite3D
 		if (_oldRot != rot) {
 			_oldRot = rot;
 			RotationDegrees = rot;
-			GD.Print("Base rotation: " + _baseRotation + ", Offset Rotation: " + _offsetRotation + ", Rotation: " + rot);
+			// GD.Print("Base rotation: " + _baseRotation + ", Offset Rotation: " + _offsetRotation + ", Rotation: " + rot);
 		}
 
 
