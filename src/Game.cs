@@ -18,13 +18,17 @@ public partial class Game : Node
     public Array<Player> Players { get; set; }
     private GameBoard _gameBoard;
 
-    public TurnManager TurnManager {get; set;}
+    public TurnManager TurnManager { get; set; }
+    public MultiplayerManager MultiplayerManager { get; set; }
 
     public override void _EnterTree() {
         ME = this;
 
         TurnManager = new TurnManager();
         AddChild(TurnManager);
+        
+        MultiplayerManager = new MultiplayerManager();
+        AddChild(MultiplayerManager);
     }
 
     public override void _Ready() {

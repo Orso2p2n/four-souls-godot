@@ -1,0 +1,90 @@
+[gd_scene load_steps=2 format=3 uid="uid://7qgjx4em3736"]
+
+[ext_resource type="Script" path="res://src/MultiplayerManager.cs" id="1_5j3be"]
+
+[node name="MultiplayerTest" type="Node3D"]
+
+[node name="MultiplayerManager" type="Node" parent="." node_paths=PackedStringArray("_menu", "_printLabel", "_infoLabel", "_textEdit", "_ipContainer", "_ipTextEdit")]
+script = ExtResource("1_5j3be")
+_menu = NodePath("Menu")
+_printLabel = NodePath("RichTextLabel")
+_infoLabel = NodePath("Label")
+_textEdit = NodePath("ChatTextEdit")
+_ipContainer = NodePath("EnterIP")
+_ipTextEdit = NodePath("EnterIP/EnterIPTextEdit")
+
+[node name="Label" type="Label" parent="MultiplayerManager"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -512.0
+offset_right = -8.0
+offset_bottom = 23.0
+grow_horizontal = 0
+horizontal_alignment = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MultiplayerManager"]
+offset_left = 8.0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ChatTextEdit" type="TextEdit" parent="MultiplayerManager"]
+offset_left = 576.0
+offset_top = 592.0
+offset_right = 1144.0
+offset_bottom = 632.0
+
+[node name="Menu" type="Control" parent="MultiplayerManager"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Host" type="Button" parent="MultiplayerManager/Menu"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 560.0
+offset_right = 80.0
+offset_bottom = 591.0
+text = "Host"
+
+[node name="Join" type="Button" parent="MultiplayerManager/Menu"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 600.0
+offset_right = 80.0
+offset_bottom = 631.0
+text = "Join
+"
+
+[node name="EnterIP" type="Control" parent="MultiplayerManager"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="MultiplayerManager/EnterIP"]
+layout_mode = 0
+offset_left = 432.0
+offset_top = 280.0
+offset_right = 668.0
+offset_bottom = 303.0
+text = "Enter IP address to connect to:"
+
+[node name="EnterIPTextEdit" type="TextEdit" parent="MultiplayerManager/EnterIP"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 412.0
+offset_top = 288.0
+offset_right = 700.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+
+[connection signal="pressed" from="MultiplayerManager/Menu/Host" to="MultiplayerManager" method="OnHostPressed"]
+[connection signal="pressed" from="MultiplayerManager/Menu/Join" to="MultiplayerManager" method="OnJoinPressed"]
