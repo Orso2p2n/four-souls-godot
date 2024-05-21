@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8l4ty825mcpr"]
+
+[ext_resource type="FontVariation" uid="uid://djoayo0umh5l4" path="res://assets/fonts/console/FiraCode_normal.tres" id="1_2qkbq"]
+[ext_resource type="Script" path="res://src/ui/lobby/LobbyNameLabel.cs" id="2_1wf8w"]
+
+[node name="NameLabel" type="Label"]
+theme_override_fonts/font = ExtResource("1_2qkbq")
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+script = ExtResource("2_1wf8w")

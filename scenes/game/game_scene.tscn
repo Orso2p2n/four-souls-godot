@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://src/Assets.cs" id="1_y60vm"]
 [ext_resource type="Script" path="res://src/debug/DebugUI.cs" id="2_8xbdr"]
 [ext_resource type="Script" path="res://src/CardManager.cs" id="2_dncla"]
-[ext_resource type="PackedScene" uid="uid://d14u8obxjmagj" path="res://scenes/game_board.tscn" id="2_ndw8r"]
+[ext_resource type="PackedScene" uid="uid://d14u8obxjmagj" path="res://scenes/game/game_board.tscn" id="2_ndw8r"]
 [ext_resource type="PackedScene" uid="uid://dmga6tho40pxg" path="res://scenes/players/main_player.tscn" id="3_xm1wf"]
 [ext_resource type="PackedScene" uid="uid://dltv4ohk4lff3" path="res://scenes/players/other_player.tscn" id="4_by42d"]
 [ext_resource type="PackedScene" uid="uid://bi0bliua64s4" path="res://scenes/card_objects/card.tscn" id="6_0wx1o"]

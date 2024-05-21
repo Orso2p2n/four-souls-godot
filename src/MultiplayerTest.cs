@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 
 
-public partial class MultiplayerManager : Node
+public partial class MultiplayerTest : Node
 {
 	[Export] private Control _menu;
 	[Export] private RichTextLabel _printLabel;
@@ -128,7 +128,7 @@ public partial class MultiplayerManager : Node
 
 	[Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	void Print(string text) {
-		GD.Print(text);
+		Console.Log(text);
 		_printLabel.Text += text + "\n";
 	}
 

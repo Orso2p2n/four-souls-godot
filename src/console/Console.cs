@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 enum LogSeverity {
     Info,
     Warning,
-    Error
+    Error,
+    Network
 }
 
 public partial class Console : Control
@@ -146,7 +147,10 @@ public partial class Console : Control
                 return Colors.Orange;
 
             case LogSeverity.Error:
-                return Colors.Red;
+                return Colors.IndianRed;
+
+            case LogSeverity.Network:
+                return Colors.CornflowerBlue;
 
             default:
                 return null;
@@ -206,5 +210,9 @@ public partial class Console : Control
 
     public static void LogError(string text) {
         ME._Log(text, LogSeverity.Error);
+    }
+
+    public static void LogNetwork(string text) {
+        ME._Log(text, LogSeverity.Network);
     }
 }

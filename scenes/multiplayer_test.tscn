@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://7qgjx4em3736"]
 
-[ext_resource type="Script" path="res://src/MultiplayerManager.cs" id="1_5j3be"]
+[ext_resource type="Script" path="res://src/MultiplayerTest.cs" id="1_5j3be"]
 
 [node name="MultiplayerTest" type="Node3D"]
 

@@ -21,7 +21,7 @@ resources_spreadsheet_view/context_menu_on_leftclick=false
 [application]
 
 config/name="four-souls-godot"
-run/main_scene="res://scenes/game_scene.tscn"
+run/main_scene="res://scenes/ui/main_menu.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -30,6 +30,7 @@ config/icon="res://icon.svg"
 FpsCounter="*res://scenes/singleton/fps_counter.tscn"
 Console="*res://scenes/singleton/console.tscn"
 NetworkManager="*res://scenes/singleton/network_manager.tscn"
+SceneManager="*res://scenes/singleton/scene_manager.tscn"
 
 [dotnet]
 

@@ -19,7 +19,7 @@ public partial class Game : Node
     private GameBoard _gameBoard;
 
     public TurnManager TurnManager { get; set; }
-    public MultiplayerManager MultiplayerManager { get; set; }
+    public MultiplayerTest MultiplayerManager { get; set; }
 
     public override void _EnterTree() {
         ME = this;
@@ -27,8 +27,8 @@ public partial class Game : Node
         TurnManager = new TurnManager();
         AddChild(TurnManager);
         
-        MultiplayerManager = new MultiplayerManager();
-        AddChild(MultiplayerManager);
+        // MultiplayerManager = new MultiplayerTest();
+        // AddChild(MultiplayerManager);
     }
 
     public override void _Ready() {
