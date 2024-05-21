@@ -139,6 +139,9 @@ public partial class Console : Control
 
     private Color? GetColorForSeverity(LogSeverity severity) {
         switch (severity) {
+            case LogSeverity.Info:
+                return Colors.GreenYellow;
+
             case LogSeverity.Warning:
                 return Colors.Orange;
 
@@ -189,6 +192,10 @@ public partial class Console : Control
     // Static functions
     public static void Log(string text) {
         ME._Log(text);
+    }
+
+    public static void LogInfo(string text) {
+        ME._Log(text, LogSeverity.Info);
     }
 
     public static void LogWarning(string text) {
