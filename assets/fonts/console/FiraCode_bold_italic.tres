@@ -1,0 +1,10 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://cevk5l7bs8dvq"]
+
+[ext_resource type="FontFile" uid="uid://ktdx5xrn1lks" path="res://assets/fonts/console/FiraCode-VariableFont_wght.ttf" id="1_s2klb"]
+
+[resource]
+base_font = ExtResource("1_s2klb")
+variation_opentype = {
+2003265652: 700
+}
+variation_transform = Transform2D(1, 0.15, 0, 1, 0, 0)

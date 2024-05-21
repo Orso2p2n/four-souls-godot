@@ -1,0 +1,9 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://bv6vakv1abemq"]
+
+[ext_resource type="FontFile" uid="uid://ktdx5xrn1lks" path="res://assets/fonts/console/FiraCode-VariableFont_wght.ttf" id="1_kn5hv"]
+
+[resource]
+base_font = ExtResource("1_kn5hv")
+variation_opentype = {
+2003265652: 700
+}

@@ -53,7 +53,7 @@ script = ExtResource("8_41c4w")
 [node name="Debug" type="Node" parent="Game"]
 
 [node name="DebugUI" type="Control" parent="Game/Debug" node_paths=PackedStringArray("_toggleButton", "_menu")]
-z_index = 99
+z_index = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://djoayo0umh5l4"]
+
+[ext_resource type="FontFile" uid="uid://ktdx5xrn1lks" path="res://assets/fonts/console/FiraCode-VariableFont_wght.ttf" id="1_gcxl1"]
+
+[resource]
+base_font = ExtResource("1_gcxl1")
