@@ -7,7 +7,7 @@ public partial class StackEffect : GodotObject
 
     public StackEffect(Player owner) {
         Owner = owner;
-        GD.Print("StackEffect constructor");
+        Console.Log("StackEffect constructor");
     }
 
     public virtual void Resolve() {}

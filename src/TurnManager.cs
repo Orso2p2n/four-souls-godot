@@ -36,7 +36,7 @@ public partial class TurnManager : Node
 	}
 
 	private void EndTurn() {
-		GD.Print("End turn");
+		Console.Log("End turn");
 	}
 
 	private void SetPhase(TurnPhase phase) {
@@ -98,25 +98,25 @@ public partial class TurnManager : Node
 	}
 
 	private async Task Process_StartPhase_RechargeStep() {
-		GD.Print($"Player: {ActivePlayer.PlayerNumber}, StartPhase_RechargeStep");
+		Console.Log($"Player: {ActivePlayer.PlayerNumber}, StartPhase_RechargeStep");
 
 		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
 	}
 
 	private async Task Process_StartPhase_AbilitiesTrigger() {
-		GD.Print($"Player: {ActivePlayer.PlayerNumber}, StartPhase_AbilitiesTrigger");
+		Console.Log($"Player: {ActivePlayer.PlayerNumber}, StartPhase_AbilitiesTrigger");
 
 		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
 	}
 
 	private async Task Process_StartPhase_LootStep() {
-		GD.Print($"Player: {ActivePlayer.PlayerNumber}, StartPhase_LootStep");
+		Console.Log($"Player: {ActivePlayer.PlayerNumber}, StartPhase_LootStep");
 
 		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
 	}
 
 	private async Task Process_ActionPhase() {
-		GD.Print($"Player: {ActivePlayer.PlayerNumber}, ActionPhase");
+		Console.Log($"Player: {ActivePlayer.PlayerNumber}, ActionPhase");
 		
 		ActivePlayer.StartActionPhase();
 
@@ -124,25 +124,25 @@ public partial class TurnManager : Node
 	}
 
 	private async Task Process_EndPhase_AbilitiesTrigger() {
-		GD.Print($"Player: {ActivePlayer.PlayerNumber}, EndPhase_AbilitiesTrigger");
+		Console.Log($"Player: {ActivePlayer.PlayerNumber}, EndPhase_AbilitiesTrigger");
 
 		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
 	}
 
 	private async Task Process_EndPhase_MaxHandTrim() {
-		GD.Print($"Player: {ActivePlayer.PlayerNumber}, EndPhase_MaxHandTrim");
+		Console.Log($"Player: {ActivePlayer.PlayerNumber}, EndPhase_MaxHandTrim");
 
 		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
 	}
 
 	private async Task Process_EndPhase_RoomDiscard() {
-		GD.Print($"Player: {ActivePlayer.PlayerNumber}, EndPhase_RoomDiscard");
+		Console.Log($"Player: {ActivePlayer.PlayerNumber}, EndPhase_RoomDiscard");
 
 		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
 	}
 
 	private async Task Process_EndPhase_Final() {
-		GD.Print($"Player: {ActivePlayer.PlayerNumber}, EndPhase_Final");
+		Console.Log($"Player: {ActivePlayer.PlayerNumber}, EndPhase_Final");
 
 		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
 	}

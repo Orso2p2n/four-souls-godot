@@ -52,7 +52,7 @@ public partial class Card3D : Node3D
 	}
 
 	void OnClicked() {
-		GD.Print("On Card3D clicked");
+		Console.Log("On Card3D clicked");
 
 		_dragged = true;
 
@@ -61,7 +61,7 @@ public partial class Card3D : Node3D
 	}
 
 	void OnReleased() {
-		GD.Print("On Card3D released");
+		Console.Log("On Card3D released");
 
 		_dragged = false;
 

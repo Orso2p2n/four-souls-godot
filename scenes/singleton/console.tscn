@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3ehtynik404h"]
+[gd_scene load_steps=9 format=3 uid="uid://b3ehtynik404h"]
 
 [ext_resource type="Script" path="res://src/console/Console.cs" id="1_vglig"]
 [ext_resource type="FontVariation" uid="uid://djoayo0umh5l4" path="res://assets/fonts/console/FiraCode_normal.tres" id="2_3t1ex"]
@@ -6,7 +6,14 @@
 [ext_resource type="FontVariation" uid="uid://bv6vakv1abemq" path="res://assets/fonts/console/FiraCode_normal_italic.tres" id="4_8ogky"]
 [ext_resource type="FontVariation" uid="uid://cevk5l7bs8dvq" path="res://assets/fonts/console/FiraCode_bold_italic.tres" id="5_nwqgl"]
 
-[node name="Console" type="Control" node_paths=PackedStringArray("_scrollContainer", "_vboxContainer", "_richLabel")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6hgti"]
+bg_color = Color(0, 0, 0, 0.196078)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cpevx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nqvok"]
+
+[node name="Console" type="Control" node_paths=PackedStringArray("_scrollContainer", "_vboxContainer", "_richLabel", "_textEdit")]
 z_index = 2
 layout_mode = 3
 anchors_preset = 15
@@ -19,7 +26,8 @@ script = ExtResource("1_vglig")
 _scrollContainer = NodePath("ScrollContainer")
 _vboxContainer = NodePath("ScrollContainer/VBoxContainer")
 _richLabel = NodePath("ScrollContainer/VBoxContainer/RichTextLabel")
-_timeVisibleOnLog = 5.0
+_textEdit = NodePath("TextEdit")
+_timeVisibleOnLog = 3.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -29,7 +37,7 @@ anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = -8.0
-offset_bottom = -8.0
+offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
@@ -55,4 +63,22 @@ theme_override_font_sizes/bold_font_size = 14
 theme_override_font_sizes/italics_font_size = 14
 theme_override_font_sizes/bold_italics_font_size = 14
 theme_override_font_sizes/mono_font_size = 14
+bbcode_enabled = true
 fit_content = true
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.007
+anchor_top = 0.987654
+anchor_right = 0.993
+anchor_bottom = 0.987654
+offset_left = -0.0640001
+offset_top = -24.0
+offset_right = 0.0639648
+theme_override_fonts/font = ExtResource("2_3t1ex")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_6hgti")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cpevx")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_nqvok")
+metadata/_edit_use_anchors_ = true

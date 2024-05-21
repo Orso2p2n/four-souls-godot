@@ -27,7 +27,7 @@ public partial class CardEffect<[MustBeVariant] T> : StackEffect where T : Godot
     public override void Resolve() {
         base.Resolve();
 
-        GD.Print($"Resolving effect of {Card.CardName}");
+        Console.Log($"Resolving effect of {Card.CardName}");
 
         Trigger();
     }

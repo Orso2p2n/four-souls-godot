@@ -39,23 +39,23 @@ public partial class Player : Node
     // Priority
     public virtual void AskForPriorityIntention() {
         PriorityIntention = PriorityIntention.Deciding;
-        GD.Print($"Asking player {PlayerNumber} for their priority intention.");
+        Console.Log($"Asking player {PlayerNumber} for their priority intention.");
     }
 
     protected virtual void PriorityIntentionYes() {
-        GD.Print($"Player {PlayerNumber} priority intention yes.");
+        Console.Log($"Player {PlayerNumber} priority intention yes.");
         PriorityIntention = PriorityIntention.Acting;
         EmitSignal(SignalName.PriorityIntentionChosen);
     }
 
     protected virtual void PriorityIntentionNo() {
-        GD.Print($"Player {PlayerNumber} priority intention no.");
+        Console.Log($"Player {PlayerNumber} priority intention no.");
         PriorityIntention = PriorityIntention.NotActing;
         EmitSignal(SignalName.PriorityIntentionChosen);
     }
 
     public async Task<bool> GetPriority() {
-        GD.Print($"Priority gotten by player {PlayerNumber}");
+        Console.Log($"Priority gotten by player {PlayerNumber}");
 
         await Task.CompletedTask;
 
@@ -63,11 +63,11 @@ public partial class Player : Node
         var decision = rng.RandiRange(0, 1);
 
         if (decision == 0) {
-            GD.Print($"Player {PlayerNumber} hasn't acted during their priority.");
+            Console.Log($"Player {PlayerNumber} hasn't acted during their priority.");
             return false;
         }
         else {
-            GD.Print($"Player {PlayerNumber} has acted during their priority.");
+            Console.Log($"Player {PlayerNumber} has acted during their priority.");
             _ = StackManager.ME.StartPriority(PlayerNumber);
             return true;
         }
@@ -88,7 +88,7 @@ public partial class Player : Node
             AddCardInHand(card);
         }
         else {
-            GD.Print("Could not add card " + card.CardName + " in player " + PlayerNumber + "'s hand");
+            Console.Log("Could not add card " + card.CardName + " in player " + PlayerNumber + "'s hand");
         }
     }
 
@@ -100,9 +100,9 @@ public partial class Player : Node
     }
 
     void PrintCardsInHand() {
-        GD.Print("Cards in hand of player " + PlayerNumber + ":");
+        Console.Log("Cards in hand of player " + PlayerNumber + ":");
         foreach (var card in CardsInHand) {
-            GD.Print(" - " + card.CardName);
+            Console.Log(" - " + card.CardName);
         }
     }
 
@@ -111,6 +111,6 @@ public partial class Player : Node
     public void GainOrLoseGold(int amount) {
         Gold += amount;
 
-        GD.Print($"Player {PlayerNumber} has {Gold} gold.");
+        Console.Log($"Player {PlayerNumber} has {Gold} gold.");
     }
 }

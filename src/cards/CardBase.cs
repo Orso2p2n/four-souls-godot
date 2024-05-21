@@ -71,13 +71,13 @@ public partial class CardBase : Node
 	}
 
 	public void Destroy() {
-		GD.Print("Destroying card " + CardName);
+		Console.Log("Destroying card " + CardName);
 		QueueFree();
 	}
 
 	// Control Signals
 	void OnControlClicked() {
-		GD.Print($"Card Control {CardName} clicked.");
+		Console.Log($"Card Control {CardName} clicked.");
 		
 		TryPlayFromHand();
 	}

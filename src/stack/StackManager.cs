@@ -34,7 +34,7 @@ public partial class StackManager : Node
     }
 
     public void ResolveStack() {
-        GD.Print("Resolving stack");
+        Console.Log("Resolving stack");
         var length = EffectsOnStack.Count;
         for (int i = length - 1; i >= 0 ; i--) {
             var stackEffect = EffectsOnStack[i];
@@ -49,7 +49,7 @@ public partial class StackManager : Node
 
         var max = startPlayer + playersCount;
 
-        GD.Print("-----------------");
+        Console.Log("-----------------");
 
         // Iterate over all the players and ask for priority intention
         for (int i = startPlayer; i < max; i++) {
