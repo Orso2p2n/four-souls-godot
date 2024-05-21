@@ -125,7 +125,7 @@ public partial class Console : Control
         }
 
 
-        LogWarning($"Unknown command \"{enteredText}\"");
+        LogWarning($"Unknown command \"{enteredText}\".");
     }
 
     private void DisableTextEdit() {
@@ -137,7 +137,7 @@ public partial class Console : Control
         _textEdit.CallDeferred(TextEdit.MethodName.Clear);
     }
 
-    private Color? GetColorForSeverity(LogSeverity severity) {
+    private Color? GetColorForSeverity(LogSeverity? severity) {
         switch (severity) {
             case LogSeverity.Info:
                 return Colors.GreenYellow;
@@ -159,13 +159,15 @@ public partial class Console : Control
         _scrollContainer.SetDeferred(ScrollContainer.PropertyName.ScrollVertical, 999999);
     }
 
-    private void _Log(string text, LogSeverity severity = LogSeverity.Info) {
+    private void _Log(string text, LogSeverity? severity = null) {
         var colorOrNull = GetColorForSeverity(severity);
         if (colorOrNull != null) {
             var color = (Color) colorOrNull;
             var colorHtml = color.ToHtml(false);
             text = $"[color=#{colorHtml}]{text}[/color]";
         }
+
+        GD.PrintRich(text);
 
         text = $"\n{text}";
 

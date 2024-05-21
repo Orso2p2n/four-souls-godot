@@ -7,13 +7,13 @@ using System.Reflection;
 
 public partial class Argument : Resource {
     public string name;
-    public Type type;
+    public Variant.Type type;
     public bool optional;
 }
 
 public partial class Command : Resource {
     public string name;
-    public MethodInfo methodInfo;
+    public Callable callable;
     public Array<Argument> arguments;
 }
 
@@ -29,25 +29,44 @@ public partial class ConsoleCommands : Node
         InitCommands();
     }
 
-    private Argument CreateArgument(string name, Type type, bool optional) {
-        return new Argument() { name = name, type = type, optional = optional};
-    }
-
     private void AddCommand(string name, Delegate method) {
-        var parameters = method.Method.GetParameters();
+        var methodName = method.Method.Name;
+
+        var allMethods = GetMethodList();
+        Dictionary foundMethod = null;
+
+        foreach (var gdMethod in allMethods) {
+            var gdMethodName = (string) gdMethod["name"];
+
+            if (gdMethodName == methodName) {
+                foundMethod = gdMethod;
+                break;
+            }
+        }
+
+        if (foundMethod == null) {
+            Console.LogError($"Method \"{methodName}\" not found, could not create command.");
+            return;
+        }
 
         Array<Argument> arguments = new();
 
-        foreach (var parameter in parameters) {
-            var paramName = parameter.Name;
-            var type = parameter.ParameterType;
-            var optional = parameter.IsOptional;
+        var args = (Array<Dictionary>) foundMethod["args"];
+        var parameters = method.Method.GetParameters();
+        var i = 0;
+        foreach (var arg in args) {
+            var argName = (string) arg["name"];
+            var argType = (Variant.Type) (int) arg["type"];
+            var argOptional = parameters[i].IsOptional;
 
-            arguments.Add(CreateArgument(paramName, type, optional));
+            var argument = new Argument() { name = argName, type = argType, optional = argOptional};
+            arguments.Add(argument);
+
+            i++;
         }
         
-        // var callable = new Callable(this, method.Method.Name);
-        var command = new Command { name = name, methodInfo = method.Method, arguments = arguments};
+        var callable = new Callable(this, methodName);
+        var command = new Command { name = name, callable = callable, arguments = arguments};
         Commands.Add(command);
     }
 
@@ -66,28 +85,22 @@ public partial class ConsoleCommands : Node
         var passedArgCount = passedArguments.Count;
 
         if (passedArgCount < argCount) {
-            Console.LogError($"Missing argument for command \"{command.name}\"");
+            Console.LogError($"Missing argument for command \"{command.name}\".");
             return;
         }
 
-        List<Object> typedArgs = new();
+        Variant[] typedArgs = new Variant[argCount];
 
         for (int i = 0; i < argCount; i++) {
-            Argument arg = command.arguments[i];
-            string passedArg = passedArguments[i];
+            var arg = (Argument) command.arguments[i];
+            var passedArg = (string) passedArguments[i];
 
-            try {
-                var convertedArg = Convert.ChangeType(passedArg, arg.type);                
-                typedArgs.Add(convertedArg);
-            }
-            catch (Exception e) {
-                Console.LogError(e.ToString());
-                return;
-            }
+            var typedArg = GD.Convert(passedArg, arg.type);
+            typedArgs[i] = typedArg;
         }
 
         try {
-            command.methodInfo.Invoke(this, typedArgs.ToArray());
+            command.callable.Call(typedArgs);
         }
         catch (Exception e) {
             Console.LogError(e.ToString());
@@ -105,10 +118,11 @@ public partial class ConsoleCommands : Node
     // --- Commands ---
     
     public void ToggleFPS() {
-        Console.Log("ToggleFPS");
+        Console.LogInfo("Toggled FPS Counter.");
+        FpsCounter.Toggle();
     }
 
     public void Print(string text) {
-        Console.Log(text);
+        Console.LogInfo(text);
     }
 }

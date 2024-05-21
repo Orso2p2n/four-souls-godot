@@ -27,7 +27,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+FpsCounter="*res://scenes/singleton/fps_counter.tscn"
 Console="*res://scenes/singleton/console.tscn"
+NetworkManager="*res://scenes/singleton/network_manager.tscn"
 
 [dotnet]
 
