@@ -25,6 +25,8 @@ public partial class Console : Control
     private Timer timer;
     private Tween alphaTween;
 
+    private ConsoleCommands _consoleCommands;
+
     private bool opened = false;
 
     public override void _EnterTree() {
@@ -33,6 +35,9 @@ public partial class Console : Control
         timer = new Timer();
         AddChild(timer);
         timer.Timeout += OnTimerTimeout;
+
+        _consoleCommands = new ConsoleCommands(this);
+        AddChild(_consoleCommands);
 
         SetAlpha(0f);
 
@@ -104,6 +109,21 @@ public partial class Console : Control
         if (enteredText == "") {
             return;
         }
+
+        // Split command into members and remove empty members
+        Array<string> members = Variant.From(enteredText.Split(" ")).AsGodotArray<string>();
+        while (members.Contains("")) {
+            members.Remove("");
+        }
+
+        var commandName = members[0];
+        var arguments = members.Duplicate();
+        arguments.RemoveAt(0);
+
+        if (_consoleCommands.TryCallCommand(commandName, arguments)) {
+            return;
+        }
+
 
         LogWarning($"Unknown command \"{enteredText}\"");
     }
