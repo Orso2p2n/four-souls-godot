@@ -4,29 +4,70 @@ using System;
 
 public partial class NetworkManager : Node
 {
+    // Signals
     [Signal] public delegate void ServerCreatedEventHandler();
     [Signal] public delegate void ServerClosedEventHandler();
     [Signal] public delegate void UserAddedEventHandler(NetworkUser user);
     [Signal] public delegate void UserRemovedEventHandler(NetworkUser user);
-
+    
+    // Static
     public static NetworkManager ME;
 
+    // Variables
     public Array<NetworkUser> users = new();
 
     public string Address { get; set; } = "";
-    const int Port = 45075;
+    public const int Port = 45075;
 
-    Upnp upnp;
+    private Upnp upnp;
 
     public override void _EnterTree() {
         ME = this;
 
+        // Connect Signals
         Multiplayer.PeerConnected += OnPeerConnected;
 		Multiplayer.ConnectedToServer += OnConnectedToServer;
 		Multiplayer.PeerDisconnected += OnPeerDisconnected;
 		Multiplayer.ServerDisconnected += OnServerDisconnected;
     }
 
+    // --- Connected signals ---
+    void OnPeerConnected(long id) {
+		Console.LogNetwork($"Peer connected ID: {id}.");
+
+        AddUser(id);
+	}
+
+	void OnConnectedToServer() {
+		Console.LogNetwork($"Connected to server: {Address}.");
+	}
+
+	void OnPeerDisconnected(long id) {
+		Console.LogNetwork($"Peer disconnected ID: {id}.");
+
+        RemoveUser(id);
+	}
+
+	void OnServerDisconnected() {
+		Console.LogWarning($"Disconnected from server: {Address}.");
+
+        users.Clear();
+	}
+
+    // --- General ---
+    public void SetAddress(string newAddress) {
+        Address = newAddress;
+    }
+
+    public override void _Notification(int what) {
+		base._Notification(what);
+		
+		if (what == NotificationWMCloseRequest) {
+			CloseUpnp();
+		}
+	}
+
+    // --- Host ---
     public void Host() {
         InitUpnp();
 
@@ -37,6 +78,22 @@ public partial class NetworkManager : Node
         // Done
         EmitSignal(SignalName.ServerCreated);
         AddUser(Multiplayer.MultiplayerPeer.GetUniqueId());
+    }
+
+    public void CloseServer() {
+        var peers = Multiplayer.GetPeers();
+
+        foreach (var peer in peers) {
+            Multiplayer.MultiplayerPeer.DisconnectPeer(peer);
+        }
+
+        Multiplayer.MultiplayerPeer.Close();
+
+        CloseUpnp();
+
+        Console.LogWarning($"Server closed.");
+
+        EmitSignal(SignalName.ServerClosed);
     }
 
     void InitUpnp() {
@@ -75,27 +132,8 @@ public partial class NetworkManager : Node
         upnp.DeletePortMapping(Port, "UDP");
         upnp.DeletePortMapping(Port, "TCP");
     }
-    
-    void CloseServer() {
-        var peers = Multiplayer.GetPeers();
 
-        foreach (var peer in peers) {
-            Multiplayer.MultiplayerPeer.DisconnectPeer(peer);
-        }
-
-        Multiplayer.MultiplayerPeer.Close();
-
-        CloseUpnp();
-
-        Console.LogWarning($"Server closed.");
-
-        EmitSignal(SignalName.ServerClosed);
-    }
-
-    public void SetAddress(string newAddress) {
-        Address = newAddress;
-    }
-
+    // --- Client ---
     public void Connect() {
         if (Address == "") {
             Console.LogError($"Address is empty.");
@@ -124,28 +162,7 @@ public partial class NetworkManager : Node
         }
     }
 
-    void OnPeerConnected(long id) {
-		Console.LogNetwork($"Peer connected ID: {id}.");
-
-        AddUser(id);
-	}
-
-	void OnConnectedToServer() {
-		Console.LogNetwork($"Connected to server: {Address}.");
-	}
-
-	void OnPeerDisconnected(long id) {
-		Console.LogNetwork($"Peer disconnected ID: {id}.");
-
-        RemoveUser(id);
-	}
-
-	void OnServerDisconnected() {
-		Console.LogWarning($"Disconnected from server: {Address}.");
-
-        users.Clear();
-	}
-
+    // --- Users ---
     void AddUser(long id) {
         var isHost = id == 1;
         var isSelf = id == Multiplayer.MultiplayerPeer.GetUniqueId();
@@ -182,12 +199,4 @@ public partial class NetworkManager : Node
         var user = GetUserById(id);
         user?.SetUsername(username);
     }
-
-    public override void _Notification(int what) {
-		base._Notification(what);
-		
-		if (what == NotificationWMCloseRequest) {
-			CloseUpnp();
-		}
-	}
 }
