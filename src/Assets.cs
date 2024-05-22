@@ -9,6 +9,9 @@ public partial class Assets : Node
     
     [ExportGroup("Scenes")]
     [Export] public PackedScene CardScene { get; set; }
+    [Export] public PackedScene GameBoardScene { get; set; }
+    [Export] public PackedScene MainPlayerScene { get; set; }
+    [Export] public PackedScene OtherPlayerScene { get; set; }
 
     [ExportGroup("Textures")]
     [Export] public Texture2D CardStructureBotBase { get; set; }

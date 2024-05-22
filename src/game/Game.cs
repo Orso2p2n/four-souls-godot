@@ -6,11 +6,6 @@ public partial class Game : Node
 {
     public static Game ME { get; private set; }
 
-    [ExportGroup("Scenes")]
-    [Export] private PackedScene _gameBoardScene;
-    [Export] private PackedScene _mainPlayerScene;
-    [Export] private PackedScene _otherPlayerScene;
-
     public Array<Player> Players { get; set; }
     private Node _playersContainer;
 
@@ -59,18 +54,18 @@ public partial class Game : Node
     }
 
     void CreateGameBoard() {
-        _gameBoard = _gameBoardScene.Instantiate() as GameBoard;
+        _gameBoard = Assets.ME.GameBoardScene.Instantiate() as GameBoard;
         _gameBoard.ChangeParent(this);
     }
 
     void CreateMainPlayer() {
-        var createdPlayer = _mainPlayerScene.Instantiate() as MainPlayer; 
+        var createdPlayer = Assets.ME.MainPlayerScene.Instantiate() as MainPlayer; 
 
         OnPlayerCreated(createdPlayer);
     }
 
     void CreateOtherPlayer() {
-        var createdPlayer = _otherPlayerScene.Instantiate() as OtherPlayer; 
+        var createdPlayer = Assets.ME.OtherPlayerScene.Instantiate() as OtherPlayer; 
 
         OnPlayerCreated(createdPlayer);
     }
