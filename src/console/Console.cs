@@ -3,16 +3,18 @@ using Godot.Collections;
 using System;
 using System.Threading.Tasks;
 
-enum LogSeverity {
+public enum LogSeverity {
+    Custom,
     Info,
     Warning,
     Error,
-    Network
+    Network,
+    Rpc
 }
 
 public partial class Console : Control
 {
-    static Console ME;
+    public static Console ME;
 
     [Export] private ScrollContainer _scrollContainer;
     [Export] private VBoxContainer _vboxContainer;
@@ -34,11 +36,11 @@ public partial class Console : Control
         ME = this;
 
         timer = new Timer();
-        AddChild(timer);
+        timer.ChangeParent(this);
         timer.Timeout += OnTimerTimeout;
 
         _consoleCommands = new ConsoleCommands(this);
-        AddChild(_consoleCommands);
+        _consoleCommands.ChangeParent(this);
 
         SetAlpha(0f);
 
@@ -138,7 +140,13 @@ public partial class Console : Control
         _textEdit.CallDeferred(TextEdit.MethodName.Clear);
     }
 
-    private Color? GetColorForSeverity(LogSeverity? severity) {
+    private async Task ScrollToBottom() {
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        _scrollContainer.SetDeferred(ScrollContainer.PropertyName.ScrollVertical, 999999);
+    }
+
+    private Color? GetColorForSeverity(LogSeverity severity) {
         switch (severity) {
             case LogSeverity.Info:
                 return Colors.GreenYellow;
@@ -152,18 +160,21 @@ public partial class Console : Control
             case LogSeverity.Network:
                 return Colors.CornflowerBlue;
 
+            case LogSeverity.Rpc:
+                return Colors.DarkSeaGreen;
+
             default:
                 return null;
         }
     }
 
-    private async Task ScrollToBottom() {
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-
-        _scrollContainer.SetDeferred(ScrollContainer.PropertyName.ScrollVertical, 999999);
+    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void Test() {
+        Log("Test");
     }
 
-    private void _Log(string text, LogSeverity? severity = null) {
+    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void _Log(string text, LogSeverity severity = LogSeverity.Custom) {
         var colorOrNull = GetColorForSeverity(severity);
         if (colorOrNull != null) {
             var color = (Color) colorOrNull;
@@ -214,5 +225,9 @@ public partial class Console : Control
 
     public static void LogNetwork(string text) {
         ME._Log(text, LogSeverity.Network);
+    }
+
+    public void LogRpc(string text) {
+        Rpc(MethodName._Log, $"[{NetworkManager.ME.PeerID}] {text}", (int) LogSeverity.Custom);
     }
 }

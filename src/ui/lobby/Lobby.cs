@@ -18,7 +18,9 @@ public partial class Lobby : Control
     }
 
     public override void _Ready() {
-		_startButton.Disabled = NetworkManager.ME.State == NetworkState.Client;
+		var isClient = NetworkManager.ME.State == NetworkState.Client;
+		_startButton.Disabled = isClient;
+		GD.PushWarning(isClient ? "Client" : "Server");
 
         foreach (var user in NetworkManager.ME.Users) {
 			AddUserToList(user);
@@ -49,7 +51,7 @@ public partial class Lobby : Control
 
 		labels.Add(label);
 
-		_namesContainer.AddChild(label);
+		label.ChangeParent(_namesContainer);
 	}
 
 	private void RemoveUserFromList(NetworkUser user) {

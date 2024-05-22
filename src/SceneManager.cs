@@ -27,7 +27,7 @@ public partial class SceneManager : Node
 
         CurrentScene = scene.Instantiate();
 
-        GetTree().Root.AddChild(CurrentScene);
+        CurrentScene.ChangeParent(GetTree().Root);
         GetTree().CurrentScene = CurrentScene;
     }
 

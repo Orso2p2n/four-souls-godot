@@ -19,6 +19,13 @@ public partial class NetworkManager : Node
     // Static
     public static NetworkManager ME;
 
+    // Getters
+    public int PeerID {
+        get {
+            return Multiplayer.GetUniqueId();
+        }
+    }
+
     // Variables
     public Array<NetworkUser> Users { get; set; } = new();
 

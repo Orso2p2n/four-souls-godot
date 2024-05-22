@@ -25,7 +25,7 @@ public partial class Game : Node
         ME = this;
 
         TurnManager = new TurnManager();
-        AddChild(TurnManager);
+        TurnManager.ChangeParent(this);
         
         // MultiplayerManager = new MultiplayerTest();
         // AddChild(MultiplayerManager);

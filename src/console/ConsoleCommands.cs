@@ -113,6 +113,7 @@ public partial class ConsoleCommands : Node
     private void InitCommands() {
         AddCommand("fps", ToggleFPS);
         AddCommand("print", Print);
+        AddCommand("chat", Chat);
     }
 
     // --- Commands ---
@@ -124,5 +125,9 @@ public partial class ConsoleCommands : Node
 
     public void Print(string text) {
         Console.LogInfo(text);
+    }
+
+    public void Chat(string text) {
+        Console.ME.LogRpc(text);
     }
 }

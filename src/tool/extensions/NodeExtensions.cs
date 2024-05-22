@@ -7,7 +7,6 @@ public static class NodeExtensions
             node.GetParent().RemoveChild(node);
         }
 
-        parent.AddChild(node);
-        node.Owner = parent;
+        parent.AddChild(node, forceReadableName: true);
     }
 }
