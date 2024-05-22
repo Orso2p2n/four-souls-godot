@@ -37,10 +37,15 @@ public partial class Game : Node
         
         Players = new Array<Player>();
 
-        CreateMainPlayer();
-        CreateOtherPlayer();
-        CreateOtherPlayer();
-        CreateOtherPlayer();
+        var users = NetworkManager.ME.Users;
+        foreach (var user in users) {
+            if (user.IsSelf) {
+                CreateMainPlayer();
+            }
+            else {
+                CreateOtherPlayer();
+            }
+        }
 
         TurnManager.StartTurn(Players[0]);
     }
@@ -64,6 +69,7 @@ public partial class Game : Node
 
     void OnPlayerCreated(Player player) {
         player.ChangeParent(_playersContainer);
+        player.Name = "Player" + (Players.Count + 1);
 
         var playerNumber = Players.Count;
         player.Init(playerNumber, _gameBoard.PlayerLocations[playerNumber]);

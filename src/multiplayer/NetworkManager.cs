@@ -118,7 +118,7 @@ public partial class NetworkManager : Node
 
     private void FinalizeHost() {
         var peer = new ENetMultiplayerPeer();
-		peer.CreateServer(Port);
+		peer.CreateServer(Port, maxClients: 3);
 		Multiplayer.MultiplayerPeer = peer;
 
         // Done

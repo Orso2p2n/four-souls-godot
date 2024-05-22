@@ -3,5 +3,14 @@
 [ext_resource type="PackedScene" uid="uid://fimnkt42gwdv" path="res://scenes/players/player.tscn" id="1_uqqj8"]
 [ext_resource type="Script" path="res://src/player/MainPlayer.cs" id="2_q24p3"]
 
-[node name="MainPlayer" instance=ExtResource("1_uqqj8")]
+[node name="MainPlayer" node_paths=PackedStringArray("_origin") instance=ExtResource("1_uqqj8")]
 script = ExtResource("2_q24p3")
+_origin = NodePath("Origin")
+
+[node name="Origin" type="Node3D" parent="." index="0"]
+
+[node name="Camera3D" type="Camera3D" parent="Origin" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 20, 0)
+fov = 45.0
+size = 0.355
+near = 0.001

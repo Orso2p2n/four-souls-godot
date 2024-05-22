@@ -1,7 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://b85e6y4il8iwr"]
+[gd_scene load_steps=3 format=3 uid="uid://b85e6y4il8iwr"]
 
 [ext_resource type="Script" path="res://src/PlayerLocation.cs" id="1_42mg6"]
+[ext_resource type="FontVariation" uid="uid://djoayo0umh5l4" path="res://assets/fonts/console/FiraCode_normal.tres" id="2_gh1tj"]
 
-[node name="PlayerLocation" type="Marker3D"]
+[node name="PlayerLocation" type="Marker3D" node_paths=PackedStringArray("_label")]
 gizmo_extents = 1.0
 script = ExtResource("1_42mg6")
+_label = NodePath("Label3D")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.5)
+text = "0"
+font = ExtResource("2_gh1tj")
+font_size = 200

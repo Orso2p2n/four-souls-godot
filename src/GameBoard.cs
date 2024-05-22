@@ -11,8 +11,13 @@ public partial class GameBoard : Node3D
     public override void _Ready() {
 		PlayerLocations = new Array<PlayerLocation>();
 
+		var i = 1;
 		foreach (var child in PlayerLocationsContainer.GetChildren()) {
-			PlayerLocations.Add(child as PlayerLocation);
+			var playerLocation = child as PlayerLocation;
+			PlayerLocations.Add(playerLocation);
+			playerLocation.SetNumber(i);
+			
+			i++;
 		}
     }
 }

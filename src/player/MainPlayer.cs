@@ -4,10 +4,15 @@ using System.Threading.Tasks;
 
 public partial class MainPlayer : Player
 {
+    [Export] private Node3D _origin;
+
     private static HUD Hud { get { return Game.ME.Hud; } }
 
     public override void Init(int playerNumber, PlayerLocation playerLocation) {
         base.Init(playerNumber, playerLocation);
+
+        _origin.GlobalPosition = playerLocation.GlobalPosition;
+        _origin.GlobalRotation = playerLocation.GlobalRotation;
 
         Hud.EndTurnButton.Pressed += EndActionPhase;
 
