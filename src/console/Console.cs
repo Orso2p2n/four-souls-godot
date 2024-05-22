@@ -123,12 +123,18 @@ public partial class Console : Control
         var arguments = members.Duplicate();
         arguments.RemoveAt(0);
 
-        if (_consoleCommands.TryCallCommand(commandName, arguments)) {
+        var command = _consoleCommands.GetCommand(commandName);
+        if (command == null) {
+            LogWarning($"Unknown command \"{enteredText}\".");
             return;
         }
 
+        if (command.allArgsAsOne) {
+            var commandNameLength = commandName.Length;
+            arguments = new Array<string>() { enteredText.Remove(0, commandNameLength+1) };
+        }
 
-        LogWarning($"Unknown command \"{enteredText}\".");
+        _consoleCommands.CallCommand(command, arguments);
     }
 
     private void DisableTextEdit() {

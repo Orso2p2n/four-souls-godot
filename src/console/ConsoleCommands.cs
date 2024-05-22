@@ -15,6 +15,7 @@ public partial class Command : Resource {
     public string name;
     public Callable callable;
     public Array<Argument> arguments;
+    public bool allArgsAsOne;
 }
 
 public partial class ConsoleCommands : Node
@@ -29,7 +30,7 @@ public partial class ConsoleCommands : Node
         InitCommands();
     }
 
-    private void AddCommand(string name, Delegate method) {
+    private void AddCommand(string name, Delegate method, bool allArgsAsOne = false) {
         var methodName = method.Method.Name;
 
         var allMethods = GetMethodList();
@@ -66,21 +67,21 @@ public partial class ConsoleCommands : Node
         }
         
         var callable = new Callable(this, methodName);
-        var command = new Command { name = name, callable = callable, arguments = arguments};
+        var command = new Command { name = name, callable = callable, arguments = arguments, allArgsAsOne = allArgsAsOne};
         Commands.Add(command);
     }
 
-    public bool TryCallCommand(string commandName, Array<string> arguments) {
+    public Command GetCommand(string commandName) {
         foreach (var command in Commands) {
             if (commandName == command.name) {
-                CallCommand(command, arguments);
-                return true;
+                return command;
             }
         }
-        return false;
+
+        return null;
     }
 
-    private void CallCommand(Command command, Array<string> passedArguments) {
+    public void CallCommand(Command command, Array<string> passedArguments) {
         var argCount = command.arguments.Count;
         var passedArgCount = passedArguments.Count;
 
@@ -113,7 +114,7 @@ public partial class ConsoleCommands : Node
     private void InitCommands() {
         AddCommand("fps", ToggleFPS);
         AddCommand("print", Print);
-        AddCommand("chat", Chat);
+        AddCommand("chat", Chat, true);
     }
 
     // --- Commands ---
