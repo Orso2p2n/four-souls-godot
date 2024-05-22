@@ -58,7 +58,7 @@ public partial class TurnManager : Node
 	}
 
 	private async void ProcessCurPhase() {
-		Game.Hud.SetPhase(CurPhase);
+		MainPlayer.ME.Hud.SetPhase(CurPhase);
 
 		switch (CurPhase) {
 			case TurnPhase.StartPhase_RechargeStep:

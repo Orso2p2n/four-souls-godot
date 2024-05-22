@@ -4,9 +4,14 @@ using System.Threading.Tasks;
 
 public partial class MainPlayer : Player
 {
-    [Export] private Node3D _origin;
+    public static MainPlayer ME { get; private set; }
 
-    private static HUD Hud { get { return Game.ME.Hud; } }
+    [Export] private Node3D _origin;
+    [Export] public HUD Hud { get; set; }
+
+    public override void _EnterTree() {
+        ME = this;
+    }
 
     public override void Init(int playerNumber, PlayerLocation playerLocation) {
         base.Init(playerNumber, playerLocation);

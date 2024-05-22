@@ -1,11 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://dmga6tho40pxg"]
+[gd_scene load_steps=6 format=3 uid="uid://dmga6tho40pxg"]
 
 [ext_resource type="PackedScene" uid="uid://fimnkt42gwdv" path="res://scenes/players/player.tscn" id="1_uqqj8"]
 [ext_resource type="Script" path="res://src/player/MainPlayer.cs" id="2_q24p3"]
+[ext_resource type="Script" path="res://src/ui/HUD.cs" id="3_bofyg"]
+[ext_resource type="PackedScene" uid="uid://lymx8t7asvv2" path="res://scenes/ui/priority_intention_panel.tscn" id="4_q2nwd"]
 
-[node name="MainPlayer" node_paths=PackedStringArray("_origin") instance=ExtResource("1_uqqj8")]
+[sub_resource type="LabelSettings" id="LabelSettings_xgxdv"]
+
+[node name="MainPlayer" node_paths=PackedStringArray("_origin", "Hud") instance=ExtResource("1_uqqj8")]
 script = ExtResource("2_q24p3")
 _origin = NodePath("Origin")
+Hud = NodePath("HUD")
 
 [node name="Origin" type="Node3D" parent="." index="0"]
 
@@ -14,3 +19,67 @@ transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 
 fov = 45.0
 size = 0.355
 near = 0.001
+
+[node name="HUD" type="Control" parent="." index="1" node_paths=PackedStringArray("Hand", "PhaseLabel", "EndTurnButton", "PriorityIntentionPanel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_bofyg")
+Hand = NodePath("Hand")
+PhaseLabel = NodePath("PhaseLabel")
+EndTurnButton = NodePath("EndTurnButton")
+PriorityIntentionPanel = NodePath("PriorityIntentionPanel")
+
+[node name="Hand" type="HBoxContainer" parent="HUD" index="0"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 192.0
+offset_top = -136.0
+offset_right = -192.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="PhaseLabel" type="Label" parent="HUD" index="1"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 256.0
+offset_bottom = 32.0
+label_settings = SubResource("LabelSettings_xgxdv")
+
+[node name="EndTurnButton" type="Button" parent="HUD" index="2"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -168.0
+offset_top = -56.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "End Turn ->"
+
+[node name="PriorityIntentionPanel" parent="HUD" index="3" instance=ExtResource("4_q2nwd")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 944.0
+offset_top = 456.0
+offset_right = 1136.0
+offset_bottom = 576.0
+grow_horizontal = 1
+grow_vertical = 1

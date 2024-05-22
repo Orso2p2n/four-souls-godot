@@ -31,13 +31,13 @@ public partial class CardResource : Resource
     // Structure
     public Texture2D topTextBoxTexture {
         get {
-            return StaticTextures.CardStructureTopBase;
+            return Assets.ME.CardStructureTopBase;
         }
     }
 
     public Texture2D botTextBoxTexture {
         get {
-            return StaticTextures.CardStructureBotBase;
+            return Assets.ME.CardStructureBotBase;
         }
     }
 

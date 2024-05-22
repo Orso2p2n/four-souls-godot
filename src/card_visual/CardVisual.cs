@@ -44,11 +44,11 @@ public partial class CardVisual : SubViewport
 			Texture2D texture = null;
 			switch (cardResource.SoulCount) {
 				case 1:
-					texture = StaticTextures.CardStructureAddon1Soul;
+					texture = Assets.ME.CardStructureAddon1Soul;
 					break;
 
 				case 2:
-					texture = StaticTextures.CardStructureAddon2Soul;
+					texture = Assets.ME.CardStructureAddon2Soul;
 					break;
 			}
 
@@ -56,7 +56,7 @@ public partial class CardVisual : SubViewport
 		}
 
 		if (cardResource.Charmed) {
-			Composition.CharmedTextureRect.Texture = StaticTextures.CardStructureAddonCharmed;
+			Composition.CharmedTextureRect.Texture = Assets.ME.CardStructureAddonCharmed;
 		}
 
 		await Composition.TitleLabel.SetText(cardResource.CardName);

@@ -6,23 +6,31 @@ public partial class Game : Node
 {
     public static Game ME { get; private set; }
 
-    [Export] private Node _playersContainer;
-    [Export] public HUD Hud;
-    [Export] public StackManager StackManager { get; private set; }
-
-    [ExportCategory("Scenes")]
+    [ExportGroup("Scenes")]
     [Export] private PackedScene _gameBoardScene;
     [Export] private PackedScene _mainPlayerScene;
     [Export] private PackedScene _otherPlayerScene;
 
     public Array<Player> Players { get; set; }
-    private GameBoard _gameBoard;
+    private Node _playersContainer;
+
+    public StackManager StackManager { get; set; }
 
     public TurnManager TurnManager { get; set; }
-    public MultiplayerTest MultiplayerManager { get; set; }
+
+    private GameBoard _gameBoard;
 
     public override void _EnterTree() {
         ME = this;
+
+        var cardFactory = new CardFactory();
+        cardFactory.ChangeParent(this);
+
+        _playersContainer = new Node { Name = "PlayersContainer" };
+        _playersContainer.ChangeParent(this);
+
+        StackManager = new StackManager();
+        StackManager.ChangeParent(this);
 
         TurnManager = new TurnManager();
         TurnManager.ChangeParent(this);

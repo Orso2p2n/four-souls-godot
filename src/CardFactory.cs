@@ -1,19 +1,16 @@
 using Godot;
 using System;
 
-public partial class CardManager : Node
+public partial class CardFactory : Node
 {
-    [Export] private PackedScene _cardScene;
-    [Export] private Node _cardContainer;
+    public static CardFactory ME { get; private set; }
 
-    public static CardManager ME { get; set; }
-
-    public override void _Ready() {
-        ME = this;
+    public override void _EnterTree() {
+        base._EnterTree();
     }
 
     public CardBase CreateCard(CardResource cardResource) {
-        CardBase card = (CardBase) _cardScene.Instantiate();
+        CardBase card = (CardBase) Assets.ME.CardScene.Instantiate();
 
         Script script = cardResource.Script;
         CardBase newCard = card.SafelySetScript<CardBase>(script);
@@ -25,7 +22,7 @@ public partial class CardManager : Node
 
         newCard.CardResource = cardResource;
 
-        newCard.ChangeParent(_cardContainer);
+        newCard.ChangeParent(this);
 
         newCard.Init();
 
