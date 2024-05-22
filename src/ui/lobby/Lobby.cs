@@ -15,10 +15,12 @@ public partial class Lobby : Control
         NetworkManager.ME.UserAdded += OnUserAdded;
         NetworkManager.ME.UserRemoved += OnUserRemoved;
         NetworkManager.ME.Multiplayer.ServerDisconnected += OnServerDisconnected;
+
+		NetworkManager.ME.GameState = GameState.InLobby;
     }
 
     public override void _Ready() {
-		var isClient = NetworkManager.ME.State == NetworkState.Client;
+		var isClient = NetworkManager.ME.Status == NetworkStatus.Client;
 		_startButton.Disabled = isClient;
 		GD.PushWarning(isClient ? "Client" : "Server");
 
@@ -63,7 +65,21 @@ public partial class Lobby : Control
 		}
 	}
 
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void StartRpc() {
+		Start();
+	}
+
+	private void Start() {
+		SceneManager.ME.GotoGame();
+	}
+
 	private void OnQuitButtonPressed() {
 		NetworkManager.ME.Disconnect();
+	}
+
+	private void OnStartButtonPressed() {
+		Rpc(MethodName.StartRpc);
+		CallDeferred(MethodName.Start);
 	}
 }

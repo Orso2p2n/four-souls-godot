@@ -74,4 +74,5 @@ anchor_bottom = 0.984375
 text = "Quit"
 metadata/_edit_use_anchors_ = true
 
+[connection signal="pressed" from="Panel/StartButton" to="." method="OnStartButtonPressed"]
 [connection signal="pressed" from="Panel/QuitButton" to="." method="OnQuitButtonPressed"]

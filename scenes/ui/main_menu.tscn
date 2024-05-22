@@ -5,7 +5,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mt84v"]
 bg_color = Color(0.20871, 0.20871, 0.20871, 1)
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("_hostButton", "_joinButton", "_addressPanel", "_addressLineEdit", "_connectButton")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("_hostButton", "_hostLocalButton", "_joinButton", "_addressPanel", "_addressLineEdit", "_connectButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tpqvg")
 _hostButton = NodePath("HostButton")
+_hostLocalButton = NodePath("HostLocalButton")
 _joinButton = NodePath("JoinButton")
 _addressPanel = NodePath("AddressPanel")
 _addressLineEdit = NodePath("AddressPanel/LineEdit")
@@ -24,26 +25,38 @@ metadata/_edit_vertical_guides_ = [576.0]
 [node name="HostButton" type="Button" parent="."]
 layout_mode = 2
 anchor_left = 0.444444
-anchor_top = 0.395062
+anchor_top = 0.37037
 anchor_right = 0.555556
-anchor_bottom = 0.467593
+anchor_bottom = 0.442901
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Host"
 metadata/_edit_use_anchors_ = true
 
+[node name="HostLocalButton" type="Button" parent="."]
+layout_mode = 2
+anchor_left = 0.444445
+anchor_top = 0.45679
+anchor_right = 0.555557
+anchor_bottom = 0.529321
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Host (Local)"
+metadata/_edit_use_anchors_ = true
+
 [node name="JoinButton" type="Button" parent="."]
 layout_mode = 2
 anchor_left = 0.444444
-anchor_top = 0.518519
+anchor_top = 0.54321
 anchor_right = 0.555556
-anchor_bottom = 0.592593
+anchor_bottom = 0.617284
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Join"
 metadata/_edit_use_anchors_ = true
 
 [node name="AddressPanel" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.333333
@@ -76,6 +89,7 @@ offset_right = -16.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
+text = "127.0.0.1"
 alignment = 1
 
 [node name="ConnectButton" type="Button" parent="AddressPanel"]
@@ -99,6 +113,7 @@ text = "X"
 metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="HostButton" to="." method="OnHostButtonPressed"]
+[connection signal="pressed" from="HostLocalButton" to="." method="OnHostLocalButtonPressed"]
 [connection signal="pressed" from="JoinButton" to="." method="OnJoinButtonPressed"]
 [connection signal="pressed" from="AddressPanel/ConnectButton" to="." method="OnConnectButtonPressed"]
 [connection signal="pressed" from="AddressPanel/CloseButton" to="." method="OnClosePanelButtonPressed"]

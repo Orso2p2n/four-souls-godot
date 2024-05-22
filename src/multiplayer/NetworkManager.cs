@@ -2,17 +2,27 @@ using Godot;
 using Godot.Collections;
 using System;
 
-public enum NetworkState {
-    Inactive,
+public enum NetworkStatus {
+    None,
     Host,
     Client
+}
+
+public enum GameState {
+    InMenu,
+    InLobby,
+    InGame
 }
 
 public partial class NetworkManager : Node
 {
     // Signals
     [Signal] public delegate void ServerCreatedEventHandler();
+    [Signal] public delegate void ServerCreationFailedEventHandler();
     [Signal] public delegate void ServerClosedEventHandler();
+
+    [Signal] public delegate void ConnectedToLobbyEventHandler();
+
     [Signal] public delegate void UserAddedEventHandler(NetworkUser user);
     [Signal] public delegate void UserRemovedEventHandler(NetworkUser user);
     
@@ -29,7 +39,8 @@ public partial class NetworkManager : Node
     // Variables
     public Array<NetworkUser> Users { get; set; } = new();
 
-    public NetworkState State { get; set; } = NetworkState.Inactive;
+    public NetworkStatus Status { get; set; } = NetworkStatus.None;
+    public GameState GameState { get; set; } = GameState.InMenu;
 
     public string Address { get; set; } = "";
     public const int Port = 45075;
@@ -48,9 +59,16 @@ public partial class NetworkManager : Node
 
     // --- Connected signals ---
     private void OnPeerConnected(long id) {
-		Console.LogNetwork($"Peer connected ID: {id}.");
+        Console.LogNetwork($"Peer connected {id}.");
 
-        AddUser(id);
+        if (Status == NetworkStatus.Host) {
+            var inLobby = GameState == GameState.InLobby;
+            RpcId(id, MethodName.ReceiveServerLobbyConfirmation, inLobby, Multiplayer.GetPeers());
+
+            if (!inLobby) {
+                Console.LogWarning($"Peer {id} tried to join while not in lobby.");
+            }
+        }
 	}
 
 	private void OnConnectedToServer() {
@@ -58,7 +76,7 @@ public partial class NetworkManager : Node
 	}
 
 	private void OnPeerDisconnected(long id) {
-		Console.LogNetwork($"Peer disconnected ID: {id}.");
+		Console.LogNetwork($"Peer disconnected {id}.");
 
         RemoveUser(id);
 	}
@@ -83,19 +101,31 @@ public partial class NetworkManager : Node
 	}
 
     // --- Host ---
-    public void Host() {
+    public void HostUpnp() {
         if (!InitUpnp()) {
+            EmitSignal(SignalName.ServerCreationFailed);
             return;
         }
 
+        FinalizeHost();
+    }
+
+    public void HostLocal() {
+        Address = "127.0.0.1";
+
+        FinalizeHost();
+    }
+
+    private void FinalizeHost() {
         var peer = new ENetMultiplayerPeer();
 		peer.CreateServer(Port);
 		Multiplayer.MultiplayerPeer = peer;
 
         // Done
+        Console.LogNetwork($"Server open at address {Address}.");
         EmitSignal(SignalName.ServerCreated);
-        AddUser(Multiplayer.MultiplayerPeer.GetUniqueId());
-        State = NetworkState.Host;
+        AddUser(PeerID);
+        Status = NetworkStatus.Host;
     }
 
     public void CloseServer() {
@@ -130,8 +160,6 @@ public partial class NetworkManager : Node
                 upnp.AddPortMapping(Port, Port, (string) ProjectSettings.GetSetting("application/config/name"), "TCP");
 
                 Address = upnp.QueryExternalAddress();
-
-                Console.LogNetwork($"Server open at address {Address}.");
 
                 return true;
             }
@@ -172,8 +200,31 @@ public partial class NetworkManager : Node
 		Multiplayer.MultiplayerPeer = peer;
 
         // Done
-        AddUser(Multiplayer.MultiplayerPeer.GetUniqueId());
-        State = NetworkState.Client;
+        Status = NetworkStatus.Client;
+    }
+
+    
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void ReceiveServerLobbyConfirmation(bool confirmed, int[] connectedPeers) {
+        if (confirmed) {
+            AddUser(1);
+
+            foreach (var peer in connectedPeers) {
+                AddUser(peer);
+            }
+
+            Rpc(MethodName.NewPeerInLobby, PeerID);
+            EmitSignal(SignalName.ConnectedToLobby);
+        }
+        else {
+            Disconnect();
+        }
+    }
+
+    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void NewPeerInLobby(int id) {
+        AddUser(id);
+        Console.LogNetwork($"Peer connected {id}.");
     }
 
     public void Disconnect() {
@@ -184,7 +235,7 @@ public partial class NetworkManager : Node
             Multiplayer.MultiplayerPeer.DisconnectPeer(1);
         }
 
-        State = NetworkState.Inactive;
+        Status = NetworkStatus.None;
     }
 
     // --- Users ---
@@ -201,6 +252,11 @@ public partial class NetworkManager : Node
 
     private void RemoveUser(long id) {
         var user = GetUserById(id);
+
+        if (user == null) {
+            return;
+        }
+
         Users.Remove(user);
 
         EmitSignal(SignalName.UserRemoved, user);

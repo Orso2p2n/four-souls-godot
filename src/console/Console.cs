@@ -175,11 +175,6 @@ public partial class Console : Control
     }
 
     [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-    public void Test() {
-        Log("Test");
-    }
-
-    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public void _Log(string text, LogSeverity severity = LogSeverity.Custom) {
         var colorOrNull = GetColorForSeverity(severity);
         if (colorOrNull != null) {

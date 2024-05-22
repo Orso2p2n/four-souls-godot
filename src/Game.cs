@@ -27,11 +27,12 @@ public partial class Game : Node
         TurnManager = new TurnManager();
         TurnManager.ChangeParent(this);
         
-        // MultiplayerManager = new MultiplayerTest();
-        // AddChild(MultiplayerManager);
+        NetworkManager.ME.GameState = GameState.InGame;
     }
 
     public override void _Ready() {
+        NetworkManager.ME.Multiplayer.ServerDisconnected += OnServerDisconnected;
+        
         CreateGameBoard();
         
         Players = new Array<Player>();
@@ -69,4 +70,8 @@ public partial class Game : Node
 
         Players.Add(player);
     }
+
+    private void OnServerDisconnected() {
+		SceneManager.ME.GotoMainMenu();
+	}
 }
