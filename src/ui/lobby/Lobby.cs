@@ -6,6 +6,8 @@ public partial class Lobby : Control
 {
 	[Export] private VBoxContainer _namesContainer;
 	[Export] private PackedScene _nameLabelScene;
+	[Export] private Button _startButton;
+	[Export] private Button _quitButton;
 
 	Array<LobbyNameLabel> labels = new();
 
@@ -16,7 +18,9 @@ public partial class Lobby : Control
     }
 
     public override void _Ready() {
-        foreach (var user in NetworkManager.ME.users) {
+		_startButton.Disabled = NetworkManager.ME.State == NetworkState.Client;
+
+        foreach (var user in NetworkManager.ME.Users) {
 			AddUserToList(user);
 		}
     }

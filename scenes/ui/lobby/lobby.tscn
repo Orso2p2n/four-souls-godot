@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/ui/lobby/Lobby.cs" id="1_whbjx"]
 [ext_resource type="PackedScene" uid="uid://c8l4ty825mcpr" path="res://scenes/ui/lobby/lobby_name_label.tscn" id="2_trvnw"]
 
-[node name="Lobby" type="Control" node_paths=PackedStringArray("_namesContainer")]
+[node name="Lobby" type="Control" node_paths=PackedStringArray("_namesContainer", "_startButton", "_quitButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,6 +13,8 @@ grow_vertical = 2
 script = ExtResource("1_whbjx")
 _namesContainer = NodePath("Panel/CenterContainer/VBoxContainer")
 _nameLabelScene = ExtResource("2_trvnw")
+_startButton = NodePath("Panel/StartButton")
+_quitButton = NodePath("Panel/QuitButton")
 metadata/_edit_vertical_guides_ = [576.0]
 
 [node name="Panel" type="Panel" parent="."]

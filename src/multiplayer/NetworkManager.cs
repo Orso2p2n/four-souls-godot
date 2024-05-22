@@ -2,6 +2,12 @@ using Godot;
 using Godot.Collections;
 using System;
 
+public enum NetworkState {
+    Inactive,
+    Host,
+    Client
+}
+
 public partial class NetworkManager : Node
 {
     // Signals
@@ -14,7 +20,9 @@ public partial class NetworkManager : Node
     public static NetworkManager ME;
 
     // Variables
-    public Array<NetworkUser> users = new();
+    public Array<NetworkUser> Users { get; set; } = new();
+
+    public NetworkState State { get; set; } = NetworkState.Inactive;
 
     public string Address { get; set; } = "";
     public const int Port = 45075;
@@ -32,26 +40,26 @@ public partial class NetworkManager : Node
     }
 
     // --- Connected signals ---
-    void OnPeerConnected(long id) {
+    private void OnPeerConnected(long id) {
 		Console.LogNetwork($"Peer connected ID: {id}.");
 
         AddUser(id);
 	}
 
-	void OnConnectedToServer() {
+	private void OnConnectedToServer() {
 		Console.LogNetwork($"Connected to server: {Address}.");
 	}
 
-	void OnPeerDisconnected(long id) {
+	private void OnPeerDisconnected(long id) {
 		Console.LogNetwork($"Peer disconnected ID: {id}.");
 
         RemoveUser(id);
 	}
 
-	void OnServerDisconnected() {
+	private void OnServerDisconnected() {
 		Console.LogWarning($"Disconnected from server: {Address}.");
 
-        users.Clear();
+        Users.Clear();
 	}
 
     // --- General ---
@@ -69,7 +77,9 @@ public partial class NetworkManager : Node
 
     // --- Host ---
     public void Host() {
-        InitUpnp();
+        if (!InitUpnp()) {
+            return;
+        }
 
         var peer = new ENetMultiplayerPeer();
 		peer.CreateServer(Port);
@@ -78,6 +88,7 @@ public partial class NetworkManager : Node
         // Done
         EmitSignal(SignalName.ServerCreated);
         AddUser(Multiplayer.MultiplayerPeer.GetUniqueId());
+        State = NetworkState.Host;
     }
 
     public void CloseServer() {
@@ -96,7 +107,7 @@ public partial class NetworkManager : Node
         EmitSignal(SignalName.ServerClosed);
     }
 
-    void InitUpnp() {
+    private bool InitUpnp() {
         Console.LogNetwork("Initializing UPNP...");
 
         upnp = new Upnp();
@@ -114,6 +125,8 @@ public partial class NetworkManager : Node
                 Address = upnp.QueryExternalAddress();
 
                 Console.LogNetwork($"Server open at address {Address}.");
+
+                return true;
             }
             else {
                 Console.LogError("Invalid Gateway.");
@@ -122,9 +135,11 @@ public partial class NetworkManager : Node
         else {
             Console.LogError("UPNP Discover failed!");
         }
+
+        return false;
     }
 
-    void CloseUpnp() {
+    private void CloseUpnp() {
         if (upnp == null) {
             return;
         }
@@ -151,6 +166,7 @@ public partial class NetworkManager : Node
 
         // Done
         AddUser(Multiplayer.MultiplayerPeer.GetUniqueId());
+        State = NetworkState.Client;
     }
 
     public void Disconnect() {
@@ -160,23 +176,25 @@ public partial class NetworkManager : Node
         else {
             Multiplayer.MultiplayerPeer.DisconnectPeer(1);
         }
+
+        State = NetworkState.Inactive;
     }
 
     // --- Users ---
-    void AddUser(long id) {
+    private void AddUser(long id) {
         var isHost = id == 1;
         var isSelf = id == Multiplayer.MultiplayerPeer.GetUniqueId();
         var user = new NetworkUser() { Id = id, IsHost = isHost, IsSelf = isSelf };
-        users.Add(user);
+        Users.Add(user);
 
         EmitSignal(SignalName.UserAdded, user);
 
         Console.LogNetwork($"Network User added with ID {id}.");
     }
 
-    void RemoveUser(long id) {
+    private void RemoveUser(long id) {
         var user = GetUserById(id);
-        users.Remove(user);
+        Users.Remove(user);
 
         EmitSignal(SignalName.UserRemoved, user);
 
@@ -185,8 +203,8 @@ public partial class NetworkManager : Node
         Console.LogNetwork($"Network User removed with ID {id}.");
     }
 
-    NetworkUser GetUserById(long id) {
-        foreach (var user in users) {
+    private NetworkUser GetUserById(long id) {
+        foreach (var user in Users) {
             if (user.Id == id) {
                 return user;
             }
