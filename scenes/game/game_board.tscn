@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d14u8obxjmagj"]
 
-[ext_resource type="Script" path="res://src/GameBoard.cs" id="1_hl5i2"]
+[ext_resource type="Script" path="res://src/world/GameBoard.cs" id="1_hl5i2"]
 [ext_resource type="Material" uid="uid://bk3o3kwsnfgs5" path="res://resources/materials/placeholder_table_mat.tres" id="2_l12cw"]
 [ext_resource type="PackedScene" uid="uid://b85e6y4il8iwr" path="res://scenes/game/player_location.tscn" id="2_mq36a"]
 

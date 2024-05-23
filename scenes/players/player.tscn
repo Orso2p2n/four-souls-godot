@@ -2,5 +2,8 @@
 
 [ext_resource type="Script" path="res://src/player/Player.cs" id="1_2b6my"]
 
-[node name="Player" type="Node"]
+[node name="Player" type="Node" node_paths=PackedStringArray("_origin")]
 script = ExtResource("1_2b6my")
+_origin = NodePath("Origin")
+
+[node name="Origin" type="Node3D" parent="."]

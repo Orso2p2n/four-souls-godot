@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d14u8obxjmagj" path="res://scenes/game/game_board.tscn" id="4_dlani"]
 [ext_resource type="Texture2D" uid="uid://ccs6c7243b5jq" path="res://assets/sprites/card_structure/top_base.png" id="5_1kme2"]
 [ext_resource type="PackedScene" uid="uid://dmga6tho40pxg" path="res://scenes/players/main_player.tscn" id="5_u4evt"]
-[ext_resource type="PackedScene" uid="uid://dltv4ohk4lff3" path="res://scenes/players/other_player.tscn" id="6_f2nda"]
+[ext_resource type="PackedScene" uid="uid://grldmoq4ssj0" path="res://scenes/players/online_player.tscn" id="6_1gq1l"]
 [ext_resource type="Texture2D" uid="uid://v86b1ke3rfd4" path="res://assets/sprites/card_structure/addon_1soul.png" id="6_jdiv0"]
 [ext_resource type="Texture2D" uid="uid://begecjjqyax8j" path="res://assets/sprites/card_structure/addon_2soul.png" id="7_h4yco"]
 [ext_resource type="Texture2D" uid="uid://cu6w6fdtly33g" path="res://assets/sprites/card_structure/addon_charmed.png" id="8_6mlph"]
@@ -18,7 +18,7 @@ DeckTypeLoot = ExtResource("2_43we5")
 CardScene = ExtResource("3_satnb")
 GameBoardScene = ExtResource("4_dlani")
 MainPlayerScene = ExtResource("5_u4evt")
-OtherPlayerScene = ExtResource("6_f2nda")
+OnlinePlayerScene = ExtResource("6_1gq1l")
 CardStructureBotBase = ExtResource("4_cmmp4")
 CardStructureTopBase = ExtResource("5_1kme2")
 CardStructureAddon1Soul = ExtResource("6_jdiv0")

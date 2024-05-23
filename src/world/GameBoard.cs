@@ -8,7 +8,7 @@ public partial class GameBoard : Node3D
 
 	public Array<PlayerLocation> PlayerLocations { get; set; }
 
-    public override void _Ready() {
+    public override void _EnterTree() {
 		PlayerLocations = new Array<PlayerLocation>();
 
 		var i = 1;

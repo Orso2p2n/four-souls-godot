@@ -44,7 +44,7 @@ public partial class StackManager : Node
     }
     
     public async Task StartPriority(int startPlayer) {
-        var players = Game.ME.Players;
+        var players = GameServer.ME.Players;
         var playersCount = players.Count;
 
         var max = startPlayer + playersCount;
@@ -56,7 +56,7 @@ public partial class StackManager : Node
             var j = i;
             if (i >= playersCount) j -= playersCount;
             
-            var player = Game.ME.Players[j];
+            var player = GameServer.ME.Players[j];
 
             player.AskForPriorityIntention();
         }
@@ -66,7 +66,7 @@ public partial class StackManager : Node
             var j = i;
             if (i >= playersCount) j -= playersCount;
             
-            var player = Game.ME.Players[j];
+            var player = GameServer.ME.Players[j];
 
             if (player.PriorityIntention == PriorityIntention.Deciding) {
                 await ToSignal(player, Player.SignalName.PriorityIntentionChosen);

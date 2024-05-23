@@ -23,8 +23,8 @@ public partial class TurnManager : Node
     private static Game Game { get { return Game.ME; } }
 	
 	// Variables
-	public Player ActivePlayer {get; set;}
-	public TurnPhase CurPhase {get; set;}
+	public Player ActivePlayer { get; set; }
+	public TurnPhase CurPhase { get; set; }
 
     public override void _EnterTree() {}
 
@@ -47,7 +47,11 @@ public partial class TurnManager : Node
 		ProcessCurPhase();
 	}
 
-	private void NextPhase() {
+	[Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	protected virtual void PhaseDone(int peerId = -1) {}
+
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	protected void NextPhase() {
 		var newPhase = CurPhase + 1;
 		if (newPhase > TurnPhase.EndPhase_Final) {
 			EndTurn();
@@ -94,7 +98,7 @@ public partial class TurnManager : Node
 				break;
 		}
 
-		NextPhase();
+		PhaseDone();
 	}
 
 	private async Task Process_StartPhase_RechargeStep() {

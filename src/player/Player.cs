@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 public partial class Player : Node
 {
+    [Export] protected Node3D _origin;
+
     // Signals
     [Signal] public delegate void EndActionPhaseRequestedEventHandler();
     [Signal] public delegate void PriorityIntentionChosenEventHandler();
@@ -34,6 +36,9 @@ public partial class Player : Node
     public virtual void Init(int playerNumber, PlayerLocation playerLocation) {
         PlayerNumber = playerNumber;
         PlayerLocation = playerLocation;
+
+        _origin.GlobalPosition = playerLocation.GlobalPosition;
+        _origin.GlobalRotation = playerLocation.GlobalRotation;
     }
 
     // Priority
@@ -92,12 +97,27 @@ public partial class Player : Node
         }
     }
 
-    protected virtual void AddCardInHand(CardBase card) {
+    private void AddCardInHand(CardBase card) {
+        Rpc(MethodName.AddCardInHandID, card.ID);
+        _AddCardInHand(card);
+    }
+
+    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void AddCardInHandID(int id) {
+        var card = CardFactory.ME.GetCard(id);
+        _AddCardInHand(card);
+    }
+
+    private void _AddCardInHand(CardBase card) {
         CardsInHand.Add(card);
         card.OnAddedToPlayerHand(this);
 
         PrintCardsInHand();
+
+        OnCardAddedToHand(card);
     }
+
+    protected virtual void OnCardAddedToHand(CardBase card) {}
 
     void PrintCardsInHand() {
         Console.Log("Cards in hand of player " + PlayerNumber + ":");

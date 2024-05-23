@@ -31,7 +31,8 @@ public partial class SpawnCardButton : MenuButton
 	}
 
 	public virtual CardBase SpawnCard(CardResource cardResource) {
-		var card = CardFactory.ME.CreateCard3D(cardResource, Vector3.Zero);
+		var card = CardFactory.ME.CreateCard(cardResource);
+		card.TurnInto3D(Vector3.Zero);
 
 		return card;
 	}

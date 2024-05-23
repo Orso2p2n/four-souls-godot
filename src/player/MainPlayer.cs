@@ -6,7 +6,6 @@ public partial class MainPlayer : Player
 {
     public static MainPlayer ME { get; private set; }
 
-    [Export] private Node3D _origin;
     [Export] public HUD Hud { get; set; }
 
     public override void _EnterTree() {
@@ -15,9 +14,6 @@ public partial class MainPlayer : Player
 
     public override void Init(int playerNumber, PlayerLocation playerLocation) {
         base.Init(playerNumber, playerLocation);
-
-        _origin.GlobalPosition = playerLocation.GlobalPosition;
-        _origin.GlobalRotation = playerLocation.GlobalRotation;
 
         Hud.EndTurnButton.Pressed += EndActionPhase;
 
@@ -55,8 +51,8 @@ public partial class MainPlayer : Player
         Hud.ToggleEndTurnButton(false);
     }
 
-    protected override void AddCardInHand(CardBase card) {
-        base.AddCardInHand(card);
+    protected override void OnCardAddedToHand(CardBase card) {
+        base.OnCardAddedToHand(card);
 
         card.TurnIntoControl(Hud.Hand);
 

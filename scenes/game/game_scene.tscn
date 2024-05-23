@@ -1,10 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqrcg6mefh4c6"]
+[gd_scene load_steps=7 format=3 uid="uid://cqrcg6mefh4c6"]
 
-[ext_resource type="Script" path="res://src/game/Game.cs" id="1_ctgsk"]
+[ext_resource type="Script" path="res://src/game/GameScene.cs" id="1_secrt"]
 [ext_resource type="Script" path="res://src/debug/DebugUI.cs" id="2_8xbdr"]
-[ext_resource type="PackedScene" uid="uid://d14u8obxjmagj" path="res://scenes/game/game_board.tscn" id="2_ndw8r"]
-[ext_resource type="PackedScene" uid="uid://dmga6tho40pxg" path="res://scenes/players/main_player.tscn" id="3_xm1wf"]
-[ext_resource type="PackedScene" uid="uid://dltv4ohk4lff3" path="res://scenes/players/other_player.tscn" id="4_by42d"]
 [ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardInWorld.cs" id="8_x8m5e"]
 [ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardInHandButton.cs" id="9_3l4qs"]
 
@@ -19,12 +16,7 @@ ambient_light_color = Color(0.5, 0.5, 0.5, 1)
 reflected_light_source = 1
 
 [node name="GameScene" type="Node3D"]
-
-[node name="Game" type="Node" parent="."]
-script = ExtResource("1_ctgsk")
-_gameBoardScene = ExtResource("2_ndw8r")
-_mainPlayerScene = ExtResource("3_xm1wf")
-_otherPlayerScene = ExtResource("4_by42d")
+script = ExtResource("1_secrt")
 
 [node name="Debug" type="Node" parent="."]
 
@@ -127,8 +119,6 @@ transform = Transform3D(0.92388, -0.270598, 0.270598, 0, 0.707107, 0.707107, -0.
 light_energy = 5.0
 directional_shadow_mode = 0
 sky_mode = 1
-
-[node name="CardContainer" type="Node" parent="."]
 
 [connection signal="pressed" from="Debug/DebugUI/OpenButton" to="Debug/DebugUI" method="_on_toggle_button_pressed"]
 [connection signal="gui_input" from="Debug/DebugUI/Menu" to="Debug/DebugUI" method="_on_menu_gui_input"]

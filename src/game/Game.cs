@@ -6,11 +6,11 @@ public partial class Game : Node
 {
     public static Game ME { get; private set; }
 
-    public Array<Player> Players { get; set; }
     private Node _playersContainer;
+    public Array<Player> Players { get; set; }
 
+    public CardFactory CardFactory { get; set; }
     public StackManager StackManager { get; set; }
-
     public TurnManager TurnManager { get; set; }
 
     private GameBoard _gameBoard;
@@ -18,59 +18,74 @@ public partial class Game : Node
     public override void _EnterTree() {
         ME = this;
 
-        var cardFactory = new CardFactory();
-        cardFactory.ChangeParent(this);
+        Players = new Array<Player>();
 
         _playersContainer = new Node { Name = "PlayersContainer" };
         _playersContainer.ChangeParent(this);
 
-        StackManager = new StackManager();
-        StackManager.ChangeParent(this);
-
-        TurnManager = new TurnManager();
-        TurnManager.ChangeParent(this);
-        
-        NetworkManager.ME.GameState = GameState.InGame;
-    }
-
-    public override void _Ready() {
-        NetworkManager.ME.Multiplayer.ServerDisconnected += OnServerDisconnected;
+        CreateCardFactory();
+        CreateStackManager();
+        CreateTurnManager();
         
         CreateGameBoard();
-        
-        Players = new Array<Player>();
 
+        CreatePlayers();
+
+        NetworkManager.ME.GameState = GameState.InGame;
+        NetworkManager.ME.Multiplayer.ServerDisconnected += OnServerDisconnected;
+    }
+
+    public override void _Ready() {        
+        TurnManager.StartTurn(Players[0]);
+    }
+
+    // --- Systems creation ---
+    protected virtual void CreateCardFactory() {
+        if (CardFactory != null) {
+            return;
+        }
+
+        CardFactory = new CardFactory();
+        CardFactory.ChangeParent(this);
+    }
+
+    protected virtual void CreateStackManager() {
+        throw new NotImplementedException();
+    }
+
+    protected virtual void CreateTurnManager() {
+        throw new NotImplementedException();
+    }
+
+    protected void CreateGameBoard() {
+        _gameBoard = Assets.ME.GameBoardScene.Instantiate() as GameBoard;
+        _gameBoard.ChangeParent(this);
+    }
+
+    // --- Players creation ---
+    protected void CreatePlayers() {
         var users = NetworkManager.ME.Users;
         foreach (var user in users) {
             if (user.IsSelf) {
                 CreateMainPlayer();
             }
             else {
-                CreateOtherPlayer();
+                CreateOnlinePlayer();
             }
         }
-
-        TurnManager.StartTurn(Players[0]);
     }
 
-    void CreateGameBoard() {
-        _gameBoard = Assets.ME.GameBoardScene.Instantiate() as GameBoard;
-        _gameBoard.ChangeParent(this);
-    }
-
-    void CreateMainPlayer() {
+    protected void CreateMainPlayer() {
         var createdPlayer = Assets.ME.MainPlayerScene.Instantiate() as MainPlayer; 
-
         OnPlayerCreated(createdPlayer);
     }
 
-    void CreateOtherPlayer() {
-        var createdPlayer = Assets.ME.OtherPlayerScene.Instantiate() as OtherPlayer; 
-
+    protected void CreateOnlinePlayer() {
+        var createdPlayer = Assets.ME.OnlinePlayerScene.Instantiate() as OnlinePlayer; 
         OnPlayerCreated(createdPlayer);
     }
 
-    void OnPlayerCreated(Player player) {
+    protected void OnPlayerCreated(Player player) {
         player.ChangeParent(_playersContainer);
         player.Name = "Player" + (Players.Count + 1);
 
@@ -80,6 +95,7 @@ public partial class Game : Node
         Players.Add(player);
     }
 
+    // --- Network ---
     private void OnServerDisconnected() {
 		SceneManager.ME.GotoMainMenu();
 	}

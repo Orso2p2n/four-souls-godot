@@ -1,30 +1,13 @@
 using Godot;
 using System;
-using System.Threading.Tasks;
 
 public partial class OtherPlayer : Player
 {
-    public override void AskForPriorityIntention() {
-        base.AskForPriorityIntention();
+    [Export] private MultiCardsZone _handZone;
 
-        _ = RandomPriorityAfterRandomTime();
+    protected override void OnCardAddedToHand(CardBase card) {
+        base.OnCardAddedToHand(card);
 
-        
-    }
-
-    async Task RandomPriorityAfterRandomTime() {
-        var rng = new RandomNumberGenerator();
-
-        var time = rng.RandfRange(0f, 0f);
-        var decision = rng.RandiRange(0, 1);
-
-        await ToSignal(GetTree().CreateTimer(time), SceneTreeTimer.SignalName.Timeout);
-
-        if (decision == 0) {
-            PriorityIntentionNo();
-        }
-        else {
-            PriorityIntentionYes();
-        }
+        _handZone.AddCard(card);
     }
 }

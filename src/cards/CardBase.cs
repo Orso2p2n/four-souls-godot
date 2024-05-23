@@ -46,6 +46,8 @@ public partial class CardBase : Node
 	public Array<Player> PlayerOwnerAsArray { get; set; }
 	public CardState State { get; set; }
 
+	public int ID;
+
 	// Hand logic
 	public virtual bool CanBeInHand {
 		get {
