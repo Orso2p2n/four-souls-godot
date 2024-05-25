@@ -1,9 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://cqrcg6mefh4c6"]
+[gd_scene load_steps=13 format=3 uid="uid://cqrcg6mefh4c6"]
 
 [ext_resource type="Script" path="res://src/game/GameScene.cs" id="1_secrt"]
 [ext_resource type="Script" path="res://src/debug/DebugUI.cs" id="2_8xbdr"]
+[ext_resource type="Resource" uid="uid://b1u33unakingl" path="res://resources/cards/loot/001_a_penny.tres" id="4_ubaxr"]
+[ext_resource type="Resource" uid="uid://ccdiyac7a8igy" path="res://resources/cards/loot/002_two_cents.tres" id="5_eb1os"]
+[ext_resource type="Resource" uid="uid://lahin0xd7amy" path="res://resources/cards/loot/003_three_cents.tres" id="6_exnde"]
+[ext_resource type="Resource" uid="uid://c38s6awwxj462" path="res://resources/cards/loot/004_four_cents.tres" id="7_uwrim"]
+[ext_resource type="Resource" uid="uid://dfcugmaa5b67" path="res://resources/cards/loot/005_a_nickel.tres" id="8_8ho2u"]
 [ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardInWorld.cs" id="8_x8m5e"]
 [ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardInHandButton.cs" id="9_3l4qs"]
+[ext_resource type="Resource" uid="uid://cl7c3t60fv1ne" path="res://resources/cards/loot/006_a_dime.tres" id="9_j230f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5t7t"]
 bg_color = Color(0.301961, 0.301961, 0.301961, 0.670588)
@@ -85,7 +91,7 @@ grow_vertical = 2
 text = "Spawn Card"
 flat = false
 script = ExtResource("8_x8m5e")
-_cardResourcesDir = "res://resources/cards"
+_cardResources = Array[Resource]([ExtResource("4_ubaxr"), ExtResource("5_eb1os"), ExtResource("6_exnde"), ExtResource("7_uwrim"), ExtResource("8_8ho2u"), ExtResource("9_j230f")])
 
 [node name="PopupMenu" type="PopupMenu" parent="Debug/DebugUI/Menu/SpawnCardButton"]
 
@@ -105,7 +111,7 @@ grow_vertical = 2
 text = "Spawn Card in hand"
 flat = false
 script = ExtResource("9_3l4qs")
-_cardResourcesDir = "res://resources/cards"
+_cardResources = Array[Resource]([ExtResource("4_ubaxr"), ExtResource("5_eb1os"), ExtResource("6_exnde"), ExtResource("7_uwrim"), ExtResource("8_8ho2u"), ExtResource("9_j230f")])
 
 [node name="PopupMenu" type="PopupMenu" parent="Debug/DebugUI/Menu/SpawnCardInHandButton"]
 

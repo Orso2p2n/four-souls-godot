@@ -4,14 +4,14 @@ using System;
 
 public partial class SpawnCardButton : MenuButton
 {
-	[Export(PropertyHint.Dir)] private string _cardResourcesDir;
+	// private string _cardResourcesDir = "user://resources/cards";
 	
-	private Array<CardResource> _cardResources;
+	[Export] private Array<CardResource> _cardResources;
 
 	public override void _Ready() {
 		var popup = GetPopup();
 		
-		_cardResources = Assets.GetAllResourcesOfTypeInPath<CardResource>(_cardResourcesDir);
+		// _cardResources = Assets.GetAllResourcesOfTypeInPath<CardResource>(_cardResourcesDir);
 
 		var i = 0;
 		foreach (var cardResource in _cardResources) {
