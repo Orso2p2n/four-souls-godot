@@ -10,7 +10,7 @@ public partial class MultiCardsZone : Node3D
 	public Array<Card3D> Cards { get; set; } = new();
 
 	public void AddCard(CardBase card) {
-		card.TurnInto3D();
+		card.Show3D();
 
 		Cards.Add(card.Card3d);
 

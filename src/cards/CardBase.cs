@@ -90,8 +90,8 @@ public partial class CardBase : Node
 
 
 	// Appearance in-world
-	public void TurnInto3D(Vector3? atPos = null) {
-		CardControl.Visible = false;
+	public void Show3D(Vector3? atPos = null, bool hideControl = true) {
+		CardControl.Visible = !hideControl;
 		Card3d.Visible = true;
 
 		if (atPos != null) {
@@ -99,8 +99,8 @@ public partial class CardBase : Node
 		}
 	}
 
-	public void TurnIntoControl(Control parent = null) {
-		Card3d.Visible = false;
+	public void ShowControl(Control parent = null, bool hide3D = true) {
+		Card3d.Visible = !hide3D;
 		CardControl.Visible = true;
 
 		if (parent != null) {

@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 
 public partial class Card3D : Node3D
 {
-	[Export] private Card3DSprite _sprite3D;
+	[Export] private Card3DSprite _sprite;
 	[Export] private Card3DVisualElement _shadow;
 
 	public CardBase CardBase { get; set; }
+
+	public bool FaceDown;
 
 	public Vector2 Position2D {
 		get {
@@ -25,6 +27,8 @@ public partial class Card3D : Node3D
 		
 		Visible = false;
 		cardBase.CardVisual.TextureRefreshed += RefreshSpriteTexture;
+
+		_sprite.SetBackTexture(cardBase.CardResource.backTexture);
 	}
 
     public override void _Process(double delta) {
@@ -43,12 +47,39 @@ public partial class Card3D : Node3D
 
     public override void _PhysicsProcess(double delta) {
 		var lerpSpeed = 0.3f;
-		_sprite3D.LerpPosition(this, lerpSpeed);
+		_sprite.LerpPosition(this, lerpSpeed);
 		_shadow.LerpPosition(this, lerpSpeed);
     }
 
     public void RefreshSpriteTexture(ViewportTexture texture) {
-		_sprite3D.Texture = texture;
+		_sprite.SetFrontTexture(texture);
+	}
+
+	public void Flip(bool instant = false) {
+		SetFace(!FaceDown, instant);
+	}
+
+	public void FlipUp(bool instant = false) {
+		SetFace(true, instant);
+	}
+
+	public void FlipDown(bool instant = false) {
+		SetFace(false, instant);
+	}
+
+	public void SetFace(bool down, bool instant = false) {
+		FaceDown = down;
+
+		var targetRotZ = down ? -180 : 180;
+		var targetRot = _sprite.BaseRotation with { Z = targetRotZ };
+
+		if (instant) {
+			_sprite.BaseRotation = targetRot;
+			return;
+		}
+
+		var tween = _sprite.CreateTween();
+		tween.TweenProperty(_sprite, "BaseRotation", targetRot, 0.25f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
 	}
 
 	void OnClicked() {
@@ -56,8 +87,8 @@ public partial class Card3D : Node3D
 
 		_dragged = true;
 
-		_sprite3D.TargetHeight = 0.5f;
-		_sprite3D.TargetOffset2D = Vector2.Up * 0.25f;
+		_sprite.TargetHeight = 0.5f;
+		_sprite.TargetOffset2D = Vector2.Up * 0.25f;
 	}
 
 	void OnReleased() {
@@ -65,8 +96,8 @@ public partial class Card3D : Node3D
 
 		_dragged = false;
 
-		_sprite3D.TargetHeight = 0f;
-		_sprite3D.TargetOffset2D = Vector2.Zero;
+		_sprite.TargetHeight = 0f;
+		_sprite.TargetOffset2D = Vector2.Zero;
 	}
 
 	void _on_area_3d_mouse_entered() {}

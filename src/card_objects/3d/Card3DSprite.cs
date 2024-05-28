@@ -3,6 +3,9 @@ using System;
 
 public partial class Card3DSprite : Card3DVisualElement
 {
+	[Export] public Sprite3D Front;
+	[Export] public Sprite3D Back;
+
 	public override Vector2 Position2D {
 		get {
 			return Position.GetXZ() - _offset2D;
@@ -46,5 +49,13 @@ public partial class Card3DSprite : Card3DVisualElement
 				Height = TargetHeight;
 			}
 		}
+	}
+
+	public void SetFrontTexture(Texture2D texture) {
+		Front.Texture = texture;
+	}
+
+	public void SetBackTexture(Texture2D texture) {
+		Back.Texture = texture;
 	}
 }

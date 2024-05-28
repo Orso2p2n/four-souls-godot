@@ -54,7 +54,7 @@ public partial class MainPlayer : Player
     protected override void OnCardAddedToHand(CardBase card) {
         base.OnCardAddedToHand(card);
 
-        card.TurnIntoControl(Hud.Hand);
+        card.ShowControl(Hud.Hand);
 
         card.CardControl.CustomMinimumSize = new Vector2(Hud.Hand.Size.Y * 0.7f, 0);
     }

@@ -1,12 +1,12 @@
 using Godot;
 using System;
 
-public partial class Card3DVisualElement : Sprite3D
+public partial class Card3DVisualElement : Node3D
 {
 	[Export] private bool _canRotate3d;
 	// [Export] private bool _canRotate2d;
 
-	private Vector3 _baseRotation;
+	public Vector3 BaseRotation { get; set; }
 	private Vector3 _offsetRotation;
 	private Vector3 _oldRot;
 
@@ -20,19 +20,16 @@ public partial class Card3DVisualElement : Sprite3D
 	}
 
     public override void _Ready() {
-		_baseRotation = RotationDegrees;
+		BaseRotation = RotationDegrees;
     }
 
     public override void _Process(double delta) {
-		var rot = _baseRotation + _offsetRotation;
+		var rot = BaseRotation + _offsetRotation;
 
 		if (_oldRot != rot) {
 			_oldRot = rot;
 			RotationDegrees = rot;
-			// Console.Log("Base rotation: " + _baseRotation + ", Offset Rotation: " + _offsetRotation + ", Rotation: " + rot);
 		}
-
-
     }
 
     virtual public void LerpPosition(Card3D card3D, float lerpSpeed) {

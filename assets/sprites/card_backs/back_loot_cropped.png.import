@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djppedhwfrccd"
-path.bptc="res://.godot/imported/back_loot.png-fe088d3d5f911ebb5a3cca4d26a526dc.bptc.ctex"
+uid="uid://cjqakrjj8mgjq"
+path.s3tc="res://.godot/imported/back_loot_cropped.png-bf6d832afde054b71a634b668c988231.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,13 +11,13 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/card_backs/back_loot.png"
-dest_files=["res://.godot/imported/back_loot.png-fe088d3d5f911ebb5a3cca4d26a526dc.bptc.ctex"]
+source_file="res://assets/sprites/card_backs/back_loot_cropped.png"
+dest_files=["res://.godot/imported/back_loot_cropped.png-bf6d832afde054b71a634b668c988231.s3tc.ctex"]
 
 [params]
 
 compress/mode=2
-compress/high_quality=true
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
