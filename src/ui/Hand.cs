@@ -17,17 +17,29 @@ public partial class Hand : Control
 	private float _cardSeparation;
 
 	public override void _Ready() {
-		_cardHeight = Size.Y / 0.75f;
-		_cardHeightWhenHovered = _cardHeight * 1.33f;
+        OnResized();
         GetViewport().PhysicsObjectPickingSort = true;
 	}
+
+    public async void OnResized() {
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+
+        _cardHeight = Size.Y / 0.75f;
+		_cardHeightWhenHovered = _cardHeight * 1.33f;
+
+        if (Cards.Count > 0) {
+            _cardWidth = _cardHeight * Cards[0].Ratio;
+            _cardSeparation = _cardWidth * 0.75f;
+        }
+
+        RearrangeCards(true);
+    }
 
 	public void AddCard(CardBase card) {
 		var cardInHand = _cardInHandScene.Instantiate() as CardInHand;
 		cardInHand.ChangeParent(this);
 		cardInHand.Init(card, this);
 
-		cardInHand.SetTargetHeight(_cardHeight, true);
         cardInHand.PositionInHand = Cards.Count;
         cardInHand.ZIndex = -1;
 
@@ -55,7 +67,7 @@ public partial class Hand : Control
         }
     }
 
-	private void RearrangeCards() {
+	private void RearrangeCards(bool instant = false) {
 		var cardsCount = Cards.Count;
 
 		if (cardsCount == 0) {
@@ -77,10 +89,13 @@ public partial class Hand : Control
 
             // Calc X
 			var x = Mathf.Lerp(0, Size.X, lerpVal);
-			card.SetTargetPosition(new Vector2(GlobalPosition.X + x, GlobalPosition.Y));
+			card.SetTargetPosition(new Vector2(GlobalPosition.X + x, GlobalPosition.Y), instant);
 
             // Reset rotation
             card.SetTargetRotation(0f);
+
+            // Reset height
+            card.SetTargetHeight(_cardHeight, true);
 		}
 
         // Calculate rotation and y

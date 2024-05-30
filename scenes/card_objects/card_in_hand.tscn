@@ -24,7 +24,6 @@ expand_margin_bottom = 5.0
 size = Vector2(0, 0)
 
 [node name="CardInHand" type="AspectRatioContainer" node_paths=PackedStringArray("_textureRect", "_area2D")]
-anchors_preset = -1
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2

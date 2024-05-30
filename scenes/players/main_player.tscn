@@ -82,3 +82,5 @@ offset_right = 1136.0
 offset_bottom = 576.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[connection signal="resized" from="HUD/Hand" to="HUD/Hand" method="OnResized"]
