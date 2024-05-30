@@ -17,7 +17,6 @@ public partial class CardBase : Node
 	[Export] public CardVisual CardVisual { get; set; }
 
 	[Export] public Card3D Card3d { get; set; }
-	[Export] public CardControl CardControl { get; set; }
 
 	// Resource stuff
 	public CardResource CardResource { get; set; }
@@ -65,11 +64,8 @@ public partial class CardBase : Node
 
 	public virtual void Init() {
 		Card3d.Init(this);
-		CardControl.Init(this);
+		// CardControl.Init(this);
 		CardVisual.Init(this);
-
-		CardControl.OnClicked += OnControlClicked;
-		CardControl.OnReleased += OnControlReleased;
 	}
 
 	public void Destroy() {
@@ -77,35 +73,13 @@ public partial class CardBase : Node
 		QueueFree();
 	}
 
-	// Control Signals
-	void OnControlClicked() {
-		Console.Log($"Card Control {CardName} clicked.");
-		
-		TryPlayFromHand();
-	}
-
-	void OnControlReleased() {
-		
-	}
-
-
 	// Appearance in-world
-	public void Show3D(Vector3? atPos = null, bool hideControl = true) {
-		CardControl.Visible = !hideControl;
+	public void Show3D() {
 		Card3d.Visible = true;
-
-		if (atPos != null) {
-			Card3d.Position = (Vector3) atPos;
-		}
 	}
 
-	public void ShowControl(Control parent = null, bool hide3D = true) {
-		Card3d.Visible = !hide3D;
-		CardControl.Visible = true;
-
-		if (parent != null) {
-			CardControl.ChangeParent(parent);
-		}
+	public void Hide3D() {
+		Card3d.Visible = false;
 	}
 
 

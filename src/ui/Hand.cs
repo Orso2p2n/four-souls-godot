@@ -1,0 +1,176 @@
+using Godot;
+using Godot.Collections;
+using System;
+
+public partial class Hand : Control
+{
+	[Export] private PackedScene _cardInHandScene;
+
+	public Array<CardInHand> Cards { get; set; } = new();
+
+    private Array<CardInHand> _cardsHovered = new();
+    private CardInHand _curCardHovered;
+
+	private float _cardHeight;
+	private float _cardHeightWhenHovered;
+	private float _cardWidth;
+	private float _cardSeparation;
+
+	public override void _Ready() {
+		_cardHeight = Size.Y / 0.75f;
+		_cardHeightWhenHovered = _cardHeight * 1.33f;
+        GetViewport().PhysicsObjectPickingSort = true;
+	}
+
+	public void AddCard(CardBase card) {
+		var cardInHand = _cardInHandScene.Instantiate() as CardInHand;
+		cardInHand.ChangeParent(this);
+		cardInHand.Init(card, this);
+
+		cardInHand.SetTargetHeight(_cardHeight, true);
+        cardInHand.PositionInHand = Cards.Count;
+        cardInHand.ZIndex = -1;
+
+        _cardWidth = _cardHeight * cardInHand.Ratio;
+        _cardSeparation = _cardWidth * 0.75f;
+
+		Cards.Add(cardInHand);
+
+		RearrangeCards();
+	}
+
+    private float CalculateLerpVal(int cardsCount, int i) {
+        var widthTakenByCards = _cardSeparation * cardsCount;
+
+		var cardWidthRatio = _cardSeparation / Size.X;
+        var widthRatioTakenByCards = cardWidthRatio * cardsCount;
+        
+        if (widthTakenByCards > Size.X + _cardSeparation) { // Too many cards
+            return i / (cardsCount - 1f);
+        }
+        else {
+            var lerpVal = i * cardWidthRatio;
+            lerpVal += 0.5f - ((widthRatioTakenByCards - cardWidthRatio) / 2);
+            return lerpVal;
+        }
+    }
+
+	private void RearrangeCards() {
+		var cardsCount = Cards.Count;
+
+		if (cardsCount == 0) {
+			return;
+		}
+        
+        float distBetweenCards = _cardSeparation;
+
+        // Calculate X
+		for (int i = 0; i < cardsCount; i++) {
+			var card = Cards[i];
+
+			float lerpVal = CalculateLerpVal(cardsCount, i);
+
+            if (i == 1) {
+                var oldLerpVal = CalculateLerpVal(cardsCount, 0);
+                distBetweenCards = (lerpVal - oldLerpVal) * Size.X;
+            }
+
+            // Calc X
+			var x = Mathf.Lerp(0, Size.X, lerpVal);
+			card.SetTargetPosition(new Vector2(GlobalPosition.X + x, GlobalPosition.Y));
+
+            // Reset rotation
+            card.SetTargetRotation(0f);
+		}
+
+        // Calculate rotation and y
+        var oldY = 0f;
+        var distFactor = distBetweenCards / _cardWidth;
+        for (int i = Mathf.CeilToInt(cardsCount/2f); i < cardsCount; i++) {
+            var card = Cards[i];
+            var mirrorIdx = (cardsCount - i) - 1;
+            var mirrorCard = Cards[mirrorIdx];
+
+			float lerpVal = CalculateLerpVal(cardsCount, i);
+
+            // Calc rotation
+            var maxRot = 10f;
+            var rot = Mathf.Lerp(-maxRot, maxRot, lerpVal);
+            card.SetTargetRotation(rot);
+            mirrorCard.SetTargetRotation(-rot);
+
+            // Calc Y
+            var angRad = Mathf.DegToRad(Mathf.Abs(rot));
+            var y = (Mathf.Sin(angRad) * _cardWidth) * 0.75f * distFactor;
+
+            card.SetTargetYBonus(y + oldY);
+            mirrorCard.SetTargetYBonus(y + oldY);
+
+            oldY += y * 2;
+        }
+	}
+
+    public void CardMouseEnter(CardInHand card) {
+        _cardsHovered.Add(card);
+
+        if (_curCardHovered == null) {
+            StartHoveringCard(card);
+        }
+    }
+
+    public void CardMouseExit(CardInHand card) {
+        _cardsHovered.Remove(card);
+
+        if (_curCardHovered == card) {
+            StopHoveringCard();
+            
+            if (_cardsHovered.Count > 0) {
+                StartHoveringCard(_cardsHovered[0]);
+            }
+        }
+    }
+
+    private void StartHoveringCard(CardInHand cardToHover) {
+        _curCardHovered = cardToHover;
+
+        for (int i = 0; i < Cards.Count; i++) {
+			var card = Cards[i];
+
+            if (card == cardToHover) {
+                continue;
+            }
+
+            var diff = card.PositionInHand - cardToHover.PositionInHand;
+            var offset = (_cardSeparation / 2) / diff;
+
+            card.SetTargetPositionOffset(new Vector2(offset, 0));
+        }
+
+        cardToHover.SetTargetPositionOffset(Vector2.Down * (Size.Y - _cardHeightWhenHovered - cardToHover.TargetYBonus));
+        cardToHover.SetTargetRotationOverride(0, true);
+        cardToHover.SetTargetHeight(_cardHeightWhenHovered, true);
+        cardToHover.ZIndex = 0;
+
+        // Console.Log("Start hovering card " + cardToHover.CardBase.CardName);
+    }
+
+    private void StopHoveringCard() {
+        if (_curCardHovered == null) {
+            return;
+        }
+
+        for (int i = 0; i < Cards.Count; i++) {
+			var card = Cards[i];
+
+            card.SetTargetPositionOffset(Vector2.Zero);
+        }
+
+        _curCardHovered.SetTargetRotationOverride(-1);
+        _curCardHovered.SetTargetHeight(_cardHeight);
+        _curCardHovered.ZIndex = -1;
+
+        // Console.LogWarning("Stop hovering card " + _curCardHovered.CardBase.CardName);
+
+        _curCardHovered = null;
+    }
+}

@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmga6tho40pxg"]
+[gd_scene load_steps=8 format=3 uid="uid://dmga6tho40pxg"]
 
 [ext_resource type="PackedScene" uid="uid://fimnkt42gwdv" path="res://scenes/players/player.tscn" id="1_uqqj8"]
 [ext_resource type="Script" path="res://src/player/MainPlayer.cs" id="2_q24p3"]
 [ext_resource type="Script" path="res://src/ui/HUD.cs" id="3_bofyg"]
+[ext_resource type="Script" path="res://src/ui/Hand.cs" id="4_6c2bg"]
 [ext_resource type="PackedScene" uid="uid://lymx8t7asvv2" path="res://scenes/ui/priority_intention_panel.tscn" id="4_q2nwd"]
+[ext_resource type="PackedScene" uid="uid://cj63rf228wkjb" path="res://scenes/card_objects/card_in_hand.tscn" id="6_uay5y"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xgxdv"]
 
@@ -33,14 +35,16 @@ PriorityIntentionPanel = NodePath("PriorityIntentionPanel")
 
 [node name="Hand" type="Control" parent="HUD" index="0"]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
+anchor_left = 0.1875
+anchor_top = 0.790123
+anchor_right = 0.8125
 anchor_bottom = 1.0
-offset_left = 192.0
-offset_right = -192.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("4_6c2bg")
+_cardInHandScene = ExtResource("6_uay5y")
+metadata/_edit_use_anchors_ = true
 
 [node name="PhaseLabel" type="Label" parent="HUD" index="1"]
 layout_mode = 0

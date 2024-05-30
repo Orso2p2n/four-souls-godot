@@ -38,7 +38,6 @@ public partial class CardFactory : Node
         // Copy exports
         newCard.CardVisual = card.CardVisual;
         newCard.Card3d = card.Card3d;
-        newCard.CardControl = card.CardControl;
 
         newCard.CardResource = cardResource;
 

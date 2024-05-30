@@ -3,7 +3,7 @@ using System;
 
 public partial class HUD : Control
 {
-	[Export] public Control Hand { get; set; }
+	[Export] public Hand Hand { get; set; }
 	[Export] public Label PhaseLabel { get; set; }
 	[Export] public Button EndTurnButton { get; set; }
 	[Export] public PriorityIntentionPanel PriorityIntentionPanel { get; set; }
