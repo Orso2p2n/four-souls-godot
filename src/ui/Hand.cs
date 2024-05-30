@@ -10,6 +10,8 @@ public partial class Hand : Control
 
     private Array<CardInHand> _cardsHovered = new();
     private CardInHand _curCardHovered;
+    private CardInHand _lastCardHeld;
+    private CardInHand _curCardHeld;
 
 	private float _cardHeight;
 	private float _cardHeightWhenHovered;
@@ -20,6 +22,17 @@ public partial class Hand : Control
         OnResized();
         GetViewport().PhysicsObjectPickingSort = true;
 	}
+
+    public override void _PhysicsProcess(double delta) {
+        // Failsafe for when releasing the mouse while holding a card
+        if (_curCardHeld == null && _lastCardHeld != null) {
+            var mousePos = GetViewport().GetMousePosition();
+
+            if (!_lastCardHeld._HasPoint(mousePos)) {
+                StopHoveringCard();
+            }
+        }
+    }
 
     public async void OnResized() {
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
@@ -125,7 +138,12 @@ public partial class Hand : Control
         }
 	}
 
+    // --- Card Hovering ---
     public void CardMouseEnter(CardInHand card) {
+        if (_cardsHovered.Contains(card)) {
+            return;
+        }
+
         _cardsHovered.Add(card);
 
         if (_curCardHovered == null) {
@@ -134,6 +152,10 @@ public partial class Hand : Control
     }
 
     public void CardMouseExit(CardInHand card) {
+        if (card == _curCardHeld) {
+            return;
+        } 
+
         _cardsHovered.Remove(card);
 
         if (_curCardHovered == card) {
@@ -180,12 +202,56 @@ public partial class Hand : Control
             card.SetTargetPositionOffset(Vector2.Zero);
         }
 
-        _curCardHovered.SetTargetRotationOverride(-1);
+        _curCardHovered.SetTargetRotationOverride(null);
         _curCardHovered.SetTargetHeight(_cardHeight);
         _curCardHovered.ZIndex = -1;
 
         // Console.LogWarning("Stop hovering card " + _curCardHovered.CardBase.CardName);
 
         _curCardHovered = null;
+        _lastCardHeld = null;
+    }
+
+    // --- Card clicking and moving ---
+    public void CardClicked(CardInHand card) {
+        if (_curCardHeld != null) {
+            return;
+        }
+
+        _curCardHeld = card;
+        _lastCardHeld = card;
+    }
+
+    private void ClickReleased() {
+        if (_curCardHeld == null) {
+            return;
+        }
+        
+        _curCardHeld.SetTargetPositionOverride(null);
+        
+        _curCardHeld = null;
+    }
+
+    private void MouseMoved(Vector2 pos) {
+        if (_curCardHeld == null) {
+            return;
+        }
+
+        var centerPos = pos - new Vector2(0, _cardHeightWhenHovered / 2f);
+        _curCardHeld.SetTargetPositionOverride(centerPos);
+    }
+
+    public override void _Input(InputEvent @event) {
+        if (@event is InputEventMouseMotion eventMouseMotion) {
+            MouseMoved(eventMouseMotion.Position);
+        }
+
+        else if (@event is InputEventMouseButton eventMouseButton) {
+            if (eventMouseButton.ButtonIndex == MouseButton.Left) {
+                if (!eventMouseButton.Pressed) {
+                    ClickReleased();
+                }
+            }
+        }
     }
 }

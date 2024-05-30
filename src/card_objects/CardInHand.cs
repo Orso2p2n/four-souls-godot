@@ -8,7 +8,7 @@ public partial class CardInHand : AspectRatioContainer
 	[Signal] public delegate void OnClickedEventHandler(); 
 	[Signal] public delegate void OnReleasedEventHandler(); 
 
-	[Export] private TextureRect _textureRect;
+	[Export] public TextureRect _textureRect;
 	[Export] private Area2D _area2D;
 	private CollisionShape2D _collisionShape2D;
 	private RectangleShape2D _rectangleShape2D;
@@ -21,9 +21,10 @@ public partial class CardInHand : AspectRatioContainer
 	public Vector2 TargetPosition { get; private set; }
 	public float TargetYBonus { get; private set; }
 	public Vector2 TargetPositionOffset { get; private set; }
+	public Vector2 ?TargetPositionOverride { get; private set; } = null;
 
 	public float TargetRotation { get; private set; }
-	public float TargetRotationOverride { get; private set; } = -1;
+	public float ?TargetRotationOverride { get; private set; } = null;
 
 	public float TargetHeight { get; private set; }
 
@@ -93,7 +94,19 @@ public partial class CardInHand : AspectRatioContainer
 		}
 	}
 
+	public void SetTargetPositionOverride(Vector2 ?targetPositionOverride, bool instant = false) {
+		TargetPositionOverride = targetPositionOverride;
+
+		if (instant) {
+			SnapPosition();
+		}
+	}
+
 	private Vector2 GetRealTargetPos() {
+		if (TargetPositionOverride != null) {
+			return (Vector2) TargetPositionOverride;
+		}
+
 		return TargetPosition + Vector2.Down * TargetYBonus + TargetPositionOffset;
 	}
 
@@ -109,7 +122,7 @@ public partial class CardInHand : AspectRatioContainer
 		}
 	}
 
-	public void SetTargetRotationOverride(float targetRotationOverride, bool instant = false) {
+	public void SetTargetRotationOverride(float ?targetRotationOverride, bool instant = false) {
 		TargetRotationOverride = targetRotationOverride;
 				
 		if (instant) {
@@ -118,7 +131,7 @@ public partial class CardInHand : AspectRatioContainer
 	}
 
 	private float GetRealTargetRot() {
-		return TargetRotationOverride != -1 ? TargetRotationOverride : TargetRotation;
+		return TargetRotationOverride != null ? (float) TargetRotationOverride : TargetRotation;
 	}
 
 	private void SnapRotation() {
@@ -135,13 +148,9 @@ public partial class CardInHand : AspectRatioContainer
 
 	// --- Interaction ---
 	void Clicked() {
-		EmitSignal(SignalName.OnClicked);
+		Hand.CardClicked(this);
 	}
-
-	void Released() {
-		EmitSignal(SignalName.OnReleased);
-	}
-
+	
 	void OnArea2DMouseEntered() {
 		Hand.CardMouseEnter(this);
 	}
@@ -156,10 +165,12 @@ public partial class CardInHand : AspectRatioContainer
 				if (eventMouseButton.Pressed) {
 					Clicked();
 				}
-				else {
-					Released();
-				}
 			}
 		}
 	}
+
+    public override bool _HasPoint(Vector2 point) {
+		var rect = _textureRect.GetGlobalRect();
+        return rect.HasPoint(point);
+    }
 }
