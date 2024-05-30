@@ -173,4 +173,16 @@ public partial class CardInHand : AspectRatioContainer
 		var rect = _textureRect.GetGlobalRect();
         return rect.HasPoint(point);
     }
+
+	public Rect2 GetLeftRect() {
+		var halfSize = _textureRect.Size with { X = _textureRect.Size.X / 2 };
+		var pos = GetRealTargetPos() - halfSize with { Y = 0 };
+		return new Rect2(pos, halfSize);
+	}
+
+	public Rect2 GetRightRect() {
+		var halfSize = _textureRect.Size with { X = _textureRect.Size.X / 2 };
+		var pos = GetRealTargetPos();
+		return new Rect2(pos, halfSize);
+	}
 }
