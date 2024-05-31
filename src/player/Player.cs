@@ -112,12 +112,29 @@ public partial class Player : Node
         CardsInHand.Add(card);
         card.OnAddedToPlayerHand(this);
 
-        PrintCardsInHand();
-
         OnCardAddedToHand(card);
     }
 
+    public void RemoveCardFromHand(CardBase card) {
+        Rpc(MethodName.RemoveCardFromHandID, card.ID);
+        _RemoveCardFromHand(card);
+    }
+
+    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void RemoveCardFromHandID(int id) {
+        var card = CardFactory.ME.GetCard(id);
+        _RemoveCardFromHand(card);
+    }
+
+    private void _RemoveCardFromHand(CardBase card) {
+        CardsInHand.Remove(card);
+
+        OnCardRemovedFromHand(card);
+    }
+
     protected virtual void OnCardAddedToHand(CardBase card) {}
+
+    protected virtual void OnCardRemovedFromHand(CardBase card) {}
 
     void PrintCardsInHand() {
         Console.Log("Cards in hand of player " + PlayerNumber + ":");

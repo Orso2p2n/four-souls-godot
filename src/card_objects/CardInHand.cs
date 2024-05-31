@@ -185,4 +185,10 @@ public partial class CardInHand : AspectRatioContainer
 		var pos = GetRealTargetPos();
 		return new Rect2(pos, halfSize);
 	}
+
+	// --- Gameplay ---
+	public bool TryPlay() {
+		var played = CardBase.TryPlayFromHand();
+		return played;
+	}
 }

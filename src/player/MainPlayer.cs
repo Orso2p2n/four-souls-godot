@@ -55,7 +55,11 @@ public partial class MainPlayer : Player
         base.OnCardAddedToHand(card);
         
         Hud.Hand.AddCard(card);
+    }
 
-        // 
+    protected override void OnCardRemovedFromHand(CardBase card) {
+        base.OnCardRemovedFromHand(card);
+
+        Hud.Hand.RemoveCard(card);
     }
 }

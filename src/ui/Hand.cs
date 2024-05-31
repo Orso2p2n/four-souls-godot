@@ -48,10 +48,10 @@ public partial class Hand : Control
         RearrangeCards(true);
     }
 
-	public void AddCard(CardBase card) {
+	public void AddCard(CardBase cardToAdd) {
 		var cardInHand = _cardInHandScene.Instantiate() as CardInHand;
 		cardInHand.ChangeParent(this);
-		cardInHand.Init(card, this);
+		cardInHand.Init(cardToAdd, this);
 
         cardInHand.PositionInHand = Cards.Count;
         cardInHand.ZIndex = -1;
@@ -63,6 +63,29 @@ public partial class Hand : Control
 
 		RearrangeCards();
 	}
+
+    public void RemoveCard(CardBase cardToRemove) {
+        CardInHand cardInHand = null;
+        foreach (var card in Cards) {
+            if (card.CardBase == cardToRemove) {
+                cardInHand = card;
+                break;
+            }
+        }
+
+        if (cardInHand == null) {
+            return;
+        }
+
+        Cards.Remove(cardInHand);
+        cardInHand.QueueFree();
+
+        for (int i = 0; i < Cards.Count; i++) {
+            Cards[i].PositionInHand = i;
+        }
+
+        RearrangeCards();
+    }
 
     private float CalculateLerpVal(int cardsCount, int i) {
         var widthTakenByCards = _cardSeparation * cardsCount;
@@ -204,6 +227,8 @@ public partial class Hand : Control
             card.SetTargetPositionOffset(Vector2.Zero);
         }
 
+        _cardsHovered.Remove(_curCardHovered);
+
         _curCardHovered.SetTargetRotationOverride(null);
         _curCardHovered.SetTargetHeight(_cardHeight);
         _curCardHovered.ZIndex = -1;
@@ -227,6 +252,14 @@ public partial class Hand : Control
             return;
         }
         
+        if (_mousePos.Y < Position.Y) {
+            if (_curCardHeld.TryPlay()) {
+                StopHoveringCard();
+                _curCardHeld = _lastCardHeld = null;
+                return;
+            }
+        }
+
         _curCardHeld.SetTargetPositionOverride(null);
         
         _curCardHeld = null;
@@ -241,6 +274,10 @@ public partial class Hand : Control
 
         var centerPos = _mousePos - new Vector2(0, _cardHeightWhenHovered / 2f);
         _curCardHeld.SetTargetPositionOverride(centerPos);
+
+        if (_mousePos.Y < Position.Y) {
+            return;
+        }
 
         foreach (var card in Cards) {
             if (card == _curCardHeld) {
@@ -272,9 +309,7 @@ public partial class Hand : Control
         }
     }
 
-    private void InsertAtCard(CardInHand cardToInsertAt, bool after) {
-        var afterString = after ? "after" : "before";
-        
+    private void InsertAtCard(CardInHand cardToInsertAt, bool after) {       
         var indexToInsertAt = cardToInsertAt.PositionInHand;
         if (after) {
             indexToInsertAt++;

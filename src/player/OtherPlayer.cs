@@ -12,4 +12,10 @@ public partial class OtherPlayer : Player
 
         _handZone.AddCard(card);
     }
+
+    protected override void OnCardRemovedFromHand(CardBase card) {
+        base.OnCardRemovedFromHand(card);
+
+        _handZone.RemoveCard(card);
+    }
 }

@@ -22,7 +22,7 @@ public partial class HUD : Control
 	}
 
 	public void TogglePriorityIntentionPanel(bool active) {
-		// PriorityIntentionPanel.Visible = active;
-		PriorityIntentionPanel.Visible = true;
+		PriorityIntentionPanel.Visible = active;
+		// PriorityIntentionPanel.Visible = true;
 	}
 }

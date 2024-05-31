@@ -90,14 +90,18 @@ public partial class CardBase : Node
 		State = CardState.InHand;
 	}
 
-	public void TryPlayFromHand() {
+	public bool TryPlayFromHand() {
 		if (CanBePlayedFromHand && PlayerOwner.LootPlays > 0) {
 			PlayFromHand();
+			return true;
 		}
+
+		return false;
 	}
 
 	private void PlayFromHand() {
 		PlayerOwner.LootPlays--;
+		PlayerOwner.RemoveCardFromHand(this);
 		OnPlayedFromHand();
 	}
 

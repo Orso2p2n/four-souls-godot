@@ -17,6 +17,14 @@ public partial class MultiCardsZone : Node3D
 		RearrangeCards();
 	}
 
+	public void RemoveCard(CardBase card) {
+		card.Hide3D();
+
+		Cards.Remove(card.Card3d);
+
+		RearrangeCards();
+	}
+
 	private void RearrangeCards() {
 		var cardsCount = Cards.Count;
 		
