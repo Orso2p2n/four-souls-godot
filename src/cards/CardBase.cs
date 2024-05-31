@@ -56,7 +56,7 @@ public partial class CardBase : Node
 
 	public bool CanBePlayedFromHand {
 		get {
-			return CanBeInHand && State == CardState.InHand;
+			return CanBeInHand && State == CardState.InHand && PlayerOwner.LootPlays > 0;
 		}
 	}
 
@@ -91,7 +91,7 @@ public partial class CardBase : Node
 	}
 
 	public bool TryPlayFromHand() {
-		if (CanBePlayedFromHand && PlayerOwner.LootPlays > 0) {
+		if (CanBePlayedFromHand) {
 			PlayFromHand();
 			return true;
 		}

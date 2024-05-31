@@ -8,7 +8,8 @@ public partial class CardInHand : AspectRatioContainer
 	[Signal] public delegate void OnClickedEventHandler(); 
 	[Signal] public delegate void OnReleasedEventHandler(); 
 
-	[Export] public TextureRect _textureRect;
+	[Export] private TextureRect _textureRect;
+	[Export] private Panel _outlinePanel;
 	[Export] private Area2D _area2D;
 	private CollisionShape2D _collisionShape2D;
 	private RectangleShape2D _rectangleShape2D;
@@ -37,6 +38,8 @@ public partial class CardInHand : AspectRatioContainer
 		_collisionShape2D = _area2D.GetChild(0) as CollisionShape2D;
 		_rectangleShape2D = _collisionShape2D.Shape.Duplicate() as RectangleShape2D;
 		_collisionShape2D.Shape = _rectangleShape2D;
+
+		DisplayOutline(false);
 
 		UpdateSprite(cardBase.CardVisual.GetTexture());
 	}
@@ -187,8 +190,20 @@ public partial class CardInHand : AspectRatioContainer
 	}
 
 	// --- Gameplay ---
+	public bool GetCanBePlayed() {
+		return CardBase.CanBePlayedFromHand;
+	}
+
 	public bool TryPlay() {
 		var played = CardBase.TryPlayFromHand();
 		return played;
+	}
+
+	public void DisplayOutline(bool visible) {
+		if (_outlinePanel.Visible == visible) {
+			return;
+		}
+
+		_outlinePanel.Visible = visible;
 	}
 }

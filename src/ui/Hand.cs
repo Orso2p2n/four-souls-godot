@@ -276,8 +276,13 @@ public partial class Hand : Control
         _curCardHeld.SetTargetPositionOverride(centerPos);
 
         if (_mousePos.Y < Position.Y) {
+            if (_curCardHeld.GetCanBePlayed()) {
+                _curCardHeld.DisplayOutline(true);
+            }
             return;
         }
+
+        _curCardHeld.DisplayOutline(false);
 
         foreach (var card in Cards) {
             if (card == _curCardHeld) {

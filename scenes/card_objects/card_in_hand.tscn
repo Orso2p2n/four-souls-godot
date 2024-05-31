@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj63rf228wkjb"]
+[gd_scene load_steps=6 format=3 uid="uid://cj63rf228wkjb"]
 
 [ext_resource type="Script" path="res://src/card_objects/CardInHand.cs" id="1_kedc1"]
 [ext_resource type="Texture2D" uid="uid://dk600j6g6reg6" path="res://assets/sprites/card_other/penny_cropped.png" id="2_1fqv7"]
@@ -20,10 +20,23 @@ expand_margin_top = 5.0
 expand_margin_right = 5.0
 expand_margin_bottom = 5.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xhkwx"]
+bg_color = Color(0.305882, 1, 1, 1)
+border_color = Color(0.305882, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ommrn"]
 size = Vector2(0, 0)
 
-[node name="CardInHand" type="AspectRatioContainer" node_paths=PackedStringArray("_textureRect", "_area2D")]
+[node name="CardInHand" type="AspectRatioContainer" node_paths=PackedStringArray("_textureRect", "_outlinePanel", "_area2D")]
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
@@ -31,12 +44,19 @@ ratio = 0.7135
 stretch_mode = 1
 script = ExtResource("1_kedc1")
 _textureRect = NodePath("TextureRect")
+_outlinePanel = NodePath("Outline")
 _area2D = NodePath("Area2D")
 
 [node name="Shadow" type="Panel" parent="."]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hmodt")
+
+[node name="Outline" type="Panel" parent="."]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xhkwx")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 4
