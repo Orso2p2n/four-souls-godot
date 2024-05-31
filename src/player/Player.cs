@@ -42,17 +42,20 @@ public partial class Player : Node
     }
 
     // Priority
+    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public virtual void AskForPriorityIntention() {
         PriorityIntention = PriorityIntention.Deciding;
         Console.Log($"Asking player {PlayerNumber} for their priority intention.");
     }
 
+    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     protected virtual void PriorityIntentionYes() {
         Console.Log($"Player {PlayerNumber} priority intention yes.");
         PriorityIntention = PriorityIntention.Acting;
         EmitSignal(SignalName.PriorityIntentionChosen);
     }
 
+    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     protected virtual void PriorityIntentionNo() {
         Console.Log($"Player {PlayerNumber} priority intention no.");
         PriorityIntention = PriorityIntention.NotActing;
@@ -73,7 +76,7 @@ public partial class Player : Node
         }
         else {
             Console.Log($"Player {PlayerNumber} has acted during their priority.");
-            _ = StackManager.ME.StartPriority(PlayerNumber);
+            // _ = StackManager.ME.StartPriority(PlayerNumber);
             return true;
         }
     }

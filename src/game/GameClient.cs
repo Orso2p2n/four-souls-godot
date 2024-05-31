@@ -9,7 +9,7 @@ public partial class GameClient : Game
     }
 
     protected override void CreateStackManager() {
-        StackManager = new StackManager { Name = "StackManager" };
+        StackManager = new StackManagerClient { Name = "StackManager" };
         StackManager.ChangeParent(this);
     }
 

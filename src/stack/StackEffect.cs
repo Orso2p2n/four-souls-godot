@@ -14,7 +14,7 @@ public partial class StackEffect : GodotObject
 
     public void AddToStack() {
         OnAddedToStack();
-        GameServer.ME.StackManager.AddEffect(this, Owner);
+        StackManager.ME.AddEffect(this, Owner);
     }
 
     protected virtual void OnAddedToStack() {}

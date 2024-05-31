@@ -8,7 +8,7 @@ public partial class OtherPlayer : Player
     protected override void OnCardAddedToHand(CardBase card) {
         base.OnCardAddedToHand(card);
 
-        card.Card3d.FlipDown(true);
+        // card.Card3d.FlipDown(true);
 
         _handZone.AddCard(card);
     }

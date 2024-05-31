@@ -17,8 +17,8 @@ public partial class MainPlayer : Player
 
         Hud.EndTurnButton.Pressed += EndActionPhase;
 
-        Hud.PriorityIntentionPanel.YesPressed += PriorityIntentionYes;
-        Hud.PriorityIntentionPanel.NoPressed += PriorityIntentionNo;
+        Hud.PriorityIntentionPanel.YesPressed += () => { Rpc(MethodName.PriorityIntentionYes); };
+        Hud.PriorityIntentionPanel.NoPressed += () => { Rpc(MethodName.PriorityIntentionNo); };
     }
 
     public override void AskForPriorityIntention() {
