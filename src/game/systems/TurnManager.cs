@@ -18,13 +18,11 @@ public partial class TurnManager : Node
 {
 	// Signals
 	[Signal] public delegate void PhaseChangedEventHandler();
-
-	// Getters
-    private static Game Game { get { return Game.ME; } }
 	
 	// Variables
 	public Player ActivePlayer { get; set; }
 	public TurnPhase CurPhase { get; set; }
+
 
     public void StartTurn(Player firstPlayer) {
 		ActivePlayer = firstPlayer;
@@ -34,9 +32,13 @@ public partial class TurnManager : Node
 
 	protected virtual void EndTurn() {
 		Console.Log("End turn");
+		ActivePlayer.Rpc(Player.MethodName.SetLootPlays, 0);
+		StartTurn(ActivePlayer.NextPlayer);
 	}
 
 	protected virtual void SetPhase(TurnPhase phase) {
+		Console.Log($"Player: {ActivePlayer.PlayerNumber}, phase {phase.ToString()}");
+
 		CurPhase = phase;
 
 		EmitSignal(SignalName.PhaseChanged);

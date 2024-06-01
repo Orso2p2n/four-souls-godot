@@ -34,12 +34,35 @@ public partial class Player : Node
 
     public int LootPlays { get; set; } = 1;
 
+    public Player PreviousPlayer { get; private set; }
+    public Player NextPlayer { get; private set; }
+
     public virtual void Init(int playerNumber, PlayerLocation playerLocation) {
         PlayerNumber = playerNumber;
         PlayerLocation = playerLocation;
 
         _origin.GlobalPosition = playerLocation.GlobalPosition;
         _origin.GlobalRotation = playerLocation.GlobalRotation;
+
+        CallDeferred(MethodName.InitDeffered);
+    }
+
+    private void InitDeffered() {
+        // Set previous player
+        var previousPlayerId = PlayerNumber - 1;
+        if (previousPlayerId < 0) {
+            previousPlayerId = Game.Players.Count - 1;
+        }
+
+        PreviousPlayer = Game.Players[previousPlayerId];
+
+        // Set next player
+        var nextPlayerId = PlayerNumber + 1;
+        if (nextPlayerId >= Game.Players.Count) {
+            nextPlayerId = 0;
+        }
+
+        NextPlayer = Game.Players[nextPlayerId];
     }
 
     // --- Priority ---
@@ -86,7 +109,7 @@ public partial class Player : Node
         Rpc(MethodName.IncreaseLootPlays, 1);
     }
 
-    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public virtual void EndActionPhase() {
         EmitSignal(SignalName.EndActionPhaseRequested);
     }
@@ -95,6 +118,11 @@ public partial class Player : Node
     [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public virtual void IncreaseLootPlays(int count) {
         LootPlays += count;
+    }
+
+    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public virtual void SetLootPlays(int count) {
+        LootPlays = count;
     }
 
     // --- Hand ---
