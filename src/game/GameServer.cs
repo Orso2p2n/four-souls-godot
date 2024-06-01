@@ -4,8 +4,34 @@ using System;
 
 public partial class GameServer : Game
 {
-    public override void _EnterTree() {
-        base._EnterTree();
+    private Array<int> _peersThatCalledInitDone = new();
+
+    protected override void InitDone(int peerId = -1) {
+        if (peerId == -1) {
+            peerId = NetworkManager.ME.PeerID;
+        }
+
+        _peersThatCalledInitDone.Add(peerId);
+        foreach (var user in NetworkManager.ME.Users) {
+            var id = (int) user.Id;
+            
+            if (!_peersThatCalledInitDone.Contains(id)) {
+                return;
+            }
+        }
+
+        // All peers have called InitDone
+        _peersThatCalledInitDone.Clear();
+        Rpc(MethodName.StartGame);
+    }
+
+    protected override void CreateRng() {
+        base.CreateRng();
+        Rpc(Game.MethodName.SetRngSeed, Rng.Seed);
+    }
+
+    protected override void SetRngSeed(ulong seed) {
+        base.SetRngSeed(seed);
     }
 
     protected override void CreateStackManager() {

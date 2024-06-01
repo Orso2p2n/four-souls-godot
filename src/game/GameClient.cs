@@ -4,8 +4,12 @@ using System;
 
 public partial class GameClient : Game
 {
-    public override void _EnterTree() {
-        base._EnterTree();
+    protected override void InitDone(int peerId = -1) {
+        RpcId(1, MethodName.InitDone, NetworkManager.ME.PeerID);
+    }
+
+    protected override void SetRngSeed(ulong seed) {
+        base.SetRngSeed(seed);
     }
 
     protected override void CreateStackManager() {

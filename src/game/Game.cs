@@ -4,10 +4,15 @@ using System;
 
 public partial class Game : Node
 {
+    [Signal] public delegate void RngSeedChangedEventHandler();
+
     public static Game ME { get; private set; }
 
     private Node _playersContainer;
     public Array<Player> Players { get; set; }
+
+    public RandomNumberGenerator Rng { get; set; }
+    private bool _rngInit;
 
     public CardFactory CardFactory { get; set; }
     public DeckManager DeckManager { get; set; }
@@ -17,7 +22,20 @@ public partial class Game : Node
     private GameBoard _gameBoard;
 
     public override void _EnterTree() {
+        Init();
+    }
+
+    protected async void Init() {
         ME = this;
+
+        NetworkManager.ME.GameState = GameState.InGame;
+        NetworkManager.ME.Multiplayer.ServerDisconnected += OnServerDisconnected;
+
+        CreateRng();
+
+        if (!_rngInit) {
+            await ToSignal(this, SignalName.RngSeedChanged);
+        }
 
         Players = new Array<Player>();
 
@@ -33,15 +51,34 @@ public partial class Game : Node
 
         CreatePlayers();
 
-        NetworkManager.ME.GameState = GameState.InGame;
-        NetworkManager.ME.Multiplayer.ServerDisconnected += OnServerDisconnected;
+        InitDone();
     }
 
-    public override void _Ready() {        
+	[Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    protected virtual void InitDone(int peerId = -1) {}
+
+    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    private void StartGame() {
         TurnManager.StartTurn(Players[0]);
     }
 
     // --- Systems creation ---
+    protected virtual void CreateRng() {
+        Rng = new RandomNumberGenerator();
+    }
+
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    protected virtual void SetRngSeed(ulong seed) {
+        Console.Log("SET SEED " + seed);
+        Rng.Seed = seed;
+
+        if (!_rngInit) {
+            _rngInit = true;
+        }
+
+        EmitSignal(SignalName.RngSeedChanged);
+    }
+
     protected virtual void CreateCardFactory() {
         if (CardFactory != null) {
             return;

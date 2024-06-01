@@ -9,6 +9,8 @@ public partial class Deck : Node
 	public void Init(Array<CardResource> cards) {
 		Cards = cards;
 
+		Shuffle();
+
 		PrintCards();
 	}
 
@@ -16,5 +18,9 @@ public partial class Deck : Node
 		foreach (var card in Cards) {
 			Console.Log(card.CardName);
 		}
+	}
+
+	private void Shuffle() {
+		Cards.Shuffle(Game.ME.Rng);
 	}
 }
