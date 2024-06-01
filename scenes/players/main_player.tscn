@@ -19,7 +19,7 @@ fov = 45.0
 size = 0.355
 near = 0.001
 
-[node name="HUD" type="Control" parent="." index="1" node_paths=PackedStringArray("Hand", "PhaseLabel", "EndTurnButton", "PriorityIntentionPanel")]
+[node name="HUD" type="Control" parent="." index="1" node_paths=PackedStringArray("Hand", "PhaseLabel", "EndTurnButton", "PriorityIntentionPanel", "SkipActionButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,6 +32,7 @@ Hand = NodePath("Hand")
 PhaseLabel = NodePath("PhaseLabel")
 EndTurnButton = NodePath("EndTurnButton")
 PriorityIntentionPanel = NodePath("PriorityIntentionPanel")
+SkipActionButton = NodePath("SkipActionButton")
 
 [node name="Hand" type="Control" parent="HUD" index="0"]
 layout_mode = 1
@@ -70,17 +71,25 @@ grow_vertical = 0
 text = "End Turn ->"
 
 [node name="PriorityIntentionPanel" parent="HUD" index="3" instance=ExtResource("4_q2nwd")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 944.0
-offset_top = 456.0
-offset_right = 1136.0
-offset_bottom = 576.0
+layout_mode = 1
+anchors_preset = -1
+offset_top = -192.0
+offset_bottom = -72.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="SkipActionButton" type="Button" parent="HUD" index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -168.0
+offset_top = -128.0
+offset_right = -16.0
+offset_bottom = -72.0
+text = "Skip Action"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="resized" from="HUD/Hand" to="HUD/Hand" method="OnResized"]

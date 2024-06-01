@@ -81,17 +81,17 @@ public partial class StackManagerServer : StackManager
 
                 player.Rpc(Player.MethodName.GetPriority);
 
-                void OnPlayerAction(bool passesPriority) { hasActed = true; }
+                void OnPlayerAction(bool passesPriority) { hasActed = passesPriority; }
 
                 player.PriorityAction += OnPlayerAction;
-
                 await ToSignal(player, Player.SignalName.PriorityAction);
-
                 player.PriorityAction -= OnPlayerAction;
 
                 if (hasActed) {
                     return;
                 }
+
+                player.Rpc(Player.MethodName.RemovePriority);
             }
         }
 

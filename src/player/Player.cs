@@ -64,15 +64,20 @@ public partial class Player : Node
     }
 
     [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-    public void GetPriority() {
+    public virtual void GetPriority() {
         Console.Log($"Priority gotten by player {PlayerNumber}");
 
         HasPriority = true;
     }
 
     [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-    public void RemovePriority() {
+    public virtual void RemovePriority() {
         HasPriority = false;
+    }
+
+    [Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    protected void EmitPriorityAction(bool passesPriority) {
+        EmitSignal(SignalName.PriorityAction, passesPriority);
     }
 
     // --- Action Phase ---

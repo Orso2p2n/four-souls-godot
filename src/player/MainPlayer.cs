@@ -19,6 +19,8 @@ public partial class MainPlayer : Player
 
         Hud.PriorityIntentionPanel.YesPressed += () => { Rpc(MethodName.PriorityIntentionYes); };
         Hud.PriorityIntentionPanel.NoPressed += () => { Rpc(MethodName.PriorityIntentionNo); };
+        
+        Hud.SkipActionButton.Pressed += SkipPriorityAction;
     }
 
     public override void AskForPriorityIntention() {
@@ -61,5 +63,21 @@ public partial class MainPlayer : Player
         base.OnCardRemovedFromHand(card);
 
         Hud.Hand.RemoveCard(card);
+    }
+
+    public override void GetPriority() {
+        base.GetPriority();
+
+        Hud.ToggleSkipActionButton(true);
+    }
+
+    public override void RemovePriority() {
+        base.RemovePriority();
+
+        Hud.ToggleSkipActionButton(false);
+    }
+
+    private void SkipPriorityAction() {
+        Rpc(Player.MethodName.EmitPriorityAction, false);
     }
 }
