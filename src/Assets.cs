@@ -5,10 +5,14 @@ using System;
 public partial class Assets : Node
 {
     [ExportGroup("Resources")]
+    [ExportSubgroup("Deck Types")]
     [Export] public DeckTypeResource DeckTypeLoot { get; set; }
+    [ExportSubgroup("Deck Sets")]
+    [Export] public DeckSetResource DeckSetBaseGame { get; set; }
     
     [ExportGroup("Scenes")]
     [Export] public PackedScene CardScene { get; set; }
+    [Export] public PackedScene DeckScene { get; set; }
     [Export] public PackedScene GameBoardScene { get; set; }
     [Export] public PackedScene MainPlayerScene { get; set; }
     [Export] public PackedScene OnlinePlayerScene { get; set; }

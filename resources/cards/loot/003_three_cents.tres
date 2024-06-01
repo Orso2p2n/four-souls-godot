@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("3_xgfbs")
-LootCardType = 0
+LootCardType = 12
 CardName = "Three Cents!"
 Script = ExtResource("2_q2lwt")
 Charmed = false

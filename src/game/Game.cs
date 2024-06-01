@@ -10,6 +10,7 @@ public partial class Game : Node
     public Array<Player> Players { get; set; }
 
     public CardFactory CardFactory { get; set; }
+    public DeckManager DeckManager { get; set; }
     public StackManager StackManager { get; set; }
     public TurnManager TurnManager { get; set; }
 
@@ -24,6 +25,7 @@ public partial class Game : Node
         _playersContainer.ChangeParent(this);
 
         CreateCardFactory();
+        CreateDeckManager();
         CreateStackManager();
         CreateTurnManager();
         
@@ -45,8 +47,19 @@ public partial class Game : Node
             return;
         }
 
-        CardFactory = new CardFactory();
+        CardFactory = new CardFactory() { Name = "CardFactory" };
         CardFactory.ChangeParent(this);
+    }
+
+    protected virtual void CreateDeckManager() {
+        if (DeckManager != null) {
+            return;
+        }
+
+        var decks = new Array<DeckSetResource>() { Assets.ME.DeckSetBaseGame };
+
+        DeckManager = new DeckManager(decks) { Name = "DeckManager" };
+        DeckManager.ChangeParent(this);
     }
 
     protected virtual void CreateStackManager() {

@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://n32q52o5p10h"]
+[gd_scene load_steps=14 format=3 uid="uid://n32q52o5p10h"]
 
 [ext_resource type="Script" path="res://src/Assets.cs" id="1_cus00"]
 [ext_resource type="Resource" uid="uid://d4jvl25muoj6n" path="res://resources/deck_types/deck_type_loot.tres" id="2_43we5"]
+[ext_resource type="Resource" uid="uid://cmvj4k3xeud10" path="res://resources/deck_sets/deck_set_base_game.tres" id="3_86y75"]
 [ext_resource type="PackedScene" uid="uid://bi0bliua64s4" path="res://scenes/card_objects/card.tscn" id="3_satnb"]
 [ext_resource type="Texture2D" uid="uid://85por7u0t1ay" path="res://assets/sprites/card_structure/bot_base.png" id="4_cmmp4"]
 [ext_resource type="PackedScene" uid="uid://d14u8obxjmagj" path="res://scenes/game/game_board.tscn" id="4_dlani"]
 [ext_resource type="Texture2D" uid="uid://ccs6c7243b5jq" path="res://assets/sprites/card_structure/top_base.png" id="5_1kme2"]
+[ext_resource type="PackedScene" uid="uid://cq7ux6ytwgulh" path="res://scenes/deck.tscn" id="5_jd776"]
 [ext_resource type="PackedScene" uid="uid://dmga6tho40pxg" path="res://scenes/players/main_player.tscn" id="5_u4evt"]
 [ext_resource type="PackedScene" uid="uid://grldmoq4ssj0" path="res://scenes/players/online_player.tscn" id="6_1gq1l"]
 [ext_resource type="Texture2D" uid="uid://v86b1ke3rfd4" path="res://assets/sprites/card_structure/addon_1soul.png" id="6_jdiv0"]
@@ -15,7 +17,9 @@
 [node name="Assets" type="Node"]
 script = ExtResource("1_cus00")
 DeckTypeLoot = ExtResource("2_43we5")
+DeckSetBaseGame = ExtResource("3_86y75")
 CardScene = ExtResource("3_satnb")
+DeckScene = ExtResource("5_jd776")
 GameBoardScene = ExtResource("4_dlani")
 MainPlayerScene = ExtResource("5_u4evt")
 OnlinePlayerScene = ExtResource("6_1gq1l")

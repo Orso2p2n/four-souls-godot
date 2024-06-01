@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("1_k7ipr")
 Name = "Loot"
-DeckType = 1
+deckType = 1
 BackTexture = ExtResource("1_ksxcp")
