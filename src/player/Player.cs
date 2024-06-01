@@ -148,6 +148,7 @@ public partial class Player : Node
 
 
     // Common effects
+    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public void GainOrLoseGold(int amount) {
         Gold += amount;
 

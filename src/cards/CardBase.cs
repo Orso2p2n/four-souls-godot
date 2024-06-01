@@ -117,7 +117,7 @@ public partial class CardBase : Node
 
 	protected void GainOrLoseGold(Array<Player> targets, int amount) {
 		foreach (var target in targets) {
-			target.GainOrLoseGold(amount);
+			target.Rpc(Player.MethodName.GainOrLoseGold, amount);
 		}
 	}
 }
