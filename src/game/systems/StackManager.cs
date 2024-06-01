@@ -13,6 +13,8 @@ public partial class StackManager : Node
 {
     public static StackManager ME;
 
+    public bool StackIsEmpty { get; set; }
+
     public override void _Ready() {
         ME = this;
     }
@@ -22,4 +24,9 @@ public partial class StackManager : Node
     }
 
     public virtual void AddEffect(StackEffect effect, Player owner) {}
+
+    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    protected virtual void SetStackIsEmpty(bool val) {
+        StackIsEmpty = val;
+    }
 }

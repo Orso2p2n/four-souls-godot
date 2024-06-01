@@ -45,6 +45,12 @@ public partial class CardBase : Node
 	public Array<Player> PlayerOwnerAsArray { get; set; }
 	public CardState State { get; set; }
 
+	public bool CanBePlayed {
+		get {
+			return PlayerOwner.HasPriority || (PlayerOwner.IsInActionPhase && StackManager.ME.StackIsEmpty);
+		}
+	}
+
 	public int ID;
 
 	// Hand logic
@@ -56,7 +62,7 @@ public partial class CardBase : Node
 
 	public bool CanBePlayedFromHand {
 		get {
-			return CanBeInHand && State == CardState.InHand && PlayerOwner.LootPlays > 0;
+			return CanBePlayed && CanBeInHand && State == CardState.InHand && PlayerOwner.LootPlays > 0;
 		}
 	}
 
@@ -100,11 +106,18 @@ public partial class CardBase : Node
 	}
 
 	private void PlayFromHand() {
-		PlayerOwner.LootPlays--;
+		PlayerOwner.Rpc(Player.MethodName.IncreaseLootPlays, -1);
 		PlayerOwner.RemoveCardFromHand(this);
-		OnPlayedFromHand();
+
+		if (NetworkManager.ME.Status == NetworkStatus.Host) {
+			OnPlayedFromHand();
+		}
+		else {
+			RpcId(1, MethodName.OnPlayedFromHand);
+		}
 	}
 
+	[Rpc(mode: MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	protected virtual void OnPlayedFromHand() {}
 
 

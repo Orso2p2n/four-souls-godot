@@ -10,6 +10,8 @@ public partial class StackManagerServer : StackManager
     private int _priorityCurNumber;
     private int _priorityStartNumber;
 
+    private bool _actingPlayerHasActed;
+
     public override void _Ready() {
         base._Ready();
 
@@ -17,11 +19,18 @@ public partial class StackManagerServer : StackManager
     }
 
     public override void AddEffect(StackEffect effect, Player owner) {
+        if (StackIsEmpty) {
+            Rpc(StackManager.MethodName.SetStackIsEmpty, false);
+        }
+
+        owner.EmitSignal(Player.SignalName.PriorityAction, true);
+
         EffectsOnStack.Add(effect);
         _ = StartPriority(owner.PlayerNumber);
     }
 
     public void Clear() {
+        Rpc(StackManager.MethodName.SetStackIsEmpty, true);
         EffectsOnStack = new Array<StackEffect>();
     }
 
@@ -33,6 +42,8 @@ public partial class StackManagerServer : StackManager
 
             stackEffect.Resolve();
         }
+
+        Clear();
     }
     
     public override async Task StartPriority(int startPlayer) {
@@ -50,6 +61,7 @@ public partial class StackManagerServer : StackManager
             
             var player = GameServer.ME.Players[j];
 
+            player.Rpc(Player.MethodName.RemovePriority);
             player.Rpc(Player.MethodName.AskForPriorityIntention);
         }
 
@@ -65,7 +77,17 @@ public partial class StackManagerServer : StackManager
             }
 
             if (player.PriorityIntention == PriorityIntention.Acting) {
-                bool hasActed = await player.GetPriority();
+                var hasActed = false;
+
+                player.Rpc(Player.MethodName.GetPriority);
+
+                void OnPlayerAction(bool passesPriority) { hasActed = true; }
+
+                player.PriorityAction += OnPlayerAction;
+
+                await ToSignal(player, Player.SignalName.PriorityAction);
+
+                player.PriorityAction -= OnPlayerAction;
 
                 if (hasActed) {
                     return;
