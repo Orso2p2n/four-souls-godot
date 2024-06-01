@@ -26,6 +26,50 @@ public partial class TurnManagerServer : TurnManager
         // All peers have called PhaseDone
         Console.LogNetwork($"All peers called PhaseDone!");
         _peersThatCalledPhaseDone.Clear();
-        Rpc(MethodName.NextPhase);
+        _ = Rpc(MethodName.NextPhase);
+    }
+
+    protected override void ProcessCurPhase() {
+        base.ProcessCurPhase();
+
+        switch (CurPhase) {
+			case TurnPhase.StartPhaseRechargeStep:
+                Rpc(MethodName.ProcessStartPhaseRechargeStep);
+				break;
+
+			case TurnPhase.StartPhaseAbilitiesTrigger:
+                Rpc(MethodName.ProcessStartPhaseAbilitiesTrigger);
+				break;
+
+			case TurnPhase.StartPhaseLootStep:
+                Rpc(MethodName.ProcessStartPhaseLootStep);
+				break;
+
+			case TurnPhase.ActionPhase:
+                Rpc(MethodName.ProcessActionPhase);
+				break;
+
+			case TurnPhase.EndPhaseAbilitiesTrigger:
+                Rpc(MethodName.ProcessEndPhaseAbilitiesTrigger);
+				break;
+
+			case TurnPhase.EndPhaseMaxHandTrim:
+                Rpc(MethodName.ProcessEndPhaseMaxHandTrim);
+				break;
+
+			case TurnPhase.EndPhaseRoomDiscard:
+                Rpc(MethodName.ProcessEndPhaseRoomDiscard);
+				break;
+
+			case TurnPhase.EndPhaseFinal:
+                Rpc(MethodName.ProcessEndPhaseFinal);
+				break;
+		}
+    }
+
+    protected override void ProcessActionPhase() {
+        ActivePlayer.Rpc(Player.MethodName.StartActionPhase);
+
+        base.ProcessActionPhase();
     }
 }

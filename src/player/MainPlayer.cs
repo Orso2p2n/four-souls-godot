@@ -15,12 +15,12 @@ public partial class MainPlayer : Player
     public override void Init(int playerNumber, PlayerLocation playerLocation) {
         base.Init(playerNumber, playerLocation);
 
-        Hud.EndTurnButton.Pressed += EndActionPhase;
+        Hud.EndTurnButton.Pressed += OnEndTurnButtonPressed;
 
         Hud.PriorityIntentionPanel.YesPressed += () => { Rpc(MethodName.PriorityIntentionYes); };
         Hud.PriorityIntentionPanel.NoPressed += () => { Rpc(MethodName.PriorityIntentionNo); };
         
-        Hud.SkipActionButton.Pressed += SkipPriorityAction;
+        Hud.SkipActionButton.Pressed += OnSkipActionButtonPressed;
     }
 
     public override void AskForPriorityIntention() {
@@ -45,6 +45,10 @@ public partial class MainPlayer : Player
         base.StartActionPhase();
 
         Hud.ToggleEndTurnButton(true);
+    }
+
+    private void OnEndTurnButtonPressed() {
+        Rpc(MethodName.EndActionPhase);
     }
 
     public override void EndActionPhase() {
@@ -77,7 +81,7 @@ public partial class MainPlayer : Player
         Hud.ToggleSkipActionButton(false);
     }
 
-    private void SkipPriorityAction() {
+    private void OnSkipActionButtonPressed() {
         Rpc(Player.MethodName.EmitPriorityAction, false);
     }
 }

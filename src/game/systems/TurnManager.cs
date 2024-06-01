@@ -4,14 +4,14 @@ using System;
 using System.Threading.Tasks;
 
 public enum TurnPhase {
-	StartPhase_RechargeStep,
-	StartPhase_AbilitiesTrigger,
-	StartPhase_LootStep,
+	StartPhaseRechargeStep,
+	StartPhaseAbilitiesTrigger,
+	StartPhaseLootStep,
 	ActionPhase,
-	EndPhase_AbilitiesTrigger,
-	EndPhase_MaxHandTrim,
-	EndPhase_RoomDiscard,
-	EndPhase_Final
+	EndPhaseAbilitiesTrigger,
+	EndPhaseMaxHandTrim,
+	EndPhaseRoomDiscard,
+	EndPhaseFinal
 }
 
 public partial class TurnManager : Node
@@ -26,24 +26,20 @@ public partial class TurnManager : Node
 	public Player ActivePlayer { get; set; }
 	public TurnPhase CurPhase { get; set; }
 
-    public override void _EnterTree() {}
-
     public void StartTurn(Player firstPlayer) {
 		ActivePlayer = firstPlayer;
 
-		CurPhase = TurnPhase.StartPhase_RechargeStep;
-		ProcessCurPhase();
+		SetPhase(TurnPhase.StartPhaseRechargeStep);
 	}
 
-	private void EndTurn() {
+	protected virtual void EndTurn() {
 		Console.Log("End turn");
 	}
 
-	private void SetPhase(TurnPhase phase) {
+	protected virtual void SetPhase(TurnPhase phase) {
 		CurPhase = phase;
 
 		EmitSignal(SignalName.PhaseChanged);
-
 		ProcessCurPhase();
 	}
 
@@ -53,7 +49,7 @@ public partial class TurnManager : Node
 	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	protected void NextPhase() {
 		var newPhase = CurPhase + 1;
-		if (newPhase > TurnPhase.EndPhase_Final) {
+		if (newPhase > TurnPhase.EndPhaseFinal) {
 			EndTurn();
 		}
 		else {
@@ -61,94 +57,50 @@ public partial class TurnManager : Node
 		}
 	}
 
-	private async void ProcessCurPhase() {
+	protected virtual void ProcessCurPhase() {
 		MainPlayer.ME.Hud.SetPhase(CurPhase);
+	}
 
-		switch (CurPhase) {
-			case TurnPhase.StartPhase_RechargeStep:
-				await Process_StartPhase_RechargeStep();
-				break;
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	protected async virtual void ProcessStartPhaseRechargeStep() {
+		PhaseDone();
+	}
 
-			case TurnPhase.StartPhase_AbilitiesTrigger:
-				await Process_StartPhase_AbilitiesTrigger();
-				break;
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	protected async virtual void ProcessStartPhaseAbilitiesTrigger() {
+		PhaseDone();
+	}
 
-			case TurnPhase.StartPhase_LootStep:
-				await Process_StartPhase_LootStep();
-				break;
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	protected async virtual void ProcessStartPhaseLootStep() {
+		PhaseDone();
+	}
 
-			case TurnPhase.ActionPhase:
-				await Process_ActionPhase();
-				break;
-
-			case TurnPhase.EndPhase_AbilitiesTrigger:
-				await Process_EndPhase_AbilitiesTrigger();
-				break;
-
-			case TurnPhase.EndPhase_MaxHandTrim:
-				await Process_EndPhase_MaxHandTrim();
-				break;
-
-			case TurnPhase.EndPhase_RoomDiscard:
-				await Process_EndPhase_RoomDiscard();
-				break;
-
-			case TurnPhase.EndPhase_Final:
-				await Process_EndPhase_Final();
-				break;
-		}
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	protected async virtual void ProcessActionPhase() {	
+		await ToSignal(ActivePlayer, Player.SignalName.EndActionPhaseRequested);
 
 		PhaseDone();
 	}
 
-	private async Task Process_StartPhase_RechargeStep() {
-		Console.Log($"Player: {ActivePlayer.PlayerNumber}, StartPhase_RechargeStep");
-
-		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	protected async virtual void ProcessEndPhaseAbilitiesTrigger() {
+		PhaseDone();
 	}
 
-	private async Task Process_StartPhase_AbilitiesTrigger() {
-		Console.Log($"Player: {ActivePlayer.PlayerNumber}, StartPhase_AbilitiesTrigger");
-
-		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	protected async virtual void ProcessEndPhaseMaxHandTrim() {
+		PhaseDone();
 	}
 
-	private async Task Process_StartPhase_LootStep() {
-		Console.Log($"Player: {ActivePlayer.PlayerNumber}, StartPhase_LootStep");
-
-		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	protected async virtual void ProcessEndPhaseRoomDiscard() {
+		PhaseDone();
 	}
 
-	private async Task Process_ActionPhase() {
-		Console.Log($"Player: {ActivePlayer.PlayerNumber}, ActionPhase");
-		
-		ActivePlayer.StartActionPhase();
-
-		await ToSignal(ActivePlayer, Player.SignalName.EndActionPhaseRequested);
-	}
-
-	private async Task Process_EndPhase_AbilitiesTrigger() {
-		Console.Log($"Player: {ActivePlayer.PlayerNumber}, EndPhase_AbilitiesTrigger");
-
-		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
-	}
-
-	private async Task Process_EndPhase_MaxHandTrim() {
-		Console.Log($"Player: {ActivePlayer.PlayerNumber}, EndPhase_MaxHandTrim");
-
-		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
-	}
-
-	private async Task Process_EndPhase_RoomDiscard() {
-		Console.Log($"Player: {ActivePlayer.PlayerNumber}, EndPhase_RoomDiscard");
-
-		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
-	}
-
-	private async Task Process_EndPhase_Final() {
-		Console.Log($"Player: {ActivePlayer.PlayerNumber}, EndPhase_Final");
-
-		await ToSignal(GetTree().CreateTimer(1.0f), SceneTreeTimer.SignalName.Timeout);
+	[Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	protected async virtual void ProcessEndPhaseFinal() {
+		PhaseDone();
 	}
 
 }

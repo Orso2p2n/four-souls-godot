@@ -81,10 +81,12 @@ public partial class Player : Node
     }
 
     // --- Action Phase ---
+    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public virtual void StartActionPhase() {
         Rpc(MethodName.IncreaseLootPlays, 1);
     }
 
+    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public virtual void EndActionPhase() {
         EmitSignal(SignalName.EndActionPhaseRequested);
     }
