@@ -33,13 +33,13 @@ public partial class Card3DVisualElement : Node3D
     }
 
     virtual public void LerpPosition(Card3D card3D, float lerpSpeed) {
-		if (Position2D != card3D.Position2D) {
-			Position2D = Position2D.Lerp(card3D.Position2D, lerpSpeed);
+		if (Position != card3D.Position) {
+			Position = Position.Lerp(card3D.Position, lerpSpeed);
 
 			RotateTowards(card3D.Position2D);
 
-			if (Position2D.DistanceTo(card3D.Position2D) < 0.01f) {
-				Position2D = card3D.Position2D;
+			if (Position.DistanceTo(card3D.Position) < 0.01f) {
+				Position = card3D.Position;
 			}
 		}
 	}

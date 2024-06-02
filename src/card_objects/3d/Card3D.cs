@@ -51,6 +51,15 @@ public partial class Card3D : Node3D
 		_shadow.LerpPosition(this, lerpSpeed);
     }
 
+	public void SetPosition(Vector3 position, bool instant = false) {
+		Position = position;
+
+		if (instant) {
+			_sprite.Position = position;
+			_shadow.Position = position;
+		}
+	}
+
     public void RefreshSpriteTexture(ViewportTexture texture) {
 		_sprite.SetFrontTexture(texture);
 	}
@@ -83,21 +92,17 @@ public partial class Card3D : Node3D
 	}
 
 	void OnClicked() {
-		Console.Log("On Card3D clicked");
+		// _dragged = true;
 
-		_dragged = true;
-
-		_sprite.TargetHeight = 0.5f;
-		_sprite.TargetOffset2D = Vector2.Up * 0.25f;
+		// _sprite.TargetHeight = 0.5f;
+		// _sprite.TargetOffset2D = Vector2.Up * 0.25f;
 	}
 
 	void OnReleased() {
-		Console.Log("On Card3D released");
+		// _dragged = false;
 
-		_dragged = false;
-
-		_sprite.TargetHeight = 0f;
-		_sprite.TargetOffset2D = Vector2.Zero;
+		// _sprite.TargetHeight = 0f;
+		// _sprite.TargetOffset2D = Vector2.Zero;
 	}
 
 	void _on_area_3d_mouse_entered() {}

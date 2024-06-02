@@ -71,8 +71,6 @@ public partial class CardVisual : SubViewport
 
 		var newTexture = GetTexture();
 
-		Console.Log("Texture refreshed for: " + Card.CardName);
-
 		EmitSignal(SignalName.TextureRefreshed, newTexture);
 	}
 

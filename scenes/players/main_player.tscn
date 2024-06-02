@@ -9,8 +9,9 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_xgxdv"]
 
-[node name="MainPlayer" node_paths=PackedStringArray("Hud") instance=ExtResource("1_uqqj8")]
+[node name="MainPlayer" node_paths=PackedStringArray("Camera", "Hud") instance=ExtResource("1_uqqj8")]
 script = ExtResource("2_q24p3")
+Camera = NodePath("Origin/Camera3D")
 Hud = NodePath("HUD")
 
 [node name="Camera3D" type="Camera3D" parent="Origin" index="0"]

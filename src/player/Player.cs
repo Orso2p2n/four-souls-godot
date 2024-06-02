@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 public partial class Player : Node
 {
-    [Export] protected Node3D _origin;
+    [Export] public Node3D Origin { get; set; }
 
     // Signals
     [Signal] public delegate void EndActionPhaseRequestedEventHandler();
@@ -41,8 +41,8 @@ public partial class Player : Node
         PlayerNumber = playerNumber;
         PlayerLocation = playerLocation;
 
-        _origin.GlobalPosition = playerLocation.GlobalPosition;
-        _origin.GlobalRotation = playerLocation.GlobalRotation;
+        Origin.GlobalPosition = playerLocation.GlobalPosition;
+        Origin.GlobalRotation = playerLocation.GlobalRotation;
 
         CallDeferred(MethodName.InitDeffered);
     }

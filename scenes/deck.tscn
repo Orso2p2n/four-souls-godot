@@ -10,9 +10,9 @@
 script = ExtResource("1_a0cnn")
 _deck3d = NodePath("Deck3D")
 
-[node name="Deck3D" type="Node3D" parent="." node_paths=PackedStringArray("_model")]
+[node name="Deck3D" type="Node3D" parent="." node_paths=PackedStringArray("Model")]
 script = ExtResource("2_lcjct")
-_model = NodePath("Model")
+Model = NodePath("Model")
 
 [node name="Model" parent="Deck3D" instance=ExtResource("2_5saik")]
 

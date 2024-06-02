@@ -3,8 +3,8 @@ using System;
 
 public partial class Deck3D : Node3D
 {
-	[Export] private Node3D _model;
-	private MeshInstance3D _mesh;
+	[Export] public Node3D Model { get; set; }
+	public MeshInstance3D Mesh { get; set; }
 
 	private ShaderMaterial _topMaterial;
 	private ShaderMaterial _sidesMaterial;
@@ -16,21 +16,21 @@ public partial class Deck3D : Node3D
     public void Init(Deck deck) {
 		Deck = deck;
 
-		_mesh = _model.GetChild(0) as MeshInstance3D;
+		Mesh = Model.GetChild(0) as MeshInstance3D;
 
-		_sidesMaterial = _mesh.GetSurfaceOverrideMaterial(0).Duplicate() as ShaderMaterial;
-		_topMaterial = _mesh.GetSurfaceOverrideMaterial(1).Duplicate() as ShaderMaterial;
+		_sidesMaterial = Mesh.GetSurfaceOverrideMaterial(0).Duplicate() as ShaderMaterial;
+		_topMaterial = Mesh.GetSurfaceOverrideMaterial(1).Duplicate() as ShaderMaterial;
 		
 		_topMaterial.SetShaderParameter("albedo_texture", Deck.DeckType.BackTexture);
 
-		_mesh.SetSurfaceOverrideMaterial(0, _sidesMaterial);
-		_mesh.SetSurfaceOverrideMaterial(1, _topMaterial);
+		Mesh.SetSurfaceOverrideMaterial(0, _sidesMaterial);
+		Mesh.SetSurfaceOverrideMaterial(1, _topMaterial);
 	}
 
 	public void SetCardsCount(int count) {
 		_cardsCount = count;
 
 		var yScale = 0.01f * _cardsCount;
-		_model.Scale = _model.Scale with { Y = yScale };
+		Model.Scale = Model.Scale with { Y = yScale };
 	}
 }

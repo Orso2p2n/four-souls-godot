@@ -6,6 +6,7 @@ public partial class MainPlayer : Player
 {
     public static MainPlayer ME { get; private set; }
 
+    [Export] public Camera3D Camera { get; set; }
     [Export] public HUD Hud { get; set; }
 
     public override void _EnterTree() {

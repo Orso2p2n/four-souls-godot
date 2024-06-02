@@ -65,6 +65,11 @@ public partial class Deck : Node
 		Cards.RemoveAt(0);
 		var card = Game.ME.CardFactory.CreateCard(cardResource);
 
+		var height = _deck3d.Mesh.GetAabb().Size.Y + 0.1f;
+		var cardPos = _deck3d.GlobalPosition + Vector3.Up * height;
+		card.Card3d.SetPosition(cardPos, true);
+		card.Card3d.FlipDown(true);
+
 		if (refresh) {
 			RefreshModelCardsCount();
 		}

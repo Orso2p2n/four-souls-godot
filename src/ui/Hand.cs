@@ -50,8 +50,20 @@ public partial class Hand : Control
         RearrangeCards(true);
     }
 
-	public void AddCard(CardBase cardToAdd) {
+	public async void AddCard(CardBase cardToAdd) {
+        cardToAdd.Show3D();
+
+        var tween = CreateTween();
+        var targetOrigin = MainPlayer.ME.Origin;
+        var backwardVector = targetOrigin.Transform.Basis.Z;
+        var targetPosition = targetOrigin.GlobalPosition + (Vector3.Up * MainPlayer.ME.Camera.Position.Y / 2) + (backwardVector * 3);
+        tween.TweenProperty(cardToAdd.Card3d, "global_position", targetPosition, 0.25f).SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Quint);
+
+        await ToSignal(tween, Tween.SignalName.Finished);
+
+        // Spawn HUD card
 		var cardInHand = _cardInHandScene.Instantiate() as CardInHand;
+        cardInHand.GlobalPosition = GlobalPosition + Vector2.Down * _cardHeightWhenHovered;
 		cardInHand.ChangeParent(this);
 		cardInHand.Init(cardToAdd, this);
 

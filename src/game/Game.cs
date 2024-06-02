@@ -1,3 +1,4 @@
+using Fractural.Tasks;
 using Godot;
 using Godot.Collections;
 using System;
@@ -5,6 +6,7 @@ using System;
 public partial class Game : Node
 {
     [Signal] public delegate void RngSeedChangedEventHandler();
+    [Signal] public delegate void LootedPlayerEventHandler(Player player, Array<CardBase> cards);
 
     public static Game ME { get; private set; }
 
@@ -58,7 +60,7 @@ public partial class Game : Node
     protected virtual void InitDone(int peerId = -1) {}
 
     [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-    protected virtual void StartGame() {
+    protected void StartFirstTurn() {
         TurnManager.StartTurn(Players[0]);
     }
 
@@ -152,12 +154,18 @@ public partial class Game : Node
 
     // --- Gameplay ---
     [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-    public void Loot(int lootingPlayerId, int count) {
-        var cards = DeckManager.LootDeck.CreateTopCards(count);
+    public async void Loot(int lootingPlayerId, int count) {
         var player = Players[lootingPlayerId];
+        var cards = new Array<CardBase>();
 
-        foreach (var card in cards) {
+        for (int i = 0; i < count; i++){
+            var card = DeckManager.LootDeck.CreateTopCard();
+            cards.Add(card);
             player.TryAddCardInHand(card);
+
+            await GDTask.Delay(TimeSpan.FromSeconds(0.5f));
         }
+
+        EmitSignal(SignalName.LootedPlayer, player, cards);
     }
 }

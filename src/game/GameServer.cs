@@ -1,3 +1,4 @@
+using Fractural.Tasks;
 using Godot;
 using Godot.Collections;
 using System;
@@ -22,19 +23,19 @@ public partial class GameServer : Game
 
         // All peers have called InitDone
         _peersThatCalledInitDone.Clear();
-        CallDeferred(MethodName.RpcStartGame);
+        CallDeferred(MethodName.StartGame);
     }
 
-    private void RpcStartGame() {
-        Rpc(MethodName.StartGame);
-    }
+    private async void StartGame() {
+        await GDTask.Delay(TimeSpan.FromSeconds(0.5f));
 
-    protected override void StartGame() {
         for (int i = 0; i < Players.Count; i++) {
             Rpc(MethodName.Loot, i, 3);
+
+            await ToSignal(this, SignalName.LootedPlayer);
         }
 
-        base.StartGame();
+        Rpc(MethodName.StartFirstTurn);
     }
 
     protected override void CreateRng() {
