@@ -19,7 +19,7 @@ public partial class Game : Node
     public StackManager StackManager { get; set; }
     public TurnManager TurnManager { get; set; }
 
-    private GameBoard _gameBoard;
+    public GameBoard GameBoard { get; set; }
 
     public override void _Ready() {
         Init();
@@ -42,12 +42,12 @@ public partial class Game : Node
         _playersContainer = new Node { Name = "PlayersContainer" };
         _playersContainer.ChangeParent(this);
 
+        CreateGameBoard();
+
         CreateCardFactory();
         CreateDeckManager();
         CreateStackManager();
         CreateTurnManager();
-        
-        CreateGameBoard();
 
         CreatePlayers();
 
@@ -108,8 +108,8 @@ public partial class Game : Node
     }
 
     protected void CreateGameBoard() {
-        _gameBoard = Assets.ME.GameBoardScene.Instantiate() as GameBoard;
-        _gameBoard.ChangeParent(this);
+        GameBoard = Assets.ME.GameBoardScene.Instantiate() as GameBoard;
+        GameBoard.ChangeParent(this);
     }
 
     // --- Players creation ---
@@ -140,7 +140,7 @@ public partial class Game : Node
         player.Name = "Player" + (Players.Count + 1);
 
         var playerNumber = Players.Count;
-        player.Init(playerNumber, _gameBoard.PlayerLocations[playerNumber]);
+        player.Init(playerNumber, GameBoard.PlayerLocations[playerNumber]);
 
         Players.Add(player);
     }

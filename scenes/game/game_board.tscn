@@ -1,16 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://d14u8obxjmagj"]
+[gd_scene load_steps=6 format=3 uid="uid://d14u8obxjmagj"]
 
 [ext_resource type="Script" path="res://src/world/GameBoard.cs" id="1_hl5i2"]
 [ext_resource type="Material" uid="uid://bk3o3kwsnfgs5" path="res://resources/materials/placeholder_table_mat.tres" id="2_l12cw"]
 [ext_resource type="PackedScene" uid="uid://b85e6y4il8iwr" path="res://scenes/game/player_location.tscn" id="2_mq36a"]
+[ext_resource type="Script" path="res://src/world/DeckLocation.cs" id="3_rktlo"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_t3noa"]
 material = ExtResource("2_l12cw")
 size = Vector3(20, 2, 10)
 
-[node name="GameBoard" type="Node3D" node_paths=PackedStringArray("PlayerLocationsContainer")]
+[node name="GameBoard" type="Node3D" node_paths=PackedStringArray("PlayerLocationsContainer", "DeckLocationsContainer")]
 script = ExtResource("1_hl5i2")
 PlayerLocationsContainer = NodePath("PlayerLocations")
+DeckLocationsContainer = NodePath("DeckLocations")
 
 [node name="PlayerLocations" type="Node3D" parent="."]
 
@@ -25,6 +27,14 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, 
 
 [node name="PlayerLocation4" parent="PlayerLocations" instance=ExtResource("2_mq36a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
+
+[node name="DeckLocations" type="Node3D" parent="."]
+
+[node name="DeckLocationLoot" type="Marker3D" parent="DeckLocations"]
+script = ExtResource("3_rktlo")
+DeckType = 1
+DeckOffset = -0.5
+DiscardOffset = 0.5
 
 [node name="Table" type="Node3D" parent="."]
 

@@ -45,9 +45,11 @@ public partial class DeckManager : Node
     }
 
     private void CreateLootDeck(Array<CardResource> cards) {
+        var deckLocation = Game.ME.GameBoard.GetDeckLocation(DeckType.Loot);
+
         LootDeck = Assets.ME.DeckScene.Instantiate() as Deck;
         LootDeck.Name = "LootDeck";
         LootDeck.ChangeParent(this);
-        LootDeck.Init(cards, Assets.ME.DeckTypeLoot);
+        LootDeck.Init(cards, Assets.ME.DeckTypeLoot, deckLocation);
     }
 }

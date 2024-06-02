@@ -10,11 +10,13 @@ public partial class Deck : Node
 
 	public Array<CardResource> Cards { get; set; }
 
-	public void Init(Array<CardResource> cards, DeckTypeResource deckType) {
+	public void Init(Array<CardResource> cards, DeckTypeResource deckType, DeckLocation deckLocation) {
 		Cards = cards;
 		DeckType = deckType;
 
 		_deck3d.Init(this);
+
+		_deck3d.GlobalPosition = deckLocation.GetDeckLocation();
 
 		Shuffle();
 
