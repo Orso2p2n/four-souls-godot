@@ -67,6 +67,12 @@ public partial class TurnManagerServer : TurnManager
 		}
     }
 
+    protected override void ProcessStartPhaseLootStep() {
+        Game.ME.Rpc(Game.MethodName.Loot, ActivePlayer.PlayerNumber, 1);
+
+        base.ProcessStartPhaseLootStep();
+    }
+
     protected override void ProcessActionPhase() {
         ActivePlayer.Rpc(Player.MethodName.StartActionPhase);
 
