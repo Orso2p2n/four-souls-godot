@@ -1,16 +1,16 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bk3o3kwsnfgs5"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cvo44jhuy0fmt"]
 
-[ext_resource type="Shader" path="res://addons/flexible_toon_shader/flexible_toon.gdshader" id="1_xi161"]
+[ext_resource type="Shader" path="res://addons/flexible_toon_shader/flexible_toon.gdshader" id="1_glqav"]
 
 [resource]
 render_priority = 0
-shader = ExtResource("1_xi161")
-shader_parameter/albedo = Color(0.457181, 0.436067, 0.489045, 1)
-shader_parameter/clamp_diffuse_to_max = false
+shader = ExtResource("1_glqav")
+shader_parameter/albedo = Color(0.8, 0.8, 0.8, 1)
+shader_parameter/clamp_diffuse_to_max = true
 shader_parameter/cuts = 1
-shader_parameter/wrap = 0.0
+shader_parameter/wrap = 9.5e-08
 shader_parameter/steepness = 1.0
-shader_parameter/use_attenuation = false
+shader_parameter/use_attenuation = true
 shader_parameter/use_specular = false
 shader_parameter/specular_strength = 1.0
 shader_parameter/specular_shininess = 16.0

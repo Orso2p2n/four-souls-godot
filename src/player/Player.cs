@@ -126,17 +126,19 @@ public partial class Player : Node
     }
 
     // --- Hand ---
-    public void TryAddCardInHand(CardBase card) {
+    public void TryAddCardInHand(CardBase card, bool rpc = false) {
         if (card.CanBeInHand) {
-            AddCardInHand(card);
+            AddCardInHand(card, rpc);
         }
         else {
             Console.Log("Could not add card " + card.CardName + " in player " + PlayerNumber + "'s hand");
         }
     }
 
-    private void AddCardInHand(CardBase card) {
-        Rpc(MethodName.AddCardInHandID, card.ID);
+    private void AddCardInHand(CardBase card, bool rpc = false) {
+        if (rpc) {
+            Rpc(MethodName.AddCardInHandID, card.ID);
+        }
         _AddCardInHand(card);
     }
 

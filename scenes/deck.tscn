@@ -1,6 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://cq7ux6ytwgulh"]
+[gd_scene load_steps=6 format=3 uid="uid://cq7ux6ytwgulh"]
 
-[ext_resource type="Script" path="res://src/Deck.cs" id="1_wbry1"]
+[ext_resource type="Script" path="res://src/deck/Deck.cs" id="1_a0cnn"]
+[ext_resource type="PackedScene" uid="uid://d0wdbgaqvajme" path="res://assets/models/deck/deck.glb" id="2_5saik"]
+[ext_resource type="Script" path="res://src/deck/Deck3D.cs" id="2_lcjct"]
+[ext_resource type="Material" uid="uid://cvo44jhuy0fmt" path="res://resources/materials/deck/deck_side_mat.tres" id="4_mhei1"]
+[ext_resource type="Material" uid="uid://djy74jb6kjhkk" path="res://resources/materials/deck/deck_top_mat.tres" id="5_1vd55"]
 
-[node name="Deck" type="Node"]
-script = ExtResource("1_wbry1")
+[node name="Deck" type="Node" node_paths=PackedStringArray("_deck3d")]
+script = ExtResource("1_a0cnn")
+_deck3d = NodePath("Deck3D")
+
+[node name="Deck3D" type="Node3D" parent="." node_paths=PackedStringArray("_model")]
+script = ExtResource("2_lcjct")
+_model = NodePath("Model")
+
+[node name="Model" parent="Deck3D" instance=ExtResource("2_5saik")]
+
+[node name="Deck" parent="Deck3D/Model" index="0"]
+surface_material_override/0 = ExtResource("4_mhei1")
+surface_material_override/1 = ExtResource("5_1vd55")
+
+[editable path="Deck3D/Model"]

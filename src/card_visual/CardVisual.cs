@@ -27,16 +27,16 @@ public partial class CardVisual : SubViewport
 			Composition.FgArtTextureRect.Texture = cardResource.FgArt;
 		}
 
-		if (cardResource.topTextBoxTexture != null) {
-			Composition.TopTextureRect.Texture = cardResource.topTextBoxTexture;
+		if (cardResource.TopTextBoxTexture != null) {
+			Composition.TopTextureRect.Texture = cardResource.TopTextBoxTexture;
 		}
 
-		if (cardResource.botTextBoxTexture != null) {
-			Composition.BottomTextureRect.Texture = cardResource.botTextBoxTexture;
+		if (cardResource.BotTextBoxTexture != null) {
+			Composition.BottomTextureRect.Texture = cardResource.BotTextBoxTexture;
 		}
 
-		if (cardResource.botTextBoxTexture != null) {
-			Composition.BottomTextureRect.Texture = cardResource.botTextBoxTexture;
+		if (cardResource.BotTextBoxTexture != null) {
+			Composition.BottomTextureRect.Texture = cardResource.BotTextBoxTexture;
 		}
 
 		// Addons

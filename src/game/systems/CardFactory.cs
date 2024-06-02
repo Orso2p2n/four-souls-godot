@@ -24,8 +24,11 @@ public partial class CardFactory : Node
         _CreateCard(cardResource);
     } 
 
-    public CardBase CreateCard(CardResource cardResource) {
-        Rpc(MethodName.CreateCardFromPath, cardResource.ResourcePath);
+    public CardBase CreateCard(CardResource cardResource, bool rpc = false) {
+        if (rpc) {
+            Rpc(MethodName.CreateCardFromPath, cardResource.ResourcePath);
+        }
+        
         return _CreateCard(cardResource);
     }
 

@@ -15,27 +15,33 @@ public partial class CardResource : Resource
     [Export] public Texture2D BgArt { get; set; }
     [Export] public Texture2D FgArt { get; set; }
     
-    public DeckTypeResource deckTypeResource {
+    public DeckTypeResource DeckTypeResource {
         get {
             return GetDeckTypeResource();
         }
     }
 
     // Back texture
-    public Texture2D backTexture {
+    public Texture2D BackTexture {
         get {
-            return deckTypeResource.BackTexture;
+            return DeckTypeResource.BackTexture;
+        }
+    }
+
+    public Texture2D BackTextureCropped {
+        get {
+            return DeckTypeResource.BackTextureCropped;
         }
     }
 
     // Structure
-    public Texture2D topTextBoxTexture {
+    public Texture2D TopTextBoxTexture {
         get {
             return Assets.ME.CardStructureTopBase;
         }
     }
 
-    public Texture2D botTextBoxTexture {
+    public Texture2D BotTextBoxTexture {
         get {
             return Assets.ME.CardStructureBotBase;
         }

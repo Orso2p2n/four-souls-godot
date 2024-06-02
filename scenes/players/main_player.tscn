@@ -15,7 +15,7 @@ Hud = NodePath("HUD")
 
 [node name="Camera3D" type="Camera3D" parent="Origin" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 20, 0)
-fov = 45.0
+fov = 35.0
 size = 0.355
 near = 0.001
 
@@ -92,4 +92,4 @@ offset_bottom = -72.0
 text = "Skip Action"
 metadata/_edit_use_anchors_ = true
 
-[connection signal="resized" from="HUD/Hand" to="HUD/Hand" method="OnResized"]
+[connection signal="resized" from="HUD/Hand" to="HUD/Hand" method="OnResized" binds= [false]]

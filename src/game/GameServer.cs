@@ -22,7 +22,19 @@ public partial class GameServer : Game
 
         // All peers have called InitDone
         _peersThatCalledInitDone.Clear();
+        CallDeferred(MethodName.RpcStartGame);
+    }
+
+    private void RpcStartGame() {
         Rpc(MethodName.StartGame);
+    }
+
+    protected override void StartGame() {
+        for (int i = 0; i < Players.Count; i++) {
+            Rpc(MethodName.Loot, i, 3);
+        }
+
+        base.StartGame();
     }
 
     protected override void CreateRng() {

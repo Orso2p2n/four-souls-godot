@@ -28,7 +28,7 @@ public partial class Card3D : Node3D
 		Visible = false;
 		cardBase.CardVisual.TextureRefreshed += RefreshSpriteTexture;
 
-		_sprite.SetBackTexture(cardBase.CardResource.backTexture);
+		_sprite.SetBackTexture(cardBase.CardResource.BackTextureCropped);
 	}
 
     public override void _Process(double delta) {

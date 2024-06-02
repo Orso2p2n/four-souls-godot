@@ -21,7 +21,7 @@ public partial class Game : Node
 
     private GameBoard _gameBoard;
 
-    public override void _EnterTree() {
+    public override void _Ready() {
         Init();
     }
 
@@ -58,7 +58,7 @@ public partial class Game : Node
     protected virtual void InitDone(int peerId = -1) {}
 
     [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-    private void StartGame() {
+    protected virtual void StartGame() {
         TurnManager.StartTurn(Players[0]);
     }
 
@@ -149,4 +149,15 @@ public partial class Game : Node
     private void OnServerDisconnected() {
 		SceneManager.ME.GotoMainMenu();
 	}
+
+    // --- Gameplay ---
+    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public void Loot(int lootingPlayerId, int count) {
+        var cards = DeckManager.LootDeck.CreateTopCards(count);
+        var player = Players[lootingPlayerId];
+
+        foreach (var card in cards) {
+            player.TryAddCardInHand(card);
+        }
+    }
 }

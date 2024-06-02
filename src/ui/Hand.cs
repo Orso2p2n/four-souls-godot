@@ -21,7 +21,7 @@ public partial class Hand : Control
     private Vector2 _mousePos;
 
 	public override void _Ready() {
-        OnResized();
+        OnResized(true);
         GetViewport().PhysicsObjectPickingSort = true;
 	}
 
@@ -34,8 +34,10 @@ public partial class Hand : Control
         }
     }
 
-    public async void OnResized() {
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+    public async void OnResized(bool instant = false) {
+        if (!instant) {
+            await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        }
 
         _cardHeight = Size.Y / 0.75f;
 		_cardHeightWhenHovered = _cardHeight * 1.33f;

@@ -7,7 +7,7 @@ public partial class SpawnCardInHandButton : SpawnCardButton
 	public override CardBase SpawnCard(CardResource cardResource) {
 		var card = base.SpawnCard(cardResource);
 
-		MainPlayer.ME.TryAddCardInHand(card);
+		MainPlayer.ME.TryAddCardInHand(card, rpc: true);
 
 		// foreach (var player in Game.ME.Players) {
 		// 	player.TryAddCardInHand(card);
