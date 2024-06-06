@@ -65,11 +65,11 @@ public partial class Card3D : Node3D
 	}
 
 	public void FlipUp(bool instant = false) {
-		SetFace(true, instant);
+		SetFace(false, instant);
 	}
 
 	public void FlipDown(bool instant = false) {
-		SetFace(false, instant);
+		SetFace(true, instant);
 	}
 
 	public async void SetFace(bool down, bool instant = false) {
