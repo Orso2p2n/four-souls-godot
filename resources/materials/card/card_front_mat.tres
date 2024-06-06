@@ -1,24 +1,7 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://c4oecn7rrew86"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cfi4oxxa7788o"]
 
-[ext_resource type="Shader" path="res://addons/flexible_toon_shader/flexible_toon.gdshader" id="1_cntqo"]
-[ext_resource type="Texture2D" uid="uid://c4mi8c3tnjrop" path="res://assets/sprites/card_arts/base_game/loot/001_one_cent_1.png" id="2_hima4"]
+[ext_resource type="Texture2D" uid="uid://dk600j6g6reg6" path="res://assets/sprites/card_other/penny_cropped.png" id="2_a6p54"]
 
 [resource]
-render_priority = 0
-shader = ExtResource("1_cntqo")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/clamp_diffuse_to_max = false
-shader_parameter/cuts = 1
-shader_parameter/wrap = 0.0
-shader_parameter/steepness = 1.0
-shader_parameter/use_attenuation = true
-shader_parameter/use_specular = false
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.0
-shader_parameter/use_rim = false
-shader_parameter/rim_width = 8.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
-shader_parameter/albedo_texture = ExtResource("2_hima4")
+shading_mode = 0
+albedo_texture = ExtResource("2_a6p54")

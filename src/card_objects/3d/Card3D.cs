@@ -93,11 +93,11 @@ public partial class Card3D : Node3D
 	}
 
 	void OnClicked() {
-
+		_dragged = true;
 	}
 
 	void OnReleased() {
-
+		_dragged = false;
 	}
 
 	void _on_area_3d_mouse_entered() {}

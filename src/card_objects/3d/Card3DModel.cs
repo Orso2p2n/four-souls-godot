@@ -8,8 +8,8 @@ public partial class Card3DModel : Node3D
 	public MeshInstance3D Mesh { get; set; }
 
 	private ShaderMaterial _sidesMaterial;
-	private ShaderMaterial _frontMaterial;
-	private ShaderMaterial _backMaterial;
+	private StandardMaterial3D _frontMaterial;
+	private StandardMaterial3D _backMaterial;
 
 	public Vector3 BaseRotation { 
 		get {
@@ -30,8 +30,8 @@ public partial class Card3DModel : Node3D
 		Mesh = GetChild(0) as MeshInstance3D;
 
 		_sidesMaterial = Mesh.GetSurfaceOverrideMaterial(0).Duplicate() as ShaderMaterial;
-		_frontMaterial = Mesh.GetSurfaceOverrideMaterial(1).Duplicate() as ShaderMaterial;
-		_backMaterial = Mesh.GetSurfaceOverrideMaterial(2).Duplicate() as ShaderMaterial;
+		_frontMaterial = Mesh.GetSurfaceOverrideMaterial(1).Duplicate() as StandardMaterial3D;
+		_backMaterial = Mesh.GetSurfaceOverrideMaterial(2).Duplicate() as StandardMaterial3D;
 
 		Mesh.SetSurfaceOverrideMaterial(0, _sidesMaterial);
 		Mesh.SetSurfaceOverrideMaterial(1, _frontMaterial);
@@ -52,11 +52,11 @@ public partial class Card3DModel : Node3D
 	}
 
 	public void SetFrontTexture(Texture2D texture) {
-		_frontMaterial.SetShaderParameter("albedo_texture", texture);
+		_frontMaterial.AlbedoTexture = texture;
 	}
 
 	public void SetBackTexture(Texture2D texture) {
-		_backMaterial.SetShaderParameter("albedo_texture", texture);
+		_backMaterial.AlbedoTexture = texture;
 	}
 
 	public void SetFrontDarkened(bool darkened) {
@@ -66,6 +66,6 @@ public partial class Card3DModel : Node3D
 			modulateColor = Colors.Black;
 		}
 
-		_frontMaterial.SetShaderParameter("albedo", modulateColor);
+		_frontMaterial.AlbedoColor = modulateColor;
 	}
 }
