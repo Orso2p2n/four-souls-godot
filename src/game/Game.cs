@@ -127,6 +127,8 @@ public partial class Game : Node
         }
 
         CreateCpuPlayer();
+        CreateCpuPlayer();
+        CreateCpuPlayer();
     }
 
     protected void CreateMainPlayer() {

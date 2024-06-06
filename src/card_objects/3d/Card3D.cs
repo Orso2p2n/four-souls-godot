@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 
 public partial class Card3D : Node3D
 {
-	[Export] private Card3DSprite _sprite;
-	[Export] private Card3DVisualElement _shadow;
+	[Export] private Card3DModel _model;
 
 	public CardBase CardBase { get; set; }
 
@@ -22,16 +21,12 @@ public partial class Card3D : Node3D
 
 	private bool _dragged;
 
-	public bool VisualLag { get; private set; }
-
     public override void _EnterTree() {
-		_sprite.Card3D = this;
-		_shadow.Card3D = this;
+		_model.Card3D = this;
     }
 
     public override void _Ready() {
-		_sprite.Position = Position;
-		_shadow.Position = Position;
+
     }
 
     public void Init(CardBase cardBase) {
@@ -40,7 +35,7 @@ public partial class Card3D : Node3D
 		Visible = false;
 		cardBase.CardVisual.TextureRefreshed += RefreshSpriteTexture;
 
-		_sprite.SetBackTexture(cardBase.CardResource.BackTextureCropped);
+		_model.SetBackTexture(cardBase.CardResource.BackTextureCropped);
 	}
 
     public override void _Process(double delta) {
@@ -58,15 +53,11 @@ public partial class Card3D : Node3D
     }
 
     public override void _PhysicsProcess(double delta) {
-		if (VisualLag) {
-			var lerpSpeed = 0.3f;
-			_sprite.LerpPosition(this, lerpSpeed);
-			_shadow.LerpPosition(this, lerpSpeed);
-		}
+
     }
 
     public void RefreshSpriteTexture(ViewportTexture texture) {
-		_sprite.SetFrontTexture(texture);
+		_model.SetFrontTexture(texture);
 	}
 
 	public void Flip(bool instant = false) {
@@ -85,39 +76,28 @@ public partial class Card3D : Node3D
 		FaceDown = down;
 
 		var targetRotZ = down ? -180 : 180;
-		var targetRot = _sprite.BaseRotation with { Z = targetRotZ };
+		var targetRot = _model.BaseRotation with { Z = targetRotZ };
 
 		if (instant) {
-			_sprite.BaseRotation = targetRot;
-			_sprite.SetFrontDarkened(down);
+			_model.BaseRotation = targetRot;
+			_model.SetFrontDarkened(down);
 			return;
 		}
 
-		var tween = _sprite.CreateTween();
-		tween.TweenProperty(_sprite, "BaseRotation", targetRot, 0.25f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
+		var tween = _model.CreateTween();
+		tween.TweenProperty(_model, "BaseRotation", targetRot, 0.25f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
 
 		await ToSignal(tween, Tween.SignalName.Finished);
 
-		_sprite.SetFrontDarkened(down);
-	}
-
-	public void ToggleVisualLag(bool enabled) {
-		VisualLag = enabled;
-		_sprite.TopLevel = enabled;
+		_model.SetFrontDarkened(down);
 	}
 
 	void OnClicked() {
-		// _dragged = true;
 
-		// _sprite.TargetHeight = 0.5f;
-		// _sprite.TargetOffset2D = Vector2.Up * 0.25f;
 	}
 
 	void OnReleased() {
-		// _dragged = false;
 
-		// _sprite.TargetHeight = 0f;
-		// _sprite.TargetOffset2D = Vector2.Zero;
 	}
 
 	void _on_area_3d_mouse_entered() {}

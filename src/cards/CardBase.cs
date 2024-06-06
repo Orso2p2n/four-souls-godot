@@ -86,7 +86,6 @@ public partial class CardBase : Node
 
 	public void Hide3D() {
 		Card3d.Visible = false;
-		Card3d.ToggleVisualLag(false);
 	}
 
 

@@ -1,22 +1,36 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmq3w836loiaj"]
+[gd_scene load_steps=13 format=3 uid="uid://bmq3w836loiaj"]
 
 [ext_resource type="Script" path="res://src/card_objects/3d/Card3D.cs" id="1_1gacn"]
+[ext_resource type="PackedScene" uid="uid://fab4uikt0cty" path="res://assets/models/card/card.glb" id="2_bb502"]
 [ext_resource type="Texture2D" uid="uid://dk600j6g6reg6" path="res://assets/sprites/card_other/penny_cropped.png" id="2_l4aqc"]
+[ext_resource type="Script" path="res://src/card_objects/3d/Card3DModel.cs" id="3_12is4"]
+[ext_resource type="Material" uid="uid://bocjhjvp72gj3" path="res://resources/materials/card/card_side_mat.tres" id="3_eakc6"]
 [ext_resource type="Texture2D" uid="uid://cioravgdirrej" path="res://assets/sprites/card_other/card_crop.png" id="3_xc2l1"]
 [ext_resource type="Script" path="res://src/card_objects/3d/Card3DSprite.cs" id="3_y0tul"]
 [ext_resource type="Texture2D" uid="uid://cjqakrjj8mgjq" path="res://assets/sprites/card_backs/back_loot_cropped.png" id="4_c3dsp"]
+[ext_resource type="Material" uid="uid://c4oecn7rrew86" path="res://resources/materials/card/card_front_mat.tres" id="4_qqnpk"]
 [ext_resource type="Script" path="res://src/card_objects/3d/Card3DVisualElement.cs" id="5_4q4n3"]
+[ext_resource type="Material" uid="uid://dj15cqh5ru2ya" path="res://resources/materials/card/card_back_mat.tres" id="5_vpd8i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fb2ih"]
 size = Vector3(0.875, 0.1, 1.225)
 
-[node name="Card3D" type="Node3D" node_paths=PackedStringArray("_sprite", "_shadow")]
+[node name="Card3D" type="Node3D" node_paths=PackedStringArray("_model")]
 rotation_order = 0
 script = ExtResource("1_1gacn")
-_sprite = NodePath("Sprite")
-_shadow = NodePath("Shadow")
+_model = NodePath("Model")
+
+[node name="Model" parent="." instance=ExtResource("2_bb502")]
+script = ExtResource("3_12is4")
+
+[node name="Card" parent="Model" index="0"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+surface_material_override/0 = ExtResource("3_eakc6")
+surface_material_override/1 = ExtResource("4_qqnpk")
+surface_material_override/2 = ExtResource("5_vpd8i")
 
 [node name="Sprite" type="Node3D" parent="." node_paths=PackedStringArray("Front", "Back")]
+visible = false
 script = ExtResource("3_y0tul")
 Front = NodePath("Front")
 Back = NodePath("Back")
@@ -65,3 +79,5 @@ shape = SubResource("BoxShape3D_fb2ih")
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+
+[editable path="Model"]
