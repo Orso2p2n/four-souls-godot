@@ -19,11 +19,12 @@ public enum LootCardType {
     OneCent
 }
 
+[Tool]
 public partial class LootCardResource : CardResource
 {
     [Export] public LootCardType LootCardType { get; set; }
 
-    override public DeckTypeResource GetDeckTypeResource() {
+    public override DeckTypeResource GetDeckTypeResource() {
         return Assets.ME.DeckTypeLoot;
     }
 }

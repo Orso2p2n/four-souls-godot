@@ -11,4 +11,5 @@ CardName = "A Penny!"
 Script = ExtResource("2_82kv4")
 Charmed = false
 SoulCount = 0
+StatType = 0
 BgArt = ExtResource("1_yrji4")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b5fomlhh5frqv"]
+[gd_scene load_steps=12 format=3 uid="uid://b5fomlhh5frqv"]
 
 [ext_resource type="Script" path="res://src/card_visual/CardVisualComposition.cs" id="1_7o27l"]
 [ext_resource type="Texture2D" uid="uid://cioravgdirrej" path="res://assets/sprites/card_other/card_crop.png" id="2_15nr0"]
@@ -9,9 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://bm5hcya5v3hfp" path="res://scenes/card_visual/description/effect.tscn" id="7_kd4mk"]
 [ext_resource type="PackedScene" uid="uid://bedaixr2va8a5" path="res://scenes/card_visual/description/lore.tscn" id="9_knjop"]
 [ext_resource type="PackedScene" uid="uid://dhhmjnud2g2i3" path="res://scenes/card_visual/description/line_sub.tscn" id="10_w22b6"]
+[ext_resource type="Script" path="res://src/card_visual/CardVisualStatContainer.cs" id="11_veink"]
 [ext_resource type="PackedScene" uid="uid://gi6ltebjm5ur" path="res://scenes/card_visual/description/line.tscn" id="12_s1vve"]
 
-[node name="CardVisualComposition" type="Control" node_paths=PackedStringArray("BgArtTextureRect", "BorderTextureRect", "BottomTextureRect", "TopTextureRect", "StatblockTextureRect", "RewardTextureRect", "SoulTextureRect", "CharmedTextureRect", "FgArtTextureRect", "TitleLabel", "DescriptionContainer")]
+[node name="CardVisualComposition" type="Control" node_paths=PackedStringArray("BgArtTextureRect", "BorderTextureRect", "BottomTextureRect", "TopTextureRect", "StatblockTextureRect", "RewardTextureRect", "SoulTextureRect", "CharmedTextureRect", "FgArtTextureRect", "TitleLabel", "DescriptionContainer", "MonsterStats", "CharacterStats")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -44.0
@@ -30,6 +31,8 @@ CharmedTextureRect = NodePath("BleedzonesMask/Charmed")
 FgArtTextureRect = NodePath("BleedzonesMask/FgArt")
 TitleLabel = NodePath("BleedzonesMask/Texts/TitleContainer/Title")
 DescriptionContainer = NodePath("BleedzonesMask/Texts/DescriptionContainer")
+MonsterStats = NodePath("BleedzonesMask/Texts/Stats/Monster")
+CharacterStats = NodePath("BleedzonesMask/Texts/Stats/Character")
 
 [node name="BleedzonesMask" type="TextureRect" parent="."]
 clip_children = 1
@@ -134,3 +137,79 @@ _effectScene = ExtResource("7_kd4mk")
 _loreScene = ExtResource("9_knjop")
 _lineScene = ExtResource("12_s1vve")
 _lineSubScene = ExtResource("10_w22b6")
+
+[node name="Stats" type="Control" parent="BleedzonesMask/Texts"]
+layout_mode = 1
+anchors_preset = 0
+
+[node name="Monster" type="Control" parent="BleedzonesMask/Texts/Stats" node_paths=PackedStringArray("_hpLabel", "_diceLabel", "_atkLabel")]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+script = ExtResource("11_veink")
+_hpLabel = NodePath("HP")
+_diceLabel = NodePath("DICE")
+_atkLabel = NodePath("ATK")
+
+[node name="HP" type="Label" parent="BleedzonesMask/Texts/Stats/Monster"]
+layout_mode = 0
+offset_left = 285.0
+offset_top = 778.0
+offset_right = 361.0
+offset_bottom = 857.0
+theme = ExtResource("4_2pcup")
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DICE" type="Label" parent="BleedzonesMask/Texts/Stats/Monster"]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 778.0
+offset_right = 566.0
+offset_bottom = 857.0
+theme = ExtResource("4_2pcup")
+text = "4+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ATK" type="Label" parent="BleedzonesMask/Texts/Stats/Monster"]
+layout_mode = 0
+offset_left = 685.0
+offset_top = 778.0
+offset_right = 761.0
+offset_bottom = 857.0
+theme = ExtResource("4_2pcup")
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Character" type="Control" parent="BleedzonesMask/Texts/Stats" node_paths=PackedStringArray("_hpLabel", "_atkLabel")]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+script = ExtResource("11_veink")
+_hpLabel = NodePath("HP")
+_atkLabel = NodePath("ATK")
+
+[node name="HP" type="Label" parent="BleedzonesMask/Texts/Stats/Character"]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 778.0
+offset_right = 456.0
+offset_bottom = 857.0
+theme = ExtResource("4_2pcup")
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ATK" type="Label" parent="BleedzonesMask/Texts/Stats/Character"]
+layout_mode = 0
+offset_left = 579.0
+offset_top = 778.0
+offset_right = 655.0
+offset_bottom = 857.0
+theme = ExtResource("4_2pcup")
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1

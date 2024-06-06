@@ -2,22 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1fejmdhw5j2n"
-path.bptc="res://.godot/imported/back_character.png-fef1435a8a8fe312fe6f11d8db65b623.bptc.ctex"
+uid="uid://c7uuywlstjsmk"
+path="res://.godot/imported/bot_character.png-5f8b000415d0154487ef04f4a87adda3.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/card_backs/back_character.png"
-dest_files=["res://.godot/imported/back_character.png-fef1435a8a8fe312fe6f11d8db65b623.bptc.ctex"]
+source_file="res://assets/sprites/card_structure/bot_character.png"
+dest_files=["res://.godot/imported/bot_character.png-5f8b000415d0154487ef04f4a87adda3.ctex"]
 
 [params]
 
-compress/mode=2
-compress/high_quality=true
+compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
@@ -32,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

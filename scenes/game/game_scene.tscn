@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cqrcg6mefh4c6"]
+[gd_scene load_steps=14 format=3 uid="uid://cqrcg6mefh4c6"]
 
 [ext_resource type="Script" path="res://src/game/GameScene.cs" id="1_secrt"]
 [ext_resource type="Script" path="res://src/debug/DebugUI.cs" id="2_8xbdr"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardInWorld.cs" id="8_x8m5e"]
 [ext_resource type="Script" path="res://src/debug/debug_menu/SpawnCardInHandButton.cs" id="9_3l4qs"]
 [ext_resource type="Resource" uid="uid://cl7c3t60fv1ne" path="res://resources/cards/loot/006_a_dime.tres" id="9_j230f"]
+[ext_resource type="Resource" uid="uid://krpkjlqbklhx" path="res://resources/cards/character/001_isaac.tres" id="10_5e6l7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5t7t"]
 bg_color = Color(0.301961, 0.301961, 0.301961, 0.670588)
@@ -91,7 +92,7 @@ grow_vertical = 2
 text = "Spawn Card"
 flat = false
 script = ExtResource("8_x8m5e")
-_cardResources = Array[Resource]([ExtResource("4_ubaxr"), ExtResource("5_eb1os"), ExtResource("6_exnde"), ExtResource("7_uwrim"), ExtResource("8_8ho2u"), ExtResource("9_j230f")])
+_cardResources = Array[Resource]([ExtResource("4_ubaxr"), ExtResource("5_eb1os"), ExtResource("6_exnde"), ExtResource("7_uwrim"), ExtResource("8_8ho2u"), ExtResource("9_j230f"), ExtResource("10_5e6l7")])
 
 [node name="PopupMenu" type="PopupMenu" parent="Debug/DebugUI/Menu/SpawnCardButton"]
 

@@ -7,6 +7,8 @@ public partial class Assets : Node
     [ExportGroup("Resources")]
     [ExportSubgroup("Deck Types")]
     [Export] public DeckTypeResource DeckTypeLoot { get; set; }
+    [Export] public DeckTypeResource DeckTypeCharacter { get; set; }
+    [Export] public DeckTypeResource DeckTypeStartingItem { get; set; }
     [ExportSubgroup("Deck Sets")]
     [Export] public DeckSetResource DeckSetBaseGame { get; set; }
     
@@ -19,12 +21,18 @@ public partial class Assets : Node
     [Export] public PackedScene CpuPlayerScene { get; set; }
 
     [ExportGroup("Textures")]
-    [Export] public Texture2D CardStructureBotBase { get; set; }
-    [Export] public Texture2D CardStructureTopBase { get; set; }
-
-    [Export] public Texture2D CardStructureAddon1Soul { get; set; }
-    [Export] public Texture2D CardStructureAddon2Soul { get; set; }
-    [Export] public Texture2D CardStructureAddonCharmed { get; set; }
+    [ExportSubgroup("Structure")]
+    [Export] public Texture2D BotBase { get; set; }
+    [Export] public Texture2D TopBase { get; set; }
+    [Export] public Texture2D BotCharacter { get; set; }
+    [Export] public Texture2D TopCharacter { get; set; }
+    [ExportSubgroup("Stats")]
+    [Export] public Texture2D StatblockCharacter { get; set; }
+    [Export] public Texture2D StatblockMonster { get; set; }
+    [ExportSubgroup("Addons")]
+    [Export] public Texture2D Addon1Soul { get; set; }
+    [Export] public Texture2D Addon2Soul { get; set; }
+    [Export] public Texture2D AddonCharmed { get; set; }
 
     public static Assets ME { get; private set; }
 

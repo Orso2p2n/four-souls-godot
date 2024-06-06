@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://2b6wwkxxfpm8"]
+
+[ext_resource type="Texture2D" uid="uid://b1fejmdhw5j2n" path="res://assets/sprites/card_backs/back_character.png" id="1_22ktb"]
+[ext_resource type="Texture2D" uid="uid://brc8x4ddopn08" path="res://assets/sprites/card_backs/back_character_cropped.png" id="2_1s0o2"]
+[ext_resource type="Script" path="res://src/resources/DeckTypeResource.cs" id="3_o7jge"]
+
+[resource]
+script = ExtResource("3_o7jge")
+Name = "Character"
+deckType = 0
+BackTexture = ExtResource("1_22ktb")
+BackTextureCropped = ExtResource("2_1s0o2")

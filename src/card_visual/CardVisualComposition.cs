@@ -17,4 +17,8 @@ public partial class CardVisualComposition : Control
 	[ExportGroup("Texts")]
 	[Export] public CardVisualTitle TitleLabel { get; private set; }
 	[Export] public DescriptionContainer DescriptionContainer { get; private set; }
+
+	[ExportGroup("Stats")]
+	[Export] public CardVisualStatContainer MonsterStats { get; private set; }
+	[Export] public CardVisualStatContainer CharacterStats { get; private set; }
 }
