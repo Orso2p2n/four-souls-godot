@@ -125,6 +125,8 @@ public partial class Game : Node
                 CreateOnlinePlayer();
             }
         }
+
+        CreateCpuPlayer();
     }
 
     protected void CreateMainPlayer() {
@@ -134,6 +136,11 @@ public partial class Game : Node
 
     protected void CreateOnlinePlayer() {
         var createdPlayer = Assets.ME.OnlinePlayerScene.Instantiate() as OnlinePlayer; 
+        OnPlayerCreated(createdPlayer);
+    }
+
+    protected void CreateCpuPlayer() {
+        var createdPlayer = Assets.ME.CpuPlayerScene.Instantiate() as CPUPlayer; 
         OnPlayerCreated(createdPlayer);
     }
 
@@ -155,6 +162,15 @@ public partial class Game : Node
     // --- Gameplay ---
     [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public async void Loot(int lootingPlayerId, int count) {
+        var maxLootTime = 1.5f;
+        var delayPerCard = 0.5f;
+
+        var fullDelay = delayPerCard * count;
+
+        if (fullDelay > maxLootTime) {
+            delayPerCard = maxLootTime / count;
+        }
+
         var player = Players[lootingPlayerId];
         var cards = new Array<CardBase>();
 
@@ -163,7 +179,7 @@ public partial class Game : Node
             cards.Add(card);
             player.TryAddCardInHand(card);
 
-            await GDTask.Delay(TimeSpan.FromSeconds(0.5f));
+            await GDTask.Delay(TimeSpan.FromSeconds(delayPerCard));
         }
 
         EmitSignal(SignalName.LootedPlayer, player, cards);

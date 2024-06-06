@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dmga6tho40pxg"]
+[gd_scene load_steps=9 format=3 uid="uid://dmga6tho40pxg"]
 
 [ext_resource type="PackedScene" uid="uid://fimnkt42gwdv" path="res://scenes/players/player.tscn" id="1_uqqj8"]
 [ext_resource type="Script" path="res://src/player/MainPlayer.cs" id="2_q24p3"]
+[ext_resource type="Script" path="res://src/Camera.cs" id="3_bj5wu"]
 [ext_resource type="Script" path="res://src/ui/HUD.cs" id="3_bofyg"]
 [ext_resource type="Script" path="res://src/ui/Hand.cs" id="4_6c2bg"]
 [ext_resource type="PackedScene" uid="uid://lymx8t7asvv2" path="res://scenes/ui/priority_intention_panel.tscn" id="4_q2nwd"]
@@ -16,9 +17,13 @@ Hud = NodePath("HUD")
 
 [node name="Camera3D" type="Camera3D" parent="Origin" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 0, 20, 0)
-fov = 35.0
+rotation_order = 3
+fov = 45.0
 size = 0.355
 near = 0.001
+script = ExtResource("3_bj5wu")
+_movementSpeed = 10.0
+_sensitivity = 4.0
 
 [node name="HUD" type="Control" parent="." index="1" node_paths=PackedStringArray("Hand", "PhaseLabel", "EndTurnButton", "PriorityIntentionPanel", "SkipActionButton")]
 layout_mode = 3

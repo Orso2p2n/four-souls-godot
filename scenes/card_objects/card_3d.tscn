@@ -11,12 +11,12 @@
 size = Vector3(0.875, 0.1, 1.225)
 
 [node name="Card3D" type="Node3D" node_paths=PackedStringArray("_sprite", "_shadow")]
+rotation_order = 0
 script = ExtResource("1_1gacn")
 _sprite = NodePath("Sprite")
 _shadow = NodePath("Shadow")
 
 [node name="Sprite" type="Node3D" parent="." node_paths=PackedStringArray("Front", "Back")]
-top_level = true
 script = ExtResource("3_y0tul")
 Front = NodePath("Front")
 Back = NodePath("Back")
@@ -44,11 +44,11 @@ alpha_antialiasing_edge = 1.0
 texture = ExtResource("4_c3dsp")
 
 [node name="Shadow" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-rotation_order = 3
 top_level = true
+visible = false
 modulate = Color(1, 1, 1, 0.498039)
 pixel_size = 0.001
+axis = 1
 double_sided = false
 render_priority = -1
 texture = ExtResource("3_xc2l1")

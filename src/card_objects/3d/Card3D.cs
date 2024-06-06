@@ -22,7 +22,19 @@ public partial class Card3D : Node3D
 
 	private bool _dragged;
 
-	public void Init(CardBase cardBase) {
+	public bool VisualLag { get; private set; }
+
+    public override void _EnterTree() {
+		_sprite.Card3D = this;
+		_shadow.Card3D = this;
+    }
+
+    public override void _Ready() {
+		_sprite.Position = Position;
+		_shadow.Position = Position;
+    }
+
+    public void Init(CardBase cardBase) {
 		CardBase = cardBase;
 		
 		Visible = false;
@@ -46,19 +58,12 @@ public partial class Card3D : Node3D
     }
 
     public override void _PhysicsProcess(double delta) {
-		var lerpSpeed = 0.3f;
-		_sprite.LerpPosition(this, lerpSpeed);
-		_shadow.LerpPosition(this, lerpSpeed);
-    }
-
-	public void SetPosition(Vector3 position, bool instant = false) {
-		Position = position;
-
-		if (instant) {
-			_sprite.Position = position;
-			_shadow.Position = position;
+		if (VisualLag) {
+			var lerpSpeed = 0.3f;
+			_sprite.LerpPosition(this, lerpSpeed);
+			_shadow.LerpPosition(this, lerpSpeed);
 		}
-	}
+    }
 
     public void RefreshSpriteTexture(ViewportTexture texture) {
 		_sprite.SetFrontTexture(texture);
@@ -76,7 +81,7 @@ public partial class Card3D : Node3D
 		SetFace(false, instant);
 	}
 
-	public void SetFace(bool down, bool instant = false) {
+	public async void SetFace(bool down, bool instant = false) {
 		FaceDown = down;
 
 		var targetRotZ = down ? -180 : 180;
@@ -84,11 +89,21 @@ public partial class Card3D : Node3D
 
 		if (instant) {
 			_sprite.BaseRotation = targetRot;
+			_sprite.SetFrontDarkened(down);
 			return;
 		}
 
 		var tween = _sprite.CreateTween();
 		tween.TweenProperty(_sprite, "BaseRotation", targetRot, 0.25f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
+
+		await ToSignal(tween, Tween.SignalName.Finished);
+
+		_sprite.SetFrontDarkened(down);
+	}
+
+	public void ToggleVisualLag(bool enabled) {
+		VisualLag = enabled;
+		_sprite.TopLevel = enabled;
 	}
 
 	void OnClicked() {

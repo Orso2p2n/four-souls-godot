@@ -61,6 +61,8 @@ public partial class Hand : Control
 
         await ToSignal(tween, Tween.SignalName.Finished);
 
+        cardToAdd.Hide3D();
+
         // Spawn HUD card
 		var cardInHand = _cardInHandScene.Instantiate() as CardInHand;
         cardInHand.GlobalPosition = GlobalPosition + Vector2.Down * _cardHeightWhenHovered;

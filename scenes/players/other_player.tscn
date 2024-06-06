@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://fimnkt42gwdv" path="res://scenes/players/player.tscn" id="1_mfo64"]
 [ext_resource type="Script" path="res://src/player/OtherPlayer.cs" id="2_gkfjk"]
-[ext_resource type="Script" path="res://src/world/MultiCardsZone.cs" id="3_o4vii"]
+[ext_resource type="Script" path="res://src/world/OtherHand.cs" id="3_1ytbm"]
 
-[node name="OtherPlayer" node_paths=PackedStringArray("_handZone") instance=ExtResource("1_mfo64")]
+[node name="OtherPlayer" node_paths=PackedStringArray("_hand") instance=ExtResource("1_mfo64")]
 script = ExtResource("2_gkfjk")
-_handZone = NodePath("Origin/Hand")
+_hand = NodePath("Origin/Hand")
 
 [node name="Label3D" type="Label3D" parent="Origin" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -15,4 +15,5 @@ text = "ORIGIN"
 
 [node name="Hand" type="Node3D" parent="Origin" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("3_o4vii")
+script = ExtResource("3_1ytbm")
+_curveHeight = 0.5

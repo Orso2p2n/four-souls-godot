@@ -58,4 +58,14 @@ public partial class Card3DSprite : Card3DVisualElement
 	public void SetBackTexture(Texture2D texture) {
 		Back.Texture = texture;
 	}
+
+	public void SetFrontDarkened(bool darkened) {
+		var modulateColor = Colors.White;
+		
+		if (darkened) {
+			modulateColor = Colors.Black;
+		}
+
+		Front.Modulate = modulateColor;
+	}
 }

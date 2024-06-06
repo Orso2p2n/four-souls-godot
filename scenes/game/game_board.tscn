@@ -20,7 +20,7 @@ DeckLocationsContainer = NodePath("DeckLocations")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8859, 0.0377452, 4.99392)
 
 [node name="PlayerLocation2" parent="PlayerLocations" instance=ExtResource("2_mq36a")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -5, 0, -5)
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -5, 0, -5)
 
 [node name="PlayerLocation3" parent="PlayerLocations" instance=ExtResource("2_mq36a")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5, 0, -5)
