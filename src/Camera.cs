@@ -10,6 +10,13 @@ public partial class Camera : Camera3D
 	private float _total_pitch = 0f;
 
 	private bool _freeCam;
+	private Transform3D _originalTransform;
+
+	private bool _hasFreeMoved;
+
+    public override void _Ready() {
+        _originalTransform = Transform;
+    }
 
     public override void _PhysicsProcess(double delta) {
         base._PhysicsProcess(delta);
@@ -37,6 +44,10 @@ public partial class Camera : Camera3D
 					}
 				}
 			}
+
+			if (eventMouseButton.ButtonIndex == MouseButton.Middle) {
+				ResetFreeCam();
+			}
 		}
 
 		if (@event is InputEventMouseMotion eventMouseMotion) {
@@ -44,6 +55,7 @@ public partial class Camera : Camera3D
 		}
     }
 
+	// --- Freecam ---
 	private void FreeCam(double delta) {
 		var rightVector = this.GetRightVector().Normalized();
 
@@ -59,6 +71,10 @@ public partial class Camera : Camera3D
 		if (Input.IsActionPressed("camera_down")) direction.Y -= 1;
 
 		if (direction != Vector3.Zero) {
+			if (!_hasFreeMoved) {
+				_hasFreeMoved = true;
+			}
+
 			direction = direction.Normalized();
 			direction = direction.Rotated(Vector3.Up, Rotation.Y);
 			direction *= _movementSpeed * (float) delta;
@@ -79,5 +95,15 @@ public partial class Camera : Camera3D
 		RotationDegrees = rotationDegrees;
 		
 		GlobalRotate(Vector3.Up, Mathf.DegToRad(-yaw));
+	}
+
+	private void ResetFreeCam() {
+		if (!_hasFreeMoved) {
+			return;
+		}
+
+		_hasFreeMoved = false;
+
+		Transform = _originalTransform;
 	}
 }
