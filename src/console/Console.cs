@@ -205,6 +205,11 @@ public partial class Console : Control
         else if (@event.IsActionPressed("console_enter")) {
             Enter();
         }
+        else if (@event is InputEventKey eventKey && @event.IsPressed()) {
+            if (eventKey.Keycode == Key.F1) {
+                _consoleCommands.ToggleHud();
+            }
+        }
     }
 
     // Static functions

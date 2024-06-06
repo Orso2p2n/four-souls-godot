@@ -115,6 +115,7 @@ public partial class ConsoleCommands : Node
         AddCommand("fps", ToggleFPS);
         AddCommand("print", Print);
         AddCommand("chat", Chat, true);
+        AddCommand("hud", ToggleHud);
     }
 
     // --- Commands ---
@@ -130,5 +131,9 @@ public partial class ConsoleCommands : Node
 
     public void Chat(string text) {
         Console.ME.LogRpc(text);
+    }
+
+    public void ToggleHud() {
+        MainPlayer.ME.Hud.Visible = !MainPlayer.ME.Hud.Visible;
     }
 }
