@@ -30,7 +30,7 @@ public partial class GameServer : Game
         await GDTask.Delay(TimeSpan.FromSeconds(0.5f));
 
         for (int i = 0; i < Players.Count; i++) {
-            Rpc(MethodName.Loot, i, 10);
+            Rpc(MethodName.Loot, i, 3);
 
             await ToSignal(this, SignalName.LootedPlayer);
         }
