@@ -167,7 +167,7 @@ public partial class Game : Node
     [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
     public async void Loot(int lootingPlayerId, int count) {
         var maxLootTime = 1.5f;
-        var delayPerCard = 0.5f;
+        var delayPerCard = 0.3f;
 
         var fullDelay = delayPerCard * count;
 
