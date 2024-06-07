@@ -11,6 +11,7 @@ public partial class Game : Node
     public static Game ME { get; private set; }
 
     private Node _playersContainer;
+    private readonly int _maxPlayersCount = 4;
     public Array<Player> Players { get; set; }
 
     public RandomNumberGenerator Rng { get; set; }
@@ -126,9 +127,10 @@ public partial class Game : Node
             }
         }
 
-        CreateCpuPlayer();
-        CreateCpuPlayer();
-        CreateCpuPlayer();
+        var emptySlotsCount = _maxPlayersCount - Players.Count;
+        for (int i = 0; i < emptySlotsCount; i++) {
+            CreateCpuPlayer();
+        }
     }
 
     protected void CreateMainPlayer() {
