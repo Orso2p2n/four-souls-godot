@@ -183,6 +183,10 @@ public partial class Player : Node
         }
     }
 
+    // --- Zone ---
+    public void TryAddCardInZone(CardBase card, bool rpc = false) {
+        PlayerLocation.PlayerZone.AddCard(card);
+    }
 
     // Common effects
     [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]

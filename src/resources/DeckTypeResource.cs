@@ -7,7 +7,7 @@ public enum DeckType {
     Monster,
     Treasure,
     BonusSoul,
-    Node3D
+    StartingItem
 }
 
 public partial class DeckTypeResource : Resource

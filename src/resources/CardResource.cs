@@ -2,6 +2,11 @@ using Godot;
 using System;
 using Godot.Collections;
 
+public enum ItemType {
+    Active,
+    Passive
+}
+
 public enum StatType {
     None,
     Character,
@@ -11,10 +16,11 @@ public enum StatType {
 [Tool]
 public partial class CardResource : Resource
 {
-    [Export]public string CardName { get; set; }
+    [Export] public string CardName { get; set; }
     [Export] public Script Script { get; set; }
 
     [ExportGroup("Properties and Addons")]
+    [Export] public ItemType ItemType { get; set; } = ItemType.Active;
     [Export] public bool Charmed { get; set; } = false;
     [Export(PropertyHint.Range, "0,2,")] public int SoulCount { get; set; } = 0;
 
@@ -38,6 +44,12 @@ public partial class CardResource : Resource
     public DeckTypeResource DeckTypeResource {
         get {
             return GetDeckTypeResource();
+        }
+    }
+
+    public virtual bool IsItem {
+        get {
+            return false;
         }
     }
 
@@ -89,8 +101,9 @@ public partial class CardResource : Resource
     // --- Editor manipulation ---
     public override void _ValidateProperty(Godot.Collections.Dictionary property) {
         var name = property["name"].AsStringName();
-        
         bool visible;
+        
+        // Stats
         if (name == PropertyName.HpStat) {
             visible = StatType != StatType.None;
         }
@@ -100,10 +113,14 @@ public partial class CardResource : Resource
         else if (name == PropertyName.AtkStat) {
             visible = StatType != StatType.None;
         }
+        // Item Type
+        else if (name == PropertyName.ItemType) {
+            visible = IsItem;
+        }
         else {
             return;
         }
-        
+
         if (!visible) {
             var usage = PropertyUsageFlags.None;
             property["usage"] = (int) usage;

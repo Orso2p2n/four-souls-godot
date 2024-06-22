@@ -9,6 +9,7 @@ public partial class Assets : Node
     [Export] public DeckTypeResource DeckTypeLoot { get; set; }
     [Export] public DeckTypeResource DeckTypeCharacter { get; set; }
     [Export] public DeckTypeResource DeckTypeStartingItem { get; set; }
+    [Export] public DeckTypeResource DeckTypeTreasure { get; set; }
     [ExportSubgroup("Deck Sets")]
     [Export] public DeckSetResource DeckSetBaseGame { get; set; }
     

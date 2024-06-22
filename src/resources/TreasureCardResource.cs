@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [Tool]
-public partial class StartingItemCardResource : CardResource
+public partial class TreasureCardResource : CardResource
 {
     public override bool IsItem {
         get {
@@ -11,6 +11,6 @@ public partial class StartingItemCardResource : CardResource
     }
 
     public override DeckTypeResource GetDeckTypeResource() {
-        return Assets.ME.DeckTypeStartingItem;
+        return Assets.ME.DeckTypeTreasure;
     }
 }

@@ -9,6 +9,8 @@ public partial class SpawnCardInWorld : SpawnCardButton
 
 		card.Show3D();
 
+		MainPlayer.ME.TryAddCardInZone(card);
+
 		return card;
 	}
 }
