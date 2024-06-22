@@ -184,7 +184,7 @@ public partial class Player : Node
     }
 
     // --- Zone ---
-    public void TryAddCardInZone(CardBase card, bool rpc = false) {
+    public void AddCardInZone(CardBase card) {
         PlayerLocation.PlayerZone.AddCard(card);
     }
 

@@ -25,6 +25,8 @@ public partial class PlayerZone : Node3D
 
     public Array<CardBase> CardsInOrder { get; set; }
 
+    private float _verticalRatio = 1.3f;
+
     public override void _EnterTree() {
         _boxShape3D = new BoxShape3D();
         _collisionShape3D.Shape = _boxShape3D;
@@ -42,7 +44,7 @@ public partial class PlayerZone : Node3D
         var newSize = _boxShape3D.Size;
         newSize.X = areaSize.X;
         newSize.Y = 0;
-        newSize.Z = areaSize.Y;
+        newSize.Z = areaSize.Y * _verticalRatio;
         _boxShape3D.Size = newSize;
     }
 
@@ -126,7 +128,7 @@ public partial class PlayerZone : Node3D
         var basePos = new Vector3(-AreaSize.X / 2f, 0f, AreaSize.Y / 2f);
 
         basePos.X += slot.X + 0.5f;
-        basePos.Z -= slot.Y * 1.3f + 0.5f;
+        basePos.Z -= slot.Y * _verticalRatio + 0.5f;
 
         return basePos;
     }
