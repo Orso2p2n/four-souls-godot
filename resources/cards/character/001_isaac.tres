@@ -1,14 +1,14 @@
 [gd_resource type="Resource" load_steps=4 format=3 uid="uid://krpkjlqbklhx"]
 
-[ext_resource type="Script" path="res://src/cards/character/C001_Isaac.cs" id="1_nxno0"]
 [ext_resource type="Script" path="res://src/resources/CharacterCardResource.cs" id="1_smy5r"]
 [ext_resource type="Texture2D" uid="uid://covvua13povk1" path="res://assets/sprites/card_arts/base_game/character/001_isaac.png" id="1_t75ko"]
+[ext_resource type="Script" path="res://src/cards/character/C000_AdditionalLootCardCharacter.cs" id="2_hsv31"]
 
 [resource]
 script = ExtResource("1_smy5r")
-SpecialStartingItem = true
+SpecialStartingItem = false
 CardName = "Isaac"
-Script = ExtResource("1_nxno0")
+Script = ExtResource("2_hsv31")
 Charmed = false
 SoulCount = 0
 StatType = 1

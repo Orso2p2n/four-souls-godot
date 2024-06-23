@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://m7hh7upgobp"]
+
+[ext_resource type="Texture2D" uid="uid://dgq46icf7xnbl" path="res://assets/sprites/card_arts/base_game/character/005_blue_baby.png" id="1_kbjv7"]
+[ext_resource type="Script" path="res://src/cards/character/C000_AdditionalLootCardCharacter.cs" id="2_ahfad"]
+[ext_resource type="Script" path="res://src/resources/CharacterCardResource.cs" id="3_4jrwp"]
+
+[resource]
+script = ExtResource("3_4jrwp")
+SpecialStartingItem = false
+CardName = "Blue Baby"
+Script = ExtResource("2_ahfad")
+Charmed = false
+SoulCount = 0
+StatType = 1
+HpStat = 2
+AtkStat = 1
+BgArt = ExtResource("1_kbjv7")

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://jvj6av2cxdn8"]
+
+[ext_resource type="Script" path="res://resources/decks/base_game/BaseGameCharacterCardList.cs" id="1_s8fjn"]
+[ext_resource type="Resource" uid="uid://2b6wwkxxfpm8" path="res://resources/deck_types/deck_type_character.tres" id="2_hbcqj"]
+[ext_resource type="Script" path="res://src/resources/DeckResource.cs" id="3_oali7"]
+
+[resource]
+script = ExtResource("3_oali7")
+DeckType = ExtResource("2_hbcqj")
+DeckListScript = ExtResource("1_s8fjn")

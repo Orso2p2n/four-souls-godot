@@ -7,6 +7,7 @@ public partial class Game : Node
 {
     [Signal] public delegate void RngSeedChangedEventHandler();
     [Signal] public delegate void LootedPlayerEventHandler(Player player, Array<CardBase> cards);
+    [Signal] public delegate void GaveCharacterToPlayerEventHandler(Player player, CharacterCard card);
 
     public static Game ME { get; private set; }
 
@@ -187,5 +188,19 @@ public partial class Game : Node
         }
 
         EmitSignal(SignalName.LootedPlayer, player, cards);
+    }
+
+    [Rpc(mode: MultiplayerApi.RpcMode.Authority, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+    public async void GiveRandomCharacterToPlayer(int playerId) {
+        var delay = 0.3f;
+
+        var player = Players[playerId];
+        var card = DeckManager.CharacterDeck.CreateTopCard() as CharacterCard;
+        player.SetCharacter(card);
+        card.Card3d.FlipUp(true);
+
+        await GDTask.Delay(TimeSpan.FromSeconds(delay));
+
+        EmitSignal(SignalName.GaveCharacterToPlayer, player, card);
     }
 }

@@ -44,6 +44,10 @@ DeckType = 1
 DeckOffset = -0.5
 DiscardOffset = 0.5
 
+[node name="DeckLocationCharacter" type="Marker3D" parent="DeckLocations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 0, 0)
+script = ExtResource("3_rktlo")
+
 [node name="Table" type="Node3D" parent="."]
 
 [node name="Mesh" type="MeshInstance3D" parent="Table"]

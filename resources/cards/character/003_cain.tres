@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dbugy0g21ysof"]
+
+[ext_resource type="Texture2D" uid="uid://du2cwy243dl0l" path="res://assets/sprites/card_arts/base_game/character/003_cain.png" id="1_do6qc"]
+[ext_resource type="Script" path="res://src/cards/character/C003_Cain.cs" id="2_0m0sr"]
+[ext_resource type="Script" path="res://src/resources/CharacterCardResource.cs" id="3_hpuq6"]
+
+[resource]
+script = ExtResource("3_hpuq6")
+SpecialStartingItem = false
+CardName = "Cain"
+Script = ExtResource("2_0m0sr")
+Charmed = false
+SoulCount = 0
+StatType = 1
+HpStat = 2
+AtkStat = 1
+BgArt = ExtResource("1_do6qc")

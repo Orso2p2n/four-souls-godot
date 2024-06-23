@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://clhhv4o8qg5ck"]
+
+[ext_resource type="Texture2D" uid="uid://dsjovh2h6vwfj" path="res://assets/sprites/card_arts/base_game/character/009_lilith.png" id="1_6dxt5"]
+[ext_resource type="Script" path="res://src/cards/character/C000_AdditionalLootCardCharacter.cs" id="2_ku1na"]
+[ext_resource type="Script" path="res://src/resources/CharacterCardResource.cs" id="3_tgs5o"]
+
+[resource]
+script = ExtResource("3_tgs5o")
+SpecialStartingItem = false
+CardName = "Lilith"
+Script = ExtResource("2_ku1na")
+Charmed = false
+SoulCount = 0
+StatType = 1
+HpStat = 2
+AtkStat = 1
+BgArt = ExtResource("1_6dxt5")

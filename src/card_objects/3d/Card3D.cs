@@ -10,12 +10,12 @@ public partial class Card3D : Node3D
 
 	public bool FaceDown;
 
-	public Vector2 Position2D {
+	public Vector2 GlobalPosition2D {
 		get {
-			return Position.GetXZ();
+			return GlobalPosition.GetXZ();
 		}
 		set {
-			Position = Position.SetXZ(value.X, value.Y);
+			GlobalPosition = GlobalPosition.SetXZ(value.X, value.Y);
 		}
 	}
 
@@ -48,7 +48,7 @@ public partial class Card3D : Node3D
 
 			var worldPos = camera.ProjectPosition(viewportMousePos, cameraHeight);
 
-			Position2D = worldPos.GetXZ();
+			GlobalPosition2D = worldPos.GetXZ();
 		}
     }
 
@@ -75,7 +75,7 @@ public partial class Card3D : Node3D
 	public async void SetFace(bool down, bool instant = false) {
 		FaceDown = down;
 
-		var targetRotZ = down ? -180 : 180;
+		var targetRotZ = down ? 180 : 0;
 		var targetRot = _model.BaseRotation with { Z = targetRotZ };
 
 		if (instant) {

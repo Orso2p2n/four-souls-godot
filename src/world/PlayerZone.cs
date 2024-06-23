@@ -2,7 +2,6 @@ using Godot;
 using Godot.Collections;
 using System;
 
-[Tool]
 public partial class PlayerZone : Node3D
 {
     [Export] private CollisionShape3D _collisionShape3D;
@@ -30,7 +29,6 @@ public partial class PlayerZone : Node3D
     public override void _EnterTree() {
         _boxShape3D = new BoxShape3D();
         _collisionShape3D.Shape = _boxShape3D;
-        SetAreaSize(_areaSize);
     }
 
     public void SetAreaSize(Vector2I areaSize) {
@@ -50,7 +48,7 @@ public partial class PlayerZone : Node3D
 
     public void AddCard(CardBase card) {
         card.Show3D();
-        card.Card3d.ChangeParent(this);
+        card.Card3d.ChangeParent(this, true);
 
         // Add card to corresponding array
         var cardResource = card.CardResource;

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://pssg7jspsshw"]
+
+[ext_resource type="Texture2D" uid="uid://dc1ur1i65bid2" path="res://assets/sprites/card_arts/base_game/character/007_samson.png" id="1_82nc0"]
+[ext_resource type="Script" path="res://src/cards/character/C000_AdditionalLootCardCharacter.cs" id="2_5cxvp"]
+[ext_resource type="Script" path="res://src/resources/CharacterCardResource.cs" id="3_hnjuf"]
+
+[resource]
+script = ExtResource("3_hnjuf")
+SpecialStartingItem = false
+CardName = "Samson"
+Script = ExtResource("2_5cxvp")
+Charmed = false
+SoulCount = 0
+StatType = 1
+HpStat = 2
+AtkStat = 1
+BgArt = ExtResource("1_82nc0")

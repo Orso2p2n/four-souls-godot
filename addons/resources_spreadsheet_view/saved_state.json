@@ -1,12 +1,17 @@
 {
   "hidden_columns": {
+    "res://resources/cards/character/": {
+      "resource_local_to_scene": true,
+      "resource_name": true
+    },
     "res://resources/cards/loot/": {
       "resource_local_to_scene": true,
       "resource_name": true
     }
   },
   "recent_paths": [
-    "res://resources/cards/loot/"
+    "res://resources/cards/loot/",
+    "res://resources/cards/character/"
   ],
   "table_functions": {
     "filter": [

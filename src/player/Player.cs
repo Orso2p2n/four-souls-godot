@@ -22,7 +22,7 @@ public partial class Player : Node
     public bool IsInActionPhase { get { return IsActivePlayer && Game.TurnManager.CurPhase == TurnPhase.ActionPhase; } }
     
     // Variables
-    public CardBase CharacterCard { get; set; }
+    public CharacterCard CharacterCard { get; set; }
 
     public int Gold { get; set; }
 
@@ -186,6 +186,12 @@ public partial class Player : Node
     // --- Zone ---
     public void AddCardInZone(CardBase card) {
         PlayerLocation.PlayerZone.AddCard(card);
+    }
+
+    // --- Character ---
+    public void SetCharacter(CharacterCard card) {
+        CharacterCard = card;
+        AddCardInZone(card);
     }
 
     // Common effects

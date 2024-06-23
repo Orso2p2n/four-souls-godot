@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://gyeau4ohnilg"]
+
+[ext_resource type="Texture2D" uid="uid://duevg634ecfbj" path="res://assets/sprites/card_arts/base_game/character/008_lazarus.png" id="1_qylto"]
+[ext_resource type="Script" path="res://src/cards/character/C000_AdditionalLootCardCharacter.cs" id="2_pr6at"]
+[ext_resource type="Script" path="res://src/resources/CharacterCardResource.cs" id="3_t3sdh"]
+
+[resource]
+script = ExtResource("3_t3sdh")
+SpecialStartingItem = false
+CardName = "Lazarus"
+Script = ExtResource("2_pr6at")
+Charmed = false
+SoulCount = 0
+StatType = 1
+HpStat = 2
+AtkStat = 1
+BgArt = ExtResource("1_qylto")

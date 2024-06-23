@@ -1,13 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://1u2kwhk1muj7"]
+[gd_scene load_steps=2 format=3 uid="uid://1u2kwhk1muj7"]
 
 [ext_resource type="Script" path="res://src/world/PlayerZone.cs" id="1_cbt8k"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4lycy"]
-size = Vector3(1, 0, 1)
 
 [node name="PlayerZone" type="Node3D" node_paths=PackedStringArray("_collisionShape3D")]
 script = ExtResource("1_cbt8k")
 _collisionShape3D = NodePath("Area")
 
 [node name="Area" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_4lycy")

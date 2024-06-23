@@ -10,17 +10,23 @@ public partial class Deck : Node
 
 	public Array<CardResource> Cards { get; set; }
 
-	public void Init(Array<CardResource> cards, DeckTypeResource deckType, DeckLocation deckLocation) {
+	public void Init(Array<CardResource> cards, DeckTypeResource deckType, DeckLocation deckLocation = null) {
 		Cards = cards;
 		DeckType = deckType;
 
 		_deck3d.Init(this);
 
-		_deck3d.GlobalPosition = deckLocation.GetDeckLocation();
+		if (deckLocation != null) {
+			_deck3d.GlobalPosition = deckLocation.GetDeckLocation();
+		}
+		else {
+			_deck3d.GlobalPosition = Vector3.Zero;
+			_deck3d.Visible = false;
+		}
 
 		Shuffle();
 
-		PrintCards();
+		// PrintCards();
 
 		RefreshModelCardsCount();
 	}

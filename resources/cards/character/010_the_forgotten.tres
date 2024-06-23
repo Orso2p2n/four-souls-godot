@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dkm11sj2fj1jg"]
+
+[ext_resource type="Texture2D" uid="uid://7trv54e5fn5d" path="res://assets/sprites/card_arts/base_game/character/010_the_forgotten.png" id="1_hh1sj"]
+[ext_resource type="Script" path="res://src/cards/character/C000_AdditionalLootCardCharacter.cs" id="2_40e8d"]
+[ext_resource type="Script" path="res://src/resources/CharacterCardResource.cs" id="3_h0lc0"]
+
+[resource]
+script = ExtResource("3_h0lc0")
+SpecialStartingItem = false
+CardName = "The Forgotten"
+Script = ExtResource("2_40e8d")
+Charmed = false
+SoulCount = 0
+StatType = 1
+HpStat = 2
+AtkStat = 1
+BgArt = ExtResource("1_hh1sj")

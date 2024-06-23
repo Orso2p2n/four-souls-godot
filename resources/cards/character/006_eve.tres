@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://olfj643tm73k"]
+
+[ext_resource type="Texture2D" uid="uid://cwnvntv0sad3n" path="res://assets/sprites/card_arts/base_game/character/006_eve.png" id="1_wurl2"]
+[ext_resource type="Script" path="res://src/cards/character/C000_AdditionalLootCardCharacter.cs" id="2_t4nsf"]
+[ext_resource type="Script" path="res://src/resources/CharacterCardResource.cs" id="3_5m1c2"]
+
+[resource]
+script = ExtResource("3_5m1c2")
+SpecialStartingItem = false
+CardName = "Eve"
+Script = ExtResource("2_t4nsf")
+Charmed = false
+SoulCount = 0
+StatType = 1
+HpStat = 2
+AtkStat = 1
+BgArt = ExtResource("1_wurl2")

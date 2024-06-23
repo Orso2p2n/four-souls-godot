@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://cfms1ff8bl2hf"]
+
+[ext_resource type="Texture2D" uid="uid://unricsulk6sf" path="res://assets/sprites/card_arts/base_game/character/004_judas.png" id="1_4enb1"]
+[ext_resource type="Script" path="res://src/cards/character/C000_AdditionalLootCardCharacter.cs" id="2_lxg6i"]
+[ext_resource type="Script" path="res://src/resources/CharacterCardResource.cs" id="3_siek4"]
+
+[resource]
+script = ExtResource("3_siek4")
+SpecialStartingItem = false
+CardName = "Cain"
+Script = ExtResource("2_lxg6i")
+Charmed = false
+SoulCount = 0
+StatType = 1
+HpStat = 2
+AtkStat = 1
+BgArt = ExtResource("1_4enb1")

@@ -54,7 +54,7 @@ public partial class Card3DVisualElement : Node3D
 		if (Position != card3D.Position) {
 			Position = Position.Lerp(card3D.Position, lerpSpeed);
 
-			RotateTowards(card3D.Position2D);
+			RotateTowards(card3D.GlobalPosition2D);
 
 			if (Position.DistanceTo(card3D.Position) < 0.01f) {
 				Position = card3D.Position;
